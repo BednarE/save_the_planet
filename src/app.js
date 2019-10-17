@@ -34,7 +34,6 @@ class App {
     }
 
     showWorkshop() {
-        console.log("CALLLED")
         new Workshop();
     }
 
@@ -47,12 +46,11 @@ class App {
     }
 
     showClicker() {
-        console.log("Called");
         new Clicker();
     }
 
     showError() {
-        console.log("Ungültige Route");
+        this._router.navigate('', false);
     }
 }
 
