@@ -3,7 +3,7 @@
 class Statistic {
 
     constructor() {
-        console.log("Statistic opened");
+        document.getElementById("title").innerText = "Statistics";
     }
 
 }
