@@ -1,24 +1,58 @@
 "use strict";
 
+import Navigo from "navigo";
+import Workshop from "./workshop/workshop";
+import Tutorial from "./tutorial/tutorial";
+import Statistic from "./statistics/statistic";
+import Clicker from "./clicker/clicker";
+
 class App {
 
     constructor() {
-        console.log("Der Konstruktor der Main App wurde aufgerufen");
+        this._router = new Navigo(null, true);
+        this._currentUrl = "";
+        this._router.on({
+            "main": () => this.showClicker(),
+            "workshop": () => this.showWorkshop(),
+            "tutorial" : () => this.showTutorial(),
+            "statistic": () => this.showStatistic(),
+            "*": () => this.showError()
+        });
+        this._router.hooks({
+                after: (params) => {
+                    // Navigation durchführen, daher die neue URL merken
+                    this._currentUrl = this._router.lastRouteResolved().url;
+                    console.log(this._currentUrl);
+                }
+            }
+        );
     }
 
     start() {
         console.log("Start wurde aufgerufen");
-        let element = document.getElementById("test");
-        let retten = false;
-        setInterval(()=> {
-            if (retten) {
-                element.innerText = "Hallo,  Welt!";
-            } else {
-                element.innerText = "Hallo, du zu rettende Welt!";
-            }
-            retten = !retten;
+        this._router.resolve();
+    }
 
-        }, 1000);
+    showWorkshop() {
+        console.log("CALLLED")
+        new Workshop();
+    }
+
+    showTutorial() {
+        new Tutorial();
+    }
+
+    showStatistic() {
+        new Statistic();
+    }
+
+    showClicker() {
+        console.log("Called");
+        new Clicker();
+    }
+
+    showError() {
+        console.log("Ungültige Route");
     }
 }
 
