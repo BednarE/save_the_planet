@@ -1,0 +1,69 @@
+
+/*
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+    float: left;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #000088;
+    heigt: 5px;
+    border-radius: 10px;
+    float: left;
+}
+
+webkit-scrollbar-button {
+    border-radius: 20px;
+    background-color: white;
+    font-family: "Comic Sans MS";
+    font-color: #000088;
+    width: 5px;
+    height: 5px;
+    margin-botton: 1em;
+    margin-top: 1em;
+    float: left;
+}
+h1{
+    color: red;
+}
+
+
+.button {
+    border-radius: 200px;
+    background-color: white;
+    font-family: "Comic Sans MS";
+    font-color: #000088;
+    width: 300px;
+    height: 100px;
+    margin-botton: 5em;
+    margin-top: 1em;
+    display: block;
+    padding: 5px;
+    border: 1px solid blue;
+
+}
+
+.button > img {
+    width: 130px;
+    height: 80px;
+    float: right;
+    border-radius: 200px;
+          }
+
+
+section {
+    display: block;
+
+    height: 1500px;
+    width: 300px;
+    overflow-y: auto;
+}
+
