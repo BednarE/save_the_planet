@@ -1,0 +1,6 @@
+MIt cd ins Verzeichnis navigieren / verwenden
+Am Anfang: git fetch 
+Bei jeder Änderung: git commit und git push
+Am Ende: git pull
+
+C:\Users\bedna\OneDrive\Documents\DHBW\3.Semester\Webprogrammierung\save_the_planet
