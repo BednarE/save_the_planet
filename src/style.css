@@ -5,3 +5,11 @@ a.nav-link {
 a.nav-link:hover {
     color: mediumvioletred;
 }
+
+.hidden {
+    display: none;
+}
+
+#content {
+    display: flex;
+}
