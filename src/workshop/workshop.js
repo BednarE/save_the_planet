@@ -3,7 +3,7 @@
 class Workshop {
 
     constructor() {
-        document.getElementById("title").innerText = "Workshop";
+        document.getElementById("content").innerHTML=document.getElementById("workshopsite").innerText;
     }
 
 }
