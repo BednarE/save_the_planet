@@ -5,6 +5,7 @@ import Workshop from "./workshop/workshop";
 import Tutorial from "./tutorial/tutorial";
 import Statistic from "./statistic/statistic";
 import Clicker from "./clicker/clicker";
+import Game from "./game";
 
 class App {
 
@@ -26,6 +27,7 @@ class App {
                 }
             }
         );
+        this._game = new Game();
     }
 
     start() {
@@ -50,7 +52,7 @@ class App {
 
     showClicker() {
         document.getElementById("content").innerHTML = null;
-        new Clicker();
+        new Clicker(this._game);
     }
 
     showError() {
