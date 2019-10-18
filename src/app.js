@@ -34,23 +34,27 @@ class App {
     }
 
     showWorkshop() {
+        document.getElementById("content").innerHTML = null;
         new Workshop();
     }
 
     showTutorial() {
+        document.getElementById("content").innerHTML = null;
         new Tutorial();
     }
 
     showStatistic() {
+        document.getElementById("content").innerHTML = null;
         new Statistic();
     }
 
     showClicker() {
+        document.getElementById("content").innerHTML = null;
         new Clicker();
     }
 
     showError() {
-        this._router.navigate('', false);
+        this._router.navigate('main', false);
     }
 }
 
