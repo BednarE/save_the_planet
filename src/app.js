@@ -3,7 +3,7 @@
 import Navigo from "navigo";
 import Workshop from "./workshop/workshop";
 import Tutorial from "./tutorial/tutorial";
-import Statistic from "./statistics/statistics";
+import Statistic from "./statistic/statistic";
 import Clicker from "./clicker/clicker";
 
 class App {
@@ -34,25 +34,27 @@ class App {
     }
 
     showWorkshop() {
-        console.log("CALLLED")
+        document.getElementById("content").innerHTML = null;
         new Workshop();
     }
 
     showTutorial() {
+        document.getElementById("content").innerHTML = null;
         new Tutorial();
     }
 
     showStatistic() {
+        document.getElementById("content").innerHTML = null;
         new Statistic();
     }
 
     showClicker() {
-        console.log("Called");
+        document.getElementById("content").innerHTML = null;
         new Clicker();
     }
 
     showError() {
-        console.log("Ungültige Route");
+        this._router.navigate('main', false);
     }
 }
 

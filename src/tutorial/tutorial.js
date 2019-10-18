@@ -3,7 +3,7 @@
 class Tutorial {
 
     constructor() {
-        console.log("Tutorial opened");
+        document.getElementById("title").innerText = "Tutorial";
     }
 
 }

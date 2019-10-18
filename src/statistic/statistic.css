@@ -1,0 +1,21 @@
+#statisticsHeadline{
+    color: black;
+}
+
+#statisticsList{
+    list-style-type: none;
+    color: black;
+}
+
+.chartcanvasses {
+    width: 500px;
+    height: 200px;
+}
+
+.chartdivs{
+    background-color: white;
+}
+
+
+
+

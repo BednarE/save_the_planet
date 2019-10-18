@@ -3,7 +3,7 @@
 class Clicker {
 
     constructor() {
-        console.log("Clicker opened");
+        document.getElementById("title").innerText = "Main Page";
     }
 
 }

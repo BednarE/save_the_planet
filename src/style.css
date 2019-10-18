@@ -1,0 +1,15 @@
+a.nav-link {
+    color: red;
+}
+
+a.nav-link:hover {
+    color: mediumvioletred;
+}
+
+.hidden {
+    display: none;
+}
+
+#content {
+    display: flex;
+}
