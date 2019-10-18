@@ -1,5 +1,5 @@
 body{
-    background-color: blue;
+    background-color: grey;
 }
 
 #statisticsHeadline{
@@ -10,4 +10,18 @@ body{
     list-style-type: none;
     color: white;
 }
+
+.chartcanvasses{
+    width: 50%;
+    height: 50%;
+}
+
+.chartdivs{
+    background-color: white;
+    width: 50%;
+    height: 50%;
+}
+
+
+
 
