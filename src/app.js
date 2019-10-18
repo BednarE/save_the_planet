@@ -3,7 +3,7 @@
 import Navigo from "navigo";
 import Workshop from "./workshop/workshop";
 import Tutorial from "./tutorial/tutorial";
-import Statistic from "./statistics/statistic";
+import Statistic from "./statistic/statistic";
 import Clicker from "./clicker/clicker";
 
 class App {
