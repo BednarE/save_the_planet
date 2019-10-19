@@ -6,7 +6,8 @@
 window.onload = function() {
     let test1 = document.getElementById("test1");
     test1.setAttribute("disabled", "disabled");
-    let bBucket = document.getElementsByTagName("bBucket");
+    let bBucket = document.getElementById("bBucket");
+    bBucket.setAttribute("disabled", "disabled");
     /*let bVacuumCleaner = document.getElementById(elementId: "bVacuumCleaner");
     let bIdeonella = document.getElementById(elementId: "bIdeonella");
     let bDrone = document.getElementById(elementId: "bDrone");
@@ -23,39 +24,30 @@ window.onload = function() {
     bBucket.disabled=false;
     console.log(bBucket.disabled);
 
-    clicks = 10;
+    clicks = 1000;
 
-    /*document.addEventListener("DOMContentLoaded", function () {
-        document.querySelector('[name="button"]').addEventListener('change', changeStyle);
-        document.querySelector('[name="background"]').addEventListener('change', changeStyle);
-
-        function changeStyle() {
-            let output = document.querySelector('output');
-            output.style.color = document.querySelector('[name="test1"]').value;
-            output.style.backgroundColor = document.querySelector('[name="background"]').value;
-            document.getElementById("test1").style.color = "#585858";
-        }
-    });*/
     function checkBucket(clicks)
     {
-
-
+        //enable button
         if(100 <= clicks)
         {
             test1.removeAttribute("disabled")
-            /*Button enablen*/
+
             bBucket.disabled = false;
 
         }
-        else if(100 > clicks /*&& bBucket.disabled === false*/)
+        //gray background and button disabled
+        else if(100 > clicks && bBucket.disabled === false)
         {
             test1.setAttribute("disabled", "disabled");
-            /*Hintergrundbild ausgrauen und disablend*/
+
             //bBucket.disabled = true;
+            document.getElementById("bBucket").style.backgroundColor = "#585858";
         }
+        //show questionmark picture
         else
         {
-            /*Grundbild lassen*/
+
         }
 
     }
@@ -64,7 +56,7 @@ window.onload = function() {
 
     },100);
 
-};
+
 
 
 /*window.addEventListener("load" , () => {
@@ -106,7 +98,7 @@ if(clicks < requiredClicksForIdeonellaSakariensis)
 
 */
 
-
+};
 
 
 
