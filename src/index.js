@@ -24,16 +24,31 @@ window.onload = function() {
     bBucket.disabled=false;
     console.log(bBucket.disabled);
 
-    clicks = 1000;
+    clicks = 10;
+    let pictureUrl = [
+        "bucket.png",
+        "vacuumCleaner.jpg",
+        "IdeonellaSakariensis.jpg",
+        "drone.jpg",
+        "dipNet.jpg",
+        "magnetic.png",
+        "cat.jpg",
+        "net2.jpg",
+        "timeMachine.jpg",
+        "blackhole.jpg"
+        ];
 
+
+let sideBucket = "questionmark.png";
     function checkBucket(clicks)
     {
         //enable button
         if(100 <= clicks)
         {
-            test1.removeAttribute("disabled")
-
+            test1.removeAttribute("disabled");
+            document.getElementById("eineID").src = "bucket.png";
             bBucket.disabled = false;
+            sideBucket = ""
 
         }
         //gray background and button disabled
