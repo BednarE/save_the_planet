@@ -10,7 +10,7 @@ class Rate {
     }
 
     getCurrentRate(){
-        if(){ // Timesclicked > 100
+        if(true){ // Timesclicked > 100
             this.currentRate=this.baseRate*((Math.random()+1)*10);
         }
         else{
