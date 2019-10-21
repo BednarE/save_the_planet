@@ -34,23 +34,23 @@ class App {
     }
 
     showWorkshop() {
-        document.getElementById("content").innerHTML = null;
+        document.getElementById("content").innerHTML = "";
         new Workshop();
     }
 
     showTutorial() {
-        document.getElementById("content").innerHTML = null;
+        document.getElementById("content").innerHTML = "";
         new Tutorial();
     }
 
     showStatistic() {
-        document.getElementById("content").innerHTML = null;
+        document.getElementById("content").innerHTML = "";
         new Statistic();
     }
 
     showClicker() {
+        new Clicker(this._game);
         document.getElementById("content").innerHTML = null;
-        new Clicker();
     }
 
     showError() {
