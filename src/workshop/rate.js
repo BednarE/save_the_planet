@@ -9,18 +9,17 @@ class Rate {
         this.currentRate=currentRate;
     }
 
-    get(currentRate){
-        if(){ // Timesclicked > 100
-            currentRate=this.baseRate*((Math.random()+1)*10);
+    getCurrentRate(){
+        if(true){ // Timesclicked > 100
+            this.currentRate=this.baseRate*((Math.random()+1)*10);
         }
         else{
-            currentRate=this.baseRate*(Math.random()*10);
+            this.currentRate=this.baseRate*(Math.random()*10);
         }
-        this.update(currentRate);
         return this.currentRate;
     }
 
-    update(currentRate){
-
+    update(){
+        this.getCurrentRate();
     }
 }
