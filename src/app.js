@@ -3,8 +3,9 @@
 import Navigo from "navigo";
 import Workshop from "./workshop/workshop";
 import Tutorial from "./tutorial/tutorial";
-import Statistic from "./statistics/statistic";
+import Statistic from "./statistic/statistic";
 import Clicker from "./clicker/clicker";
+import Game from "./game";
 
 class App {
 
@@ -26,6 +27,7 @@ class App {
                 }
             }
         );
+        this._game = new Game();
     }
 
     start() {
@@ -35,7 +37,7 @@ class App {
 
     showWorkshop() {
         document.getElementById("content").innerHTML = "";
-        new Workshop();
+        new Workshop(this._game);
     }
 
     showTutorial() {
@@ -50,7 +52,7 @@ class App {
 
     showClicker() {
         new Clicker(this._game);
-        document.getElementById("content").innerHTML = null;
+        document.getElementById("content").innerHTML = "";
     }
 
     showError() {
