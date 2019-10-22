@@ -4,6 +4,10 @@ class Clicker {
 
     constructor() {
         document.getElementById("title").innerText = "Main Page";
+        document.getElementById("content").innerHTML = ClickerTemplate.trim();
+        document.getElementById("plasticBall").addEventListener("click", (product) => {
+            this.incrementClick();
+        });
         this.showMainpage();
     }
 
