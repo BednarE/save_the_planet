@@ -8,7 +8,7 @@ class Clicker {
         document.getElementById("title").innerText = "Main Page";
 
         document.getElementById("content").innerHTML = ClickerTemplate.trim();
-        document.getElementById("clickerButton").addEventListener("click", (product) => {
+        document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
     }
