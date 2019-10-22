@@ -7,7 +7,7 @@ class Clicker {
         this.showMainpage();
     }
 
-    showMainpage = () => {
+    showMainpage() {
         let test1 = document.getElementById("test1");
         test1.setAttribute("disabled", "disabled");
         let bBucket = document.getElementById("bBucket");
