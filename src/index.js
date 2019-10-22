@@ -21,53 +21,92 @@ window.onload = function() {
     let cookieclicker;
     console.log(bBucket);
     console.log(test1);
-    bBucket.disabled=false;
+
     console.log(bBucket.disabled);
 
-    clicks = 10;
-    let pictureUrl = [
-        "bucket.png",
-        "vacuumCleaner.jpg",
-        "IdeonellaSakariensis.jpg",
-        "drone.jpg",
-        "dipNet.jpg",
-        "magnetic.png",
-        "cat.jpg",
-        "net2.jpg",
-        "timeMachine.jpg",
-        "blackhole.jpg"
+    clicks = 1000;
+    let pictures = [
+        {
+            picture: "bucket.png",
+            requiredClicks: 100,
+            id: "bBucket"
+        },
+        {
+            picture: "vacuumCleaner.jpg",
+            requiredClicks: 100,
+            id: "bVacuumCleaner"
+        },
+        {
+            picture: "IdeonellaSakariensis.jpg",
+            requiredClicks: 100,
+            id: "bIdeonellaSakariensis"
+        },
+        {
+            picture: "drone.jpg",
+            requiredClicks: 100,
+            id: "bDrone"
+        },
+        {
+            picture: "dipNet.jpg",
+            requiredClicks: 100,
+            id: "bDipNet"
+        },
+        {
+            picture: "magnetic.png",
+            requiredClicks: 100,
+            id: "bMagnetic"
+        },
+        {
+            picture: "cat.jpg",
+            requiredClicks: 100,
+            id: "bCat"
+        },
+        {
+            picture: "net2.jpg",
+            requiredClicks: 100,
+            id: "bNet2"
+        },
+        {
+            pictrue: "timeMachine.jpg",
+            requiredClicks: 100,
+            id: "bTimeMachine"
+        },
+        {
+            picture: "blackhole.jpg",
+            requiredClicks: 100,
+            id: "bBlackhole"
+        }
         ];
 
-
+    
 let sideBucket = "questionmark.png";
-    function checkBucket(clicks)
+    function checkAllUpgrades(clicks)
     {
-        //enable button
-        if(100 <= clicks)
-        {
-            test1.removeAttribute("disabled");
-            document.getElementById("eineID").src = "bucket.png";
-            bBucket.disabled = false;
-            sideBucket = ""
+        for(let i = 0; i <= pictures.length-1; i++) {
+            //enable button
+            if (pictures[i].requiredClicks <= clicks) {
+                document.getElementById(pictures[i].id).removeAttribute("disabled");
+                document.getElementById(pictures[i].id).src = pictures[i].picture;
+                document.getElementById(pictures[i].id).disabled = false;
+
+            }
+            //gray background and button disabled
+            else if (pictures[i].requiredClicks  > clicks && document.getElementById(pictures[i].id).disabled === false) {
+                document.getElementById(pictures[i].id).setAttribute("disabled", "disabled");
+
+                //bBucket.disabled = true;
+                document.getElementById(pictures[i].id).style.backgroundColor = "#585858";
+            }
+            //show questionmark picture
+            else {
+                //Nächste Zeile nur zu Testzwecken
+                document.getElementById(pictures[i].id).style.backgroundColor = "#585858";
+            }
 
         }
-        //gray background and button disabled
-        else if(100 > clicks && bBucket.disabled === false)
-        {
-            test1.setAttribute("disabled", "disabled");
-
-            //bBucket.disabled = true;
-            document.getElementById("bBucket").style.backgroundColor = "#585858";
-        }
-        //show questionmark picture
-        else
-        {
-
-        }
-
     }
     window.setInterval(function() {
-        checkBucket(clicks);
+        checkAllUpgrades(clicks);
 
     },100);
 
