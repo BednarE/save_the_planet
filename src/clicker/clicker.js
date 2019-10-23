@@ -1,42 +1,46 @@
 "use strict";
 
+import clickerTemplate from "./clicker.html";
+
 class Clicker {
 
-    constructor() {
+    constructor(game) {
+        this._game = game;
+    }
+
+    incrementClick() {
+        this._game.setPlastic(this._game.getPlastic()+1);
+        document.getElementById("clicks").innerHTML = this._game.getPlastic();
+    };
+
+    showMainpage() {
         document.getElementById("title").innerText = "Main Page";
-        document.getElementById("content").innerHTML = ClickerTemplate.trim();
+        let newProduct = document.createElement("div");
+        newProduct.innerHTML = clickerTemplate.trim();
+        document.getElementById("content").appendChild(newProduct);
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
-        this.showMainpage();
-    }
 
-    showMainpage() {
-        let test1 = document.getElementById("test1");
-        test1.setAttribute("disabled", "disabled");
-        let bBucket = document.getElementById("bBucket");
-        bBucket.setAttribute("disabled", "disabled");
-        /*let bVacuumCleaner = document.getElementById(elementId: "bVacuumCleaner");
-        let bIdeonella = document.getElementById(elementId: "bIdeonella");
-        let bDrone = document.getElementById(elementId: "bDrone");
-        let bDipNet= document.getElementById(elementId: "bDipNet");
-        let bMagnetic = document.getElementById(elementId: "bMagnetic");
-        let bCat = document.getElementById(elementId: "bCat");
-        let bNet2 = document.getElementById(elementId: "bNet2");
-        let bTimeMachine = document.getElementById(elementId: "bTimeMachine");
-        let bBlackhole = document.getElementById(elementId: "bBlackhole"); */
+        //let bBucket = document.getElementById("bBucket");
+        //bBucket.setAttribute("g", "l");
+        let bVacuumCleaner = document.getElementById("bVacuumCleaner");
+        let bIdeonella = document.getElementById("bIdeonella");
+        let bDrone = document.getElementById("bDrone");
+        let bDipNet= document.getElementById("bDipNet");
+        let bMagnetic = document.getElementById("bMagnetic");
+        let bCat = document.getElementById("bCat");
+        let bNet2 = document.getElementById("bNet2");
+        let bTimeMachine = document.getElementById("bTimeMachine");
+        let bBlackhole = document.getElementById("bBlackhole");
         let clicks;
         let cookieclicker;
-        console.log(bBucket);
-        console.log(test1);
-
-        console.log(bBucket.disabled);
 
         clicks = 1000;
         let pictures = [
             {
                 picture: "bucket.png",
-                requiredClicks: 100,
+                requiredClicks: 10,
                 id: "bBucket"
             },
             {
@@ -89,42 +93,12 @@ class Clicker {
 
         let sideBucket = "questionmark.png";
 
-        function checkAllCollectors(clicks) {
-            for (let i = 0; i <= pictures.length - 1; i++) {
-                //enable button
-                if (pictures[i].requiredClicks <= clicks) {
-                    document.getElementById(pictures[i].id).removeAttribute("disabled");
-                    document.getElementById(pictures[i].id).src = pictures[i].picture;
-                    document.getElementById(pictures[i].id).disabled = false;
 
-                }
-                //gray background and button disabled
-                else if (pictures[i].requiredClicks > clicks && document.getElementById(pictures[i].id).disabled === false) {
-                    document.getElementById(pictures[i].id).setAttribute("disabled", "disabled");
 
-                    //bBucket.disabled = true;
-                    document.getElementById(pictures[i].id).style.backgroundColor = "#585858";
-                }
-                //show questionmark picture
-                else {
-                    //Nächste Zeile nur zu Testzwecken
-                    document.getElementById(pictures[i].id).style.backgroundColor = "#585858";
-                }
-
-            }
-        }
-
-        setInterval(function () {
-            checkAllCollectors(clicks);
-
+        setInterval(() => {
+            this.checkCollectorUnlock(pictures);
         }, 100);
 
-
-        /*window.addEventListener("load" , () => {
-            //Anwendung starten
-            let app = new App();
-            app.start();
-        });*/
 
         /*providing Upgrades, after quantity of clicks*/
 
@@ -159,5 +133,30 @@ class Clicker {
         */
 
     };
+
+    checkCollectorUnlock(collectorList) {
+        for (let picture of collectorList) {
+            //enable button
+            if (picture.requiredClicks <= this._game.getPlastic()) {
+                document.getElementById(picture.id).removeAttribute("disabled");
+                document.getElementById(picture.id).src = "./../img/" + picture.picture;
+                document.getElementById(picture.id).disabled = false;
+                document.getElementById(picture.id).style.backgroundColor = "white";
+            }
+            //gray background and button disabled
+            else if (picture.requiredClicks > this._game.getPlastic() && document.getElementById(picture.id).disabled === false) {
+                document.getElementById(picture.id).setAttribute("disabled", "disabled");
+
+                //bBucket.disabled = true;
+                document.getElementById(picture.id).style.backgroundColor = "#585858";
+            }
+            //show questionmark picture
+            else {
+                //Nächste Zeile nur zu Testzwecken
+                document.getElementById(picture.id).style.backgroundColor = "#585858";
+            }
+
+        }
+    }
 }
 export default Clicker;
