@@ -1,69 +1,108 @@
 "use strict";
 
-import Product from "./Product";
-import ProductTemplate from "./workshop.html";
+import ProductTemplate from "./productTemplate.html";
+import WorkshopTemplate from "./workshopTemplate.html";
 
 class Workshop {
 
-    constructor() {
+    constructor(game) {
         document.getElementById("title").innerText = "Workshop";
-
-        this._products = [
-            new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 2, 10, null, 1000),
-            new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, null, 5000),
-            new Product("Plastik Ohrringe","sehr leicht zerbrechlich, aber dennoch schmückend", 5, 25,null, 10000),
-            new Product("Plastik Handtasche","umweltfreundliche Handtasche", 10, 45,null, 30000),
-            new Product("Plastik Jacke","sehr stylisch, sorgt für anziehende Blicke", 17, 65,null, 80000),
-            new Product("Plastik Schuhe","sehr komfortabel", 20, 70,null, 75000),
-            new Product("Plastik Raum","zum Versammeln mit Umweltaktivisten, so wie Greta Thunberg", 50, 180,null, 500000),
-            new Product("Plastik Auto","sehr schnell, dafür das es nur aus Plastik ist", 100, 300,null, 800000),
-            new Product("Plastik Flugzeug","sehr stabil für seine Verhältnisse", 150, 400,null, 1000000),
-            new Product("Plastik Supermarkt","ein neuer Supermarkt zum Einkaufen", 300, 750,null, 3000000),
-            new Product("Plastik Krankenhaus","zur Versorgung von kranken Umweltaktivisten", 1000, 4000,null, 10000000),
-            new Product("Plastik Flughafen","damit die Umweltaktivisten um die Welt reisen können", 1500, 6000,null, 30000000)
-        ];
+        this._game = game;
 
         this.showProducts();
     }
 
     showProducts() {
-        for (let product of this._products) {
+        //Create the main workshop div
+        let workshopTemplate = document.createElement("div");
+        workshopTemplate.innerHTML = WorkshopTemplate.trim();
+        //Add the workshop div to the content div
+        document.getElementById("content").appendChild(workshopTemplate);
+        //Go trough all products stored in the game & create the product-cards
+        for (let product of this._game.getProducts()) {
             let newProduct = document.createElement("div");
             newProduct.innerHTML = ProductTemplate.trim();
-
+            //Set the text inside the product card
             newProduct.getElementsByClassName("productName")[0].innerText = product._name;
             newProduct.getElementsByClassName("description")[0].innerText = product._description;
             newProduct.getElementsByClassName("plasticcost")[0].innerText = "Kostet: " + product._plasticCost + " Plastik";
             newProduct.getElementsByClassName("productMoneyValue")[0].innerText = "Wert: " + product._moneyValue + "€";
             newProduct.getElementsByClassName("productionTime")[0].innerText = "Produktionszeit: " + (product._productionTime /1000) + "s";
             newProduct.id = product._name; //Set the id of the button
-            document.getElementById("content").appendChild(newProduct);
+            document.getElementById("workshopTemplate").appendChild(newProduct);
             //You can only add the Event Listeners after the element has been added to the DOM!
             newProduct.getElementsByClassName("buyProductButton")[0].addEventListener("click", (mouseEvent) => {
-                this.buyProduct(product);
+                this.constructProduct(product);
             });
+
+            //Check if the product is currently under construction
+            if (product.isCurrentlyUnderConstruction()) {
+                //If yes, hide the button & show remaining time
+                newProduct.getElementsByClassName("buyProductButton")[0].classList.add("hidden");
+                newProduct.getElementsByClassName("productionTimeLeft")[0].innerHTML =
+                    "Wird hergestellt, übrige Zeit: " + product.getLeftConstructionHours() + "h " + product.getLeftConstructionMinutes() + "m " + product.getLeftConstructionSeconds() + "s ";
+            } else {
+                //If it is not under construction, hide the progress bar
+                newProduct.getElementsByClassName("productProgressBar")[0].classList.add("hidden");
+            }
         }
     }
 
-    buyProduct(product) {
-        console.log("Trying to buy a " + product._name);
-        document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].setAttribute("disabled", "disabled");
+    /**
+     * Starts the construction of the given product if it is not yet under construction
+     * @param product - the product to be constructed
+     */
+    constructProduct(product) {
+        //Get the product html
+        let productHtml = document.getElementById(product._name);
         let waitTime = product._productionTime;
-        let constructionInterval = setInterval(function () {
-            let seconds = Math.floor((waitTime / 1000));
-            let minutes = Math.floor((waitTime / (1000 * 60)));
-            let hours = Math.floor((waitTime / (1000 * 60 * 60)));
+        //Check if it is already unter construction
+        if (!product.isCurrentlyUnderConstruction()) {
+            //Hide the button
+            productHtml.getElementsByClassName("buyProductButton")[0].classList.add("hidden");
+            //Show the progress bar
+            productHtml.getElementsByClassName("productProgressBar")[0].classList.remove("hidden");
+            product.setCurrentlyUnderConstruction(true);
+            //Add the interval to the window object, so it will continue to run even if the Workshop class has been unloaded.
+            //We need to add it with a different name for each product, so different products wil not overwrite each other
+            window["constructionInterval_"+product._name] = setInterval(function () {
+                let seconds = Math.floor((waitTime / 1000)); //TODO: Fix the display time
+                let minutes = Math.floor((waitTime / (1000 * 60)));
+                let hours = Math.floor((waitTime / (1000 * 60 * 60)));
+                //Store the productionTime inside the product, so we can display it right away once the subpage has been switched to another page
+                //and back
+                product.setLeftConstructionTime(hours, minutes, seconds);
+                let productHtml = document.getElementById(product._name);
+                //Check if the productHtml is not null, so no nullpointers wil be thrown if the page has been switched and the div unloaded
+                if (productHtml != null) {
+                    productHtml.getElementsByClassName("productionTimeLeft")[0].innerHTML =
+                        "Wird hergestellt, übrige Zeit: " + hours + "h " + minutes + "m " + seconds + "s ";
+                    let percent = Math.round((1 -(waitTime / product._productionTime)) * 100);
+                    productHtml.getElementsByClassName("progress-bar")[0].setAttribute("aria-valuenow", ""+percent);
+                    productHtml.getElementsByClassName("progress-bar")[0].style = "width: " + percent + "%;";
+                    productHtml.getElementsByClassName("progress-bar")[0].innerHTML = percent + "%";
+                }
 
-            document.getElementById(product._name).getElementsByClassName("productionTimeLeft")[0].innerHTML =
-                "Left: " + hours + "h " + minutes + "m " + seconds + "s ";
-
-            if (waitTime <= 0) {
-                clearInterval(constructionInterval);
-                document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].removeAttribute("disabled");
-                document.getElementById(product._name).getElementsByClassName("productionTimeLeft")[0].innerHTML = "";
-            }
-            waitTime = waitTime - 1000;
-        },1000);
+                //Construction has been finished
+                if (waitTime <= 0) {
+                    clearInterval(window["constructionInterval_"+product._name]);
+                    product.setCurrentlyUnderConstruction(false);
+                    product.setLeftConstructionTime(0, 0, 0);
+                    if (productHtml != null) {
+                        document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].classList.remove("hidden");
+                        document.getElementById(product._name).getElementsByClassName("productionTimeLeft")[0].innerHTML = "";
+                        productHtml.getElementsByClassName("progress-bar")[0].setAttribute("aria-valuenow", "0");
+                        productHtml.getElementsByClassName("progress-bar")[0].style = "width: 0%;";
+                        productHtml.getElementsByClassName("progress-bar")[0].innerHTML = "0%";
+                        productHtml.getElementsByClassName("productProgressBar")[0].classList.add("hidden");
+                    }
+                }
+                waitTime = waitTime - 100;
+            }, 100);
+        } else {
+            //We should never reach this point as the button should be hidden if it is under construction
+            console.error("The product is still under construction!", product);
+        }
     }
 }
 

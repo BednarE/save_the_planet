@@ -1,3 +1,16 @@
 .product {
-    margin: 5%;
+    margin: 3%;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.productProgressBar {
+    margin: 5px;
+}
+
+#workshopTemplate {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
