@@ -51,8 +51,10 @@ class App {
     }
 
     showClicker() {
-        new Clicker(this._game);
         document.getElementById("content").innerHTML = "";
+
+        let clicker = new Clicker(this._game);
+        clicker.showMainpage();
     }
 
     showError() {
