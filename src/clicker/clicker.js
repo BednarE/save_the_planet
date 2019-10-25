@@ -1,102 +1,71 @@
 "use strict";
 
 import clickerTemplate from "./clicker.html";
+import collectortemplate from "./collectortemplate.html";
+import Collector from "./Collector";
 
 class Clicker {
 
     constructor(game) {
         this._game = game;
+        this.collectors = [
+            new Collector("bucket","./../img/bucket.png", 10, "bBucket"),
+            new Collector("vacuum cleaner", "./../img/vacuumCleaner.jpg", 100, "bVacuumCleaner"),
+            new Collector("IdeonellaSakariensis", "./../img/IdeonellaSakariensis.jpg", 100, "bIdeonellaSakariensis"),
+            new Collector("drone", "./../img/drone.jpg", 100, "bDrone"),
+            new Collector("dip net", "./../img/dipNet.jpg", 100, "bDipNet"),
+            new Collector("magnetic","./../img/magnetic.jpg", 100, "bMagnetic"),
+            new Collector("cat", "./../img/cat.jpg", 100, "bCat"),
+            new Collector("net", "./../img/net2.jpg", 100, "bNet2"),
+            new Collector("time machine", "./../img/TimeMachine.jpg", 100, "bTimeMachine"),
+            new Collector("blackhole", "./../img/blackhole.jpg", 100, "bBlackhole")
+        ];
     }
 
     incrementClick() {
         this._game.setPlastic(this._game.getPlastic()+1);
+        /*Für Testzwecke erhöhung Money*/
+        this._game.setMoney(this._game.getMoney()+1);
         document.getElementById("clicks").innerHTML = this._game.getPlastic();
     };
 
+    /*Methodenname*/
     showMainpage() {
+        /*zieht sich das Element mit der ID Titel und setzt den Text auf main page, Änderung des Titelbilds pro Seite*/
         document.getElementById("title").innerText = "Main Page";
-        let newProduct = document.createElement("div");
-        newProduct.innerHTML = clickerTemplate.trim();
-        document.getElementById("content").appendChild(newProduct);
+        /*Dom div wird neu erstelllt */
+        let newClicker = document.createElement("div");
+        /*INhalt des Templates in das Div kopieren*/
+        newClicker.innerHTML = clickerTemplate.trim();
+        /*Der Clicker wird zum Content hinzugefügt, appendChild nimmt den Inhalt und setzt den Inhalt in den contect von index.html
+        *Die Zeile:  um es komplett auf die Seite zu bringen*/
+        document.getElementById("content").appendChild(newClicker);
+        /*Neuer EventListener wird hinzugefügt, document = gesamte Webseite, getElementbyI sucht den PlasticBall raus (steht in der Clicker
+        html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
+         */
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
+        for (let collector of this.collectors) {
+            /*div Element wird erzeugt*/
+            let newCollector = document.createElement("div");
+            /*Inhalt des Templates in das DIV kopieren*/
+            newCollector.innerHTML = collectortemplate.trim();
+            /*Im collectortemplate Collectorname wird gesetzt im p */
+             newCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
 
-        //let bBucket = document.getElementById("bBucket");
-        //bBucket.setAttribute("g", "l");
-        let bVacuumCleaner = document.getElementById("bVacuumCleaner");
-        let bIdeonella = document.getElementById("bIdeonella");
-        let bDrone = document.getElementById("bDrone");
-        let bDipNet= document.getElementById("bDipNet");
-        let bMagnetic = document.getElementById("bMagnetic");
-        let bCat = document.getElementById("bCat");
-        let bNet2 = document.getElementById("bNet2");
-        let bTimeMachine = document.getElementById("bTimeMachine");
-        let bBlackhole = document.getElementById("bBlackhole");
-        let clicks;
-        let cookieclicker;
-
-        clicks = 1000;
-        let pictures = [
-            {
-                picture: "bucket.png",
-                requiredClicks: 10,
-                id: "bBucket"
-            },
-            {
-                picture: "vacuumCleaner.jpg",
-                requiredClicks: 100,
-                id: "bVacuumCleaner"
-            },
-            {
-                picture: "IdeonellaSakariensis.jpg",
-                requiredClicks: 100,
-                id: "bIdeonellaSakariensis"
-            },
-            {
-                picture: "drone.jpg",
-                requiredClicks: 100,
-                id: "bDrone"
-            },
-            {
-                picture: "dipNet.jpg",
-                requiredClicks: 100,
-                id: "bDipNet"
-            },
-            {
-                picture: "magnetic.png",
-                requiredClicks: 100,
-                id: "bMagnetic"
-            },
-            {
-                picture: "cat.jpg",
-                requiredClicks: 100,
-                id: "bCat"
-            },
-            {
-                picture: "net2.jpg",
-                requiredClicks: 100,
-                id: "bNet2"
-            },
-            {
-                pictrue: "timeMachine.jpg",
-                requiredClicks: 100,
-                id: "bTimeMachine"
-            },
-            {
-                picture: "blackhole.jpg",
-                requiredClicks: 100,
-                id: "bBlackhole"
-            }
-        ];
-
-
-        let sideBucket = "questionmark.png";
-
-
+/*Die Id vom div wird auf die Id vom neuen Collector gesetzt, um das newCollector.div im Nachhinein noch verändern zu können */
+            newCollector.id = collector.id; //Set the id of the button
+            /*Neuer Collector wird an die Collectorliste gehängt*/
+            document.getElementById("collectorList").appendChild(newCollector);
+            /*EventListener dem Collectorbutton hinzufügen, Collector wird nach Click gekauft*/
+            newCollector.getElementsByClassName("collectorbutton")[0].addEventListener("click", (mouseEvent) => {
+                this.buyCollector(collector);
+            });
+        }
 
         setInterval(() => {
-            this.checkCollectorUnlock(pictures);
+            this.checkCollectorUnlock(this.collectors);
         }, 100);
 
 
@@ -135,28 +104,53 @@ class Clicker {
     };
 
     checkCollectorUnlock(collectorList) {
-        for (let picture of collectorList) {
+        for (let collector of collectorList) {
             //enable button
-            if (picture.requiredClicks <= this._game.getPlastic()) {
-                document.getElementById(picture.id).removeAttribute("disabled");
-                document.getElementById(picture.id).src = "./../img/" + picture.picture;
-                document.getElementById(picture.id).disabled = false;
-                document.getElementById(picture.id).style.backgroundColor = "white";
+            let htmlCollector = document.getElementById(collector.id);
+
+            if(htmlCollector == null)
+            {
+                return;
+            }
+            let objCollectorButton = htmlCollector.getElementsByClassName("collectorbutton")[0];
+            if (collector.requiredMoney <= this._game.getMoney()) {
+                /*html Collector = dom Element der der Liste hinzugefügt wurde*/
+                objCollectorButton.classList.remove("qmLockedCollectorButton");
+                objCollectorButton.classList.remove("lockedCollectorButton");
+                console.log("Test");
+                /*Bilder setzen*/
+                htmlCollector.picture = "./../img/" + collector.picture;
+                htmlCollector.disabled = false;
+                htmlCollector.style.backgroundColor = "white";
+                objCollectorButton.classList.add("unlockedCollectorButton");
+                htmlCollector.removeAttribute("disabled");
+
+                collector.unlocked = true;
             }
             //gray background and button disabled
-            else if (picture.requiredClicks > this._game.getPlastic() && document.getElementById(picture.id).disabled === false) {
-                document.getElementById(picture.id).setAttribute("disabled", "disabled");
+            else if (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true) {
+                document.getElementById(collector.id).setAttribute("disabled", "disabled");
 
                 //bBucket.disabled = true;
-                document.getElementById(picture.id).style.backgroundColor = "#585858";
+                objCollectorButton.classList.remove("unlockedCollectorButton");
+                objCollectorButton.classList.add("lockedCollectorButton");
+
             }
             //show questionmark picture
             else {
-                //Nächste Zeile nur zu Testzwecken
-                document.getElementById(picture.id).style.backgroundColor = "#585858";
+                //Collector noch nicht freigeschalten
+                console.log("TEst2");
+                htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
             }
 
         }
+    }
+
+    buyCollector(collector)
+    {
+        console.log("collector");
+        this._game.setMoney(this._game.getMoney() - collector.requiredMoney )
+
     }
 }
 export default Clicker;
