@@ -66,7 +66,7 @@ class Workshop {
             //Add the interval to the window object, so it will continue to run even if the Workshop class has been unloaded.
             //We need to add it with a different name for each product, so different products wil not overwrite each other
             window["constructionInterval_" + product._name] = setInterval(function () {
-                let seconds = Math.floor((waitTime / 1000)); //TODO: Fix the display time
+                let seconds = Math.floor((waitTime / 1000));
                 let minutes = Math.floor((waitTime / (1000 * 60)));
                 let hours = Math.floor((waitTime / (1000 * 60 * 60)));
                 seconds = seconds - (minutes * 60);
@@ -111,7 +111,7 @@ class Workshop {
         //Check if enough plastic to buy a product then reduce the plastic
         if (this._game.getPlastic() >= product._plasticCost) {
             this._game.setPlastic(this._game.getPlastic() - product._plasticCost);
-            // now it can be constucted
+            // now it can be constructed
             this.constructProduct(product);
             // after construction you get the money
             this._game.setMoney(this._game.getMoney() + product._moneyValue);
@@ -125,6 +125,8 @@ class Workshop {
             for (let products of this._products) {
                 if (this._game.buttonDisableForPlastic(products._plasticCost)) {
                     document.getElementById(products._name).getElementsByClassName("buyProductButton")[0].setAttribute("disabled", "disabled");
+                } else{
+                    document.getElementById(products._name).getElementsByClassName("buyProductButton")[0].removeAttribute("disabled");
                 }
             }
         }, 1000);
