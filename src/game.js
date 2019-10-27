@@ -21,6 +21,7 @@ class Game {
             new Product("Plastik Krankenhaus","zur Versorgung von kranken Umweltaktivisten", 1000, 4000,null, 10000000),
             new Product("Plastik Flughafen","damit die Umweltaktivisten um die Welt reisen können", 1500, 6000,null, 30000000)
         ];
+
     }
 
     setPlastic(plasticAmount) {
@@ -33,12 +34,6 @@ class Game {
 
     getProducts() {
         return this._products;
-    }
-    setMoney(moneyAmount){
-        this._money=moneyAmount;
-    }
-    getMoney(){
-        return this._money;
     }
     buttonDisableForPlastic(plastic){
         if(this.getPlastic()<plastic){
@@ -54,6 +49,14 @@ class Game {
             return false;
         }
     }
+    getMoney() {
+        return this._money;
+    }
+    setMoney(money) {
+        this._money = money;
+    }
+
+
 }
 
 export default Game;
