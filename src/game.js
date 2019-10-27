@@ -6,6 +6,7 @@ class Game {
 
     constructor() {
         this._plastic = 0;
+        this._money=0;
         this._products = [
             new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 2, 10, null, 1000),
             new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, null, 5000),
@@ -32,6 +33,26 @@ class Game {
 
     getProducts() {
         return this._products;
+    }
+    setMoney(moneyAmount){
+        this._money=moneyAmount;
+    }
+    getMoney(){
+        return this._money;
+    }
+    buttonDisableForPlastic(plastic){
+        if(this.getPlastic()<plastic){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    buttonDisableForMoney(money) {
+        if (this.getMoney() < money) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
