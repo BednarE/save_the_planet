@@ -7,7 +7,7 @@ a.nav-link:hover {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 #content {
