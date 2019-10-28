@@ -1,10 +1,14 @@
 "use strict";
 
 import Product from "./workshop/Product";
+import StatisticUtils from "./statistic/statisticutils";
 
 class Game {
 
     constructor() {
+        this._appStart = new Date().toISOString();
+        this._statisticStorage = {clicks : []};
+        this.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
         this._plastic = 0;
         this._money=0;
         this._products = [
@@ -55,7 +59,9 @@ class Game {
     setMoney(money) {
         this._money = money;
     }
-
+    insertClickObjectToClickStorage(click) {
+        this._statisticStorage.clicks.push(click)
+    }
 
 }
 
