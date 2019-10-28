@@ -12,9 +12,14 @@ class Statistic {
         document.getElementById("content").appendChild(statisticDiv);
         this._clickerData = this.preparePlotData(this.getClicksPerTenSeconds());
         this.showClickerStatistics();
+        document.getElementById("timesClicked").innerHTML = "Times clicked: " + (this._game._statisticStorage.clicks.length - 1);
+        document.getElementById("plasticsGathered").innerHTML = "Plastics gathered: " + this._game._plastic;
+        document.getElementById("startDate").innerHTML = "Started to save the planet on: " + this._game._appStartUTCFormat;
+        document.getElementById("timePlayed").innerHTML = "Saving the planet since: " + this._game._dateDiff;
     }
 
     showClickerStatistics(){
+
         let data = this.preparePlotData(this.getClicksPerTenSeconds());
 
         let ctx = document.getElementById('clicksChart').getContext('2d');
@@ -26,7 +31,7 @@ class Statistic {
             type: 'bar',
             data: {
                 datasets: [{
-                    label: 'clicks',
+                    label: 'Times Clicked',
                     backgroundColor: color("red").alpha(0.5).rgbString(),
                     borderColor: "red",
                     data: data,

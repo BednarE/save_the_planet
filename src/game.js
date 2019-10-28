@@ -7,6 +7,8 @@ class Game {
 
     constructor() {
         this._appStart = new Date().toISOString();
+        this._appStartUTCFormat = new Date().toUTCString();
+        //this._dateDiff = Math.abs(this._appStart - Date.now());
         this._statisticStorage = {clicks : []};
         this.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
         this._plastic = 0;

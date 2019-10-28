@@ -13,7 +13,11 @@ a.nav-link:hover {
 #content {
     display: flex;
 }
-
+#plasticBall{
+    width: 300px;
+    length: 300px;
+    align-content: center;
+}
 /*
 /* width */
 ::-webkit-scrollbar {
