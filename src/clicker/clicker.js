@@ -46,6 +46,7 @@ class Clicker {
         /*Neuer EventListener wird hinzugefügt, document = gesamte Webseite, getElementbyI sucht den PlasticBall raus (steht in der Clicker
         html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
          */
+
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
@@ -58,6 +59,11 @@ class Clicker {
             newCollector.getElementsByClassName("collectorName")[0].innerText = "???";
             newCollector.getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             newCollector.getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
+            newCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
+
+
+
+
 
 /*Die Id vom div wird auf die Id vom neuen Collector gesetzt, um das newCollector.div im Nachhinein noch verändern zu können */
             newCollector.id = collector.id; //Set the id of the button
