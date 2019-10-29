@@ -48,6 +48,12 @@ aside {
     font-color: blue;
 
 }
+/*initial questionmark */
+.collectorbutton {
+    background-color: #585858;
+    font-color: blue;
+
+}
 /*enabled*/
 .unlockedCollectorButton {
     background-color: white;
