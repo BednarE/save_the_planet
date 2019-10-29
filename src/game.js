@@ -10,6 +10,7 @@ class Game {
         this._statisticStorage = {clicks : []};
         this.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
         this._plastic = 0;
+        this._plasticPerClick=1;
         this._money=0;
         this._products = [
             new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 2, 10, null, 1000),
@@ -35,6 +36,14 @@ class Game {
     getPlastic() {
         return this._plastic;
     };
+    getPlasticPerClick() {
+        return this._plasticPerClick;
+    }
+
+    setPlasticPerClick(plasticAmount) {
+        this._plasticPerClick = plasticAmount;
+    }
+
 
     getProducts() {
         return this._products;

@@ -33,7 +33,22 @@ aside {
     height: 400px;
     width: 350px;
     overflow-y: auto;
+    margin-left: 15px;
 }
+#plasticBall{
+    display: block;
+    width: 55%;
+    height: 80%;
+    float: right;
+    margin-left: 10px;
+    /*animation-name: clicked;
+    animation-duration: 2s;*/
+}
+/*
+@keyframes clicked{
+
+}
+*/
 /*questionmark */
 .qmLockedCollectorButton {
     background-color: #585858;
