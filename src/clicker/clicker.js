@@ -155,8 +155,7 @@ class Clicker {
     buyCollector(collector)
     {
         console.log("collector");
-        this._game.setMoney(this._game.getMoney() - collector.requiredMoney )
-        /* */
+        this._game.setMoney(this._game.getMoney() - collector.requiredMoney );
         collector.count++;
         collector.requiredMoney = collector.requiredMoney*1.5;
 
