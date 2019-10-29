@@ -1,8 +1,10 @@
 "use strict";
 
 import clickerTemplate from "./clicker.html";
-import collectorButtonTemplate from "./collectortemplate.html";
 import Collector from "./collector";
+import collectortemplate from "./collectortemplate.html";
+import StatisticUtils from "../statistic/statisticutils";
+
 
 class Clicker {
 
@@ -27,6 +29,7 @@ class Clicker {
         /*Für Testzwecke erhöhung Money*/
         this._game.setMoney(this._game.getMoney()+1);
         document.getElementById("clicks").innerHTML = this._game.getPlastic();
+        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
     };
 
     /*Methodenname*/

@@ -4,60 +4,181 @@ import Chart from "chart.js";
 
 class Statistic {
 
-    constructor() {
+    constructor(game) {
+        this._game = game;
         document.getElementById("title").innerText = "Statistics";
         let statisticDiv = document.createElement("div");
         statisticDiv.innerHTML = StatisticTemplate.trim();
         document.getElementById("content").appendChild(statisticDiv);
-
-        let ctx1 = document.getElementById('plasticChart');
-        new Chart(ctx1, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7'],
-                datasets: [{
-                    label: 'Plastics gathered',
-                    data: [12, 19, 3, 17, 6, 3, 7],
-                    backgroundColor: "rgba(153,255,51,0.4)"
-                }, {
-                    label: 'Money in the Bank',
-                    data: [2, 29, 5, 5, 2, 3, 10],
-                    backgroundColor: "rgba(255,153,0,0.4)"
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Plastics gathered'
-                },
-            }
-        });
-
-        let ctx2 = document.getElementById('buildingsOwnedChart');
-        new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7'],
-                datasets: [{
-                    label: 'Number of activists',
-                    data: [1, 4, 5, 6, 14, 30, 31],
-                    backgroundColor: "rgba(153,255,51,0.4)"
-                }, {
-                    label: 'Number of helping hands',
-                    data: [2, 3, 5, 5, 6, 7, 10],
-                    backgroundColor: "rgba(255,153,0,0.4)"
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Buildings owned'
-                }
-            }
-        });
+        this._clickerData = this.preparePlotData(this.getClicksPerTenSeconds());
+        this.showClickerStatistics();
     }
 
+    showClickerStatistics(){
+        let data = this.preparePlotData(this.getClicksPerTenSeconds());
 
+        let ctx = document.getElementById('clicksChart').getContext('2d');
+        ctx.canvas.width = 600;
+        ctx.canvas.height = 300;
+
+        let color = Chart.helpers.color;
+        let cfg = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: 'clicks',
+                    backgroundColor: color("red").alpha(0.5).rgbString(),
+                    borderColor: "red",
+                    data: data,
+                    type: 'line',
+                    pointRadius: 2,
+                    fill: false,
+                    lineTension: 0,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'series',
+                        ticks: {
+                            source: 'auto',
+                            autoSkip: false
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'clicks per one second'
+                        }
+                    }]
+                },
+                tooltips: {
+                    intersect: false,
+                    mode: 'index',
+                    callbacks: {
+                        label: function(tooltipItem, myData) {
+                            let label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += parseFloat(tooltipItem.value).toFixed(2);
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+        this._clicksChart = new Chart(ctx, cfg);
+    }
+
+    preparePlotData(clicksArray){
+        let plotableData = [];  // Die Daten die man darstellen möchte
+
+        for (let i = 0; i < clicksArray.length; i++){
+            plotableData.push(
+                {
+                    t: clicksArray[i].dateUnix, //wegen chart.js
+                    y: clicksArray[i].value  //wegen chart.js
+                }
+            );
+        }
+        return plotableData
+    }
+
+    getClicksDuring(startDate, endDate) {
+        let allClicks = this._game._statisticStorage.clicks;
+        let filteredClicks = [];
+        let parsed = 0;
+        for (let i = 0; i < allClicks.length; i++) {
+            let unixTS = allClicks[i].dateUnix;
+            if (unixTS > startDate) {
+                if (unixTS < endDate) {
+                    filteredClicks.push(allClicks[i])
+                }
+            }
+        }
+        return filteredClicks
+    }
+
+    findEarliest(clicksArray){
+        let minimum = clicksArray[0].dateUnix;
+        for (let i = 0; i < clicksArray.length; i++) {
+            if (minimum > clicksArray[i].dateUnix) {
+                minimum = clicksArray[i].dateUnix
+            }
+        }
+        return minimum
+    }
+
+    findLatest(clicksArray){
+        let maximum = clicksArray[0].dateUnix;
+        for (let i = 0; i < clicksArray.length; i++) {
+            if (maximum < clicksArray[i].dateUnix) {
+                maximum = clicksArray[i].dateUnix
+            }
+        }
+        return maximum
+    }
+
+    createIntervalBorders(startDate, endDate, stepsize){
+        let intervals = [];
+        let current = startDate;
+        intervals.push(current);
+        while (current <= endDate){
+            intervals.push(current + stepsize);
+            current = current + stepsize
+        }
+        return intervals
+    }
+
+    getClicksPerInterval(stepsize) {
+        let allClicks = this._game._statisticStorage.clicks;
+        let earliest = this.findEarliest(allClicks);
+        let latest = this.findLatest(allClicks);
+        let intervalsArray = this.createIntervalBorders(earliest, latest, stepsize);
+        let filteredClicks = [];
+
+        let lower = 0;
+        let upper = 0;
+        let middle = 0;
+
+        for (let i = 0; i < intervalsArray.length - 1; i++) {
+            lower = intervalsArray[i];
+            upper = intervalsArray[i + 1];
+            middle = (lower + upper) / 2;
+            let clicksInInterval = 0;
+            for (let y = 0; y < allClicks.length; y++) {
+                if (lower < allClicks[y].dateUnix ) {
+                    if (upper > allClicks[y].dateUnix) {
+                        clicksInInterval = clicksInInterval + 1
+                    }
+                }
+            }
+            filteredClicks.push({dateUnix: middle, value: clicksInInterval})
+        }
+        return filteredClicks
+    }
+
+    getClicksPerOneSecond() {
+        return this.getClicksPerInterval(1000);
+    }
+
+    getClicksPerTenSeconds() {
+        return this.getClicksPerInterval(10 * 1000);
+    }
+
+    getClicksPerThirtySeconds(){
+        return this.getClicksPerInterval(1000*30);
+    }
+
+    getClicksPerTSixtySeconds() {
+        return this.getClicksPerInterval(60 * 1000);
+    }
+
+    getClicksPerOneHour(){
+        return this.getClicksPerInterval(1000*60*60);
+    }
 }
-
 export default Statistic;

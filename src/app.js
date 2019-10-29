@@ -47,7 +47,7 @@ class App {
 
     showStatistic() {
         document.getElementById("content").innerHTML = "";
-        new Statistic();
+        new Statistic(this._game);
     }
 
     showClicker() {
