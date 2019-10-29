@@ -1,8 +1,8 @@
 "use strict";
 
 import clickerTemplate from "./clicker.html";
-import collectortemplate from "./collectortemplate.html";
-import Collector from "./Collector";
+import collectorButtonTemplate from "./collectortemplate.html";
+import Collector from "./collector";
 
 class Clicker {
 
@@ -11,14 +11,14 @@ class Clicker {
         this.collectors = [
             new Collector("bucket","./../img/bucket.png", 10, "bBucket"),
             new Collector("vacuum cleaner", "./../img/vacuumCleaner.jpg", 100, "bVacuumCleaner"),
-            new Collector("IdeonellaSakariensis", "./../img/IdeonellaSakariensis.jpg", 100, "bIdeonellaSakariensis"),
-            new Collector("drone", "./../img/drone.jpg", 100, "bDrone"),
-            new Collector("dip net", "./../img/dipNet.jpg", 100, "bDipNet"),
-            new Collector("magnetic","./../img/magnetic.jpg", 100, "bMagnetic"),
-            new Collector("cat", "./../img/cat.jpg", 100, "bCat"),
-            new Collector("net", "./../img/net2.jpg", 100, "bNet2"),
-            new Collector("time machine", "./../img/TimeMachine.jpg", 100, "bTimeMachine"),
-            new Collector("blackhole", "./../img/blackhole.jpg", 100, "bBlackhole")
+            new Collector("ideonella sakariensis", "./../img/IdeonellaSakariensis.jpg", 200, "bIdeonellaSakariensis"),
+            new Collector("drone", "./../img/drone.jpg", 250, "bDrone"),
+            new Collector("dip net", "./../img/dipNet.jpg", 350, "bDipNet"),
+            new Collector("magnetic","./../img/magnetic.jpg", 450, "bMagnetic"),
+            new Collector("cat", "./../img/cat.jpg", 550, "bCat"),
+            new Collector("net", "./../img/net2.jpg", 700, "bNet2"),
+            new Collector("time machine", "./../img/TimeMachine.jpg", 900, "bTimeMachine"),
+            new Collector("blackhole", "./../img/blackhole.jpg", 1500, "bBlackhole")
         ];
     }
 
@@ -37,7 +37,7 @@ class Clicker {
         let newClicker = document.createElement("div");
         /*INhalt des Templates in das Div kopieren*/
         newClicker.innerHTML = clickerTemplate.trim();
-        /*Der Clicker wird zum Content hinzugefügt, appendChild nimmt den Inhalt und setzt den Inhalt in den contect von index.html
+        /*Der Clicker wird zum Content hinzugefügt, appendChild nimmt den Inhalt und setzt den Inhalt in den content von index.html
         *Die Zeile:  um es komplett auf die Seite zu bringen*/
         document.getElementById("content").appendChild(newClicker);
         /*Neuer EventListener wird hinzugefügt, document = gesamte Webseite, getElementbyI sucht den PlasticBall raus (steht in der Clicker
@@ -50,9 +50,11 @@ class Clicker {
             /*div Element wird erzeugt*/
             let newCollector = document.createElement("div");
             /*Inhalt des Templates in das DIV kopieren*/
-            newCollector.innerHTML = collectortemplate.trim();
+            newCollector.innerHTML = collectorButtonTemplate.trim();
             /*Im collectortemplate Collectorname wird gesetzt im p */
-             newCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+            newCollector.getElementsByClassName("collectorName")[0].innerText = "???";
+            newCollector.getElementsByClassName("collectorCounts")[0].innerText = collector.count;
+            newCollector.getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
 
 /*Die Id vom div wird auf die Id vom neuen Collector gesetzt, um das newCollector.div im Nachhinein noch verändern zu können */
             newCollector.id = collector.id; //Set the id of the button
@@ -117,13 +119,15 @@ class Clicker {
                 /*html Collector = dom Element der der Liste hinzugefügt wurde*/
                 objCollectorButton.classList.remove("qmLockedCollectorButton");
                 objCollectorButton.classList.remove("lockedCollectorButton");
-                console.log("Test");
                 /*Bilder setzen*/
                 htmlCollector.picture = "./../img/" + collector.picture;
+                htmlCollector.count = collector.count;
+                htmlCollector.requiredMoney = collector.requiredMoney;
                 htmlCollector.disabled = false;
                 htmlCollector.style.backgroundColor = "white";
                 objCollectorButton.classList.add("unlockedCollectorButton");
                 htmlCollector.removeAttribute("disabled");
+
 
                 collector.unlocked = true;
             }
@@ -131,16 +135,15 @@ class Clicker {
             else if (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true) {
                 document.getElementById(collector.id).setAttribute("disabled", "disabled");
 
-                //bBucket.disabled = true;
-                objCollectorButton.classList.remove("unlockedCollectorButton");
-                objCollectorButton.classList.add("lockedCollectorButton");
-
-            }
-            //show questionmark picture
-            else {
                 //Collector noch nicht freigeschalten
                 console.log("TEst2");
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
+
+                document.getElementById(collector.name).setAttribute("disabled", "disabled");
+            }
+            else if ((collector.requiredMoney*0.8) <= this._game.getMoney())
+            {
+                htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
             }
 
         }
@@ -150,6 +153,8 @@ class Clicker {
     {
         console.log("collector");
         this._game.setMoney(this._game.getMoney() - collector.requiredMoney )
+        collector.count++;
+        collector.requiredMoney = collector.requiredMoney*1.5;
 
     }
 }
