@@ -2,7 +2,7 @@
 
 import clickerTemplate from "./clicker.html";
 import Collector from "./collector";
-import collectortemplate from "./collectortemplate.html";
+import collectorButtonTemplate from "./collectortemplate.html";
 import StatisticUtils from "../statistic/statisticutils";
 
 
@@ -74,38 +74,6 @@ class Clicker {
         }, 100);
 
 
-        /*providing Upgrades, after quantity of clicks*/
-
-
-        /*providing Upgrades, after quantity of clicks for Buckets*/
-
-        /*
-        if (clicks >= requiredClicksForBucket)
-
-        {
-            document.getElementById('button').style.disabled="true";
-        }
-
-        if(clicks < requiredClicksForBucket)
-        {
-            document.getElementById('button').style.disabled="false";
-        }
-
-        /*providing Upgrades, after quantity of clicks for IdeonellaSakariensis*/
-        /*
-        let requiredClicksForIdeonellaSakariensis;
-
-        if (clicks >= requiredClicksForIdeonellaSakariensis)
-        {
-            document.getElementById('button').style.disabled="true";
-        }
-        if(clicks < requiredClicksForIdeonellaSakariensis)
-        {
-            document.getElementById('button').style.disabled="false";
-        }
-
-        */
-
     };
 
     checkCollectorUnlock(collectorList) {
@@ -155,7 +123,7 @@ class Clicker {
     buyCollector(collector)
     {
         console.log("collector");
-        this._game.setMoney(this._game.getMoney() - collector.requiredMoney );
+        this._game.setMoney(this._game.getMoney() - collector.requiredMoney)
         collector.count++;
         collector.requiredMoney = collector.requiredMoney*1.5;
 
