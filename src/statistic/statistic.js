@@ -4,8 +4,9 @@ import Chart from "chart.js";
 
 class Statistic {
 
-    constructor(game) {
+    constructor(game, rate) {
         this._game = game;
+        this._rate = rate;
         document.getElementById("title").innerText = "Statistics";
         let statisticDiv = document.createElement("div");
         statisticDiv.innerHTML = StatisticTemplate.trim();
@@ -15,7 +16,6 @@ class Statistic {
         document.getElementById("timesClicked").innerHTML = "Times clicked: " + (this._game._statisticStorage.clicks.length - 1);
         document.getElementById("plasticsGathered").innerHTML = "Plastics gathered: " + this._game._plastic;
         document.getElementById("startDate").innerHTML = "Started to save the planet on: " + this._game._appStartUTCFormat;
-        document.getElementById("timePlayed").innerHTML = "Saving the planet since: " + this._game._dateDiff;
     }
 
     showClickerStatistics(){
