@@ -14,6 +14,7 @@ class Clicker {
     }
 
     incrementClick() {
+
         this._game.setPlastic(this._game.getPlastic()+1);
         document.getElementById("clicks").innerHTML = this._game.getPlastic();
         this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
@@ -22,6 +23,7 @@ class Clicker {
         document.getElementById("money").innerHTML = this._game.getMoney();
         this._game.insertMoneyObjectToMoneyStorage(StatisticUtils.createClickObject());
     };
+
 
     /*Methodenname*/
     showMainpage() {
@@ -37,7 +39,8 @@ class Clicker {
         /*Neuer EventListener wird hinzugefügt, document = gesamte Webseite, getElementbyI sucht den PlasticBall raus (steht in der Clicker
         html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
          */
-
+        document.getElementById("clicks").innerHTML=this._game.getPlastic();
+        document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney();
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
@@ -107,9 +110,14 @@ class Clicker {
             {
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
             }
+            else
+            {
+                htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
+            }
 
         }
     }
+
 
     buyCollector(collector) {
         if (collector.requiredMoney <= this._game.getMoney())

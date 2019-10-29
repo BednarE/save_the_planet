@@ -49,6 +49,14 @@ class Game {
     getPlastic() {
         return this._plastic;
     };
+    getPlasticPerClick() {
+        return this._plasticPerClick;
+    }
+
+    setPlasticPerClick(plasticAmount) {
+        this._plasticPerClick = plasticAmount;
+    }
+
 
     getProducts() {
         return this._products;
