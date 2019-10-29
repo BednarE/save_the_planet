@@ -153,6 +153,7 @@ class Clicker {
     {
         console.log("collector");
         this._game.setMoney(this._game.getMoney() - collector.requiredMoney )
+        /* */
         collector.count++;
         collector.requiredMoney = collector.requiredMoney*1.5;
 
