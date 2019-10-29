@@ -34,6 +34,13 @@ aside {
     width: 350px;
     overflow-y: auto;
 }
+#plasticBall{
+    display: block;
+    width: 55%;
+    height: 80%;
+    float: right;
+    margin-left: 10px;
+}
 /*questionmark */
 .qmLockedCollectorButton {
     background-color: #585858;
