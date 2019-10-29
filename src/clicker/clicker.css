@@ -44,14 +44,32 @@ aside {
 /*questionmark */
 .qmLockedCollectorButton {
     background-color: #585858;
+    font-color: blue;
+
 }
 /*enabled*/
 .unlockedCollectorButton {
     background-color: white;
+    font-color: blue;
 
 }
 
 /*disabled*/
 .lockedCollectorButton {
     background-color: #585858;
+    font-color: blue;
+}
+.collectorName {
+    font-color: blue;
+    font-size: 15px;
+}
+
+.collectorCounts {
+    font-color: blue;
+    font-size: 15px;
+}
+
+.collectorRequiredMoney {
+    font-color: blue;
+    font-size: 8px;
 }
