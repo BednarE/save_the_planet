@@ -1,6 +1,7 @@
 "use strict";
 import StatisticTemplate from "./statistic.html";
 import Chart from "chart.js";
+import StatisticUtils from "./statisticutils";
 
 class Statistic {
 
@@ -10,12 +11,11 @@ class Statistic {
         let statisticDiv = document.createElement("div");
         statisticDiv.innerHTML = StatisticTemplate.trim();
         document.getElementById("content").appendChild(statisticDiv);
-        this._clickerData = this.preparePlotData(this.getClicksPerTenSeconds());
         this.showClickerStatistics();
     }
 
     showClickerStatistics(){
-        let data = this.preparePlotData(this.getClicksPerTenSeconds());
+        this._clickerData = this.preparePlotData(this.getClicksPerTenSeconds());
 
         let ctx = document.getElementById('clicksChart').getContext('2d');
         ctx.canvas.width = 600;
@@ -29,7 +29,7 @@ class Statistic {
                     label: 'clicks',
                     backgroundColor: color("red").alpha(0.5).rgbString(),
                     borderColor: "red",
-                    data: data,
+                    data: this._clickerData,
                     type: 'line',
                     pointRadius: 2,
                     fill: false,
@@ -45,12 +45,23 @@ class Statistic {
                         ticks: {
                             source: 'auto',
                             autoSkip: false
+                        },
+                        time: {
+                            displayFormats: {
+                                millisecond: 'hh:mm:ss'
+                            },
+                            stepSize: 10,
                         }
                     }],
                     yAxes: [{
                         scaleLabel: {
                             display: true,
                             labelString: 'clicks per one second'
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            suggestedMin: 1,
+                            suggestedMax: 100
                         }
                     }]
                 },
@@ -106,10 +117,10 @@ class Statistic {
         let minimum = clicksArray[0].dateUnix;
         for (let i = 0; i < clicksArray.length; i++) {
             if (minimum > clicksArray[i].dateUnix) {
-                minimum = clicksArray[i].dateUnix
+                minimum = clicksArray[i].dateUnix;
             }
         }
-        return minimum
+        return minimum;
     }
 
     findLatest(clicksArray){
@@ -135,10 +146,29 @@ class Statistic {
 
     getClicksPerInterval(stepsize) {
         let allClicks = this._game._statisticStorage.clicks;
+        if (allClicks.length === 0) {
+            return [];
+        }
+
+        //Only show round 10 secs. earliest = earliest dateUnix value from array
         let earliest = this.findEarliest(allClicks);
+        let rounded = (Math.round( earliest / 10000) * 10000);
+        earliest = rounded;
+
+        let filteredClicks = [];
+        let clicksInInterval = 0;
+        //Alle Werte die vor dem ersten auf 10 Sekunden aufgerundeten Wert liegen diesem hinzufügen
+        for (let y = 0; y < allClicks.length; y++) {
+            if (allClicks[y].dateUnix < earliest) {
+                clicksInInterval = clicksInInterval + allClicks[y].value;
+            }
+        }
+        if (clicksInInterval !== 0) {
+            filteredClicks.push({dateUnix: earliest, value: clicksInInterval})
+        }
+
         let latest = this.findLatest(allClicks);
         let intervalsArray = this.createIntervalBorders(earliest, latest, stepsize);
-        let filteredClicks = [];
 
         let lower = 0;
         let upper = 0;
@@ -150,13 +180,13 @@ class Statistic {
             middle = (lower + upper) / 2;
             let clicksInInterval = 0;
             for (let y = 0; y < allClicks.length; y++) {
-                if (lower < allClicks[y].dateUnix ) {
+                if (lower < allClicks[y].dateUnix) {
                     if (upper > allClicks[y].dateUnix) {
-                        clicksInInterval = clicksInInterval + 1
+                        clicksInInterval = clicksInInterval + allClicks[y].value;
                     }
                 }
             }
-            filteredClicks.push({dateUnix: middle, value: clicksInInterval})
+            filteredClicks.push({dateUnix: upper, value: clicksInInterval})
         }
         return filteredClicks
     }
