@@ -28,7 +28,7 @@ class Clicker {
         /*Für Testzwecke erhöhung Money*/
         this._game.setMoney(this._game.getMoney()+1);
         document.getElementById("clicks").innerHTML = this._game.getPlastic();
-        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
+        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject(1));
     };
 
     /*Methodenname*/
@@ -119,7 +119,6 @@ class Clicker {
                 /*html Collector = dom Element der der Liste hinzugefügt wurde*/
                 objCollectorButton.classList.remove("qmLockedCollectorButton");
                 objCollectorButton.classList.remove("lockedCollectorButton");
-                console.log("Test");
                 /*Bilder setzen*/
                 htmlCollector.picture = "./../img/" + collector.picture;
                 htmlCollector.disabled = false;
@@ -141,7 +140,6 @@ class Clicker {
             //show questionmark picture
             else {
                 //Collector noch nicht freigeschalten
-                console.log("TEst2");
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
             }
 
