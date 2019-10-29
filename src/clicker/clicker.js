@@ -108,13 +108,18 @@ class Clicker {
 
                 //Collector noch nicht freigeschalten
                 console.log("TEst2");
-                htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
+                htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
 
                 document.getElementById(collector.name).setAttribute("disabled", "disabled");
+
             }
             else if ((collector.requiredMoney*0.8) <= this._game.getMoney())
             {
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+            }
+            else
+            {
+                htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
             }
 
         }
@@ -123,7 +128,7 @@ class Clicker {
     buyCollector(collector)
     {
         console.log("collector");
-        this._game.setMoney(this._game.getMoney() - collector.requiredMoney)
+        this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
         collector.count++;
         collector.requiredMoney = collector.requiredMoney*1.5;
 
