@@ -1,35 +1,29 @@
 "use strict";
 
 import clickerTemplate from "./clicker.html";
-import collectortemplate from "./collectortemplate.html";
-import Collector from "./Collector";
+import Collector from "./collector";
+import collectorButtonTemplate from "./collectortemplate.html";
 import StatisticUtils from "../statistic/statisticutils";
+
 
 class Clicker {
 
     constructor(game) {
         this._game = game;
-        this.collectors = [
-            new Collector("bucket","./../img/bucket.png", 10, "bBucket"),
-            new Collector("vacuum cleaner", "./../img/vacuumCleaner.jpg", 100, "bVacuumCleaner"),
-            new Collector("IdeonellaSakariensis", "./../img/IdeonellaSakariensis.jpg", 100, "bIdeonellaSakariensis"),
-            new Collector("drone", "./../img/drone.jpg", 100, "bDrone"),
-            new Collector("dip net", "./../img/dipNet.jpg", 100, "bDipNet"),
-            new Collector("magnetic","./../img/magnetic.jpg", 100, "bMagnetic"),
-            new Collector("cat", "./../img/cat.jpg", 100, "bCat"),
-            new Collector("net", "./../img/net2.jpg", 100, "bNet2"),
-            new Collector("time machine", "./../img/TimeMachine.jpg", 100, "bTimeMachine"),
-            new Collector("blackhole", "./../img/blackhole.jpg", 100, "bBlackhole")
-        ];
+
     }
 
     incrementClick() {
+
         this._game.setPlastic(this._game.getPlastic()+1);
-        /*Für Testzwecke erhöhung Money*/
-        this._game.setMoney(this._game.getMoney()+1);
         document.getElementById("clicks").innerHTML = this._game.getPlastic();
         this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject(1));
+        /*Für Testzwecke Erhöhung Money*/
+        this._game.setMoney(this._game.getMoney()+1);
+        document.getElementById("money").innerHTML = this._game.getMoney();
+        this._game.insertMoneyObjectToMoneyStorage(StatisticUtils.createClickObject());
     };
+
 
     /*Methodenname*/
     showMainpage() {
@@ -39,22 +33,29 @@ class Clicker {
         let newClicker = document.createElement("div");
         /*INhalt des Templates in das Div kopieren*/
         newClicker.innerHTML = clickerTemplate.trim();
-        /*Der Clicker wird zum Content hinzugefügt, appendChild nimmt den Inhalt und setzt den Inhalt in den contect von index.html
+        /*Der Clicker wird zum Content hinzugefügt, appendChild nimmt den Inhalt und setzt den Inhalt in den content von index.html
         *Die Zeile:  um es komplett auf die Seite zu bringen*/
         document.getElementById("content").appendChild(newClicker);
         /*Neuer EventListener wird hinzugefügt, document = gesamte Webseite, getElementbyI sucht den PlasticBall raus (steht in der Clicker
         html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
          */
+        document.getElementById("clicks").innerHTML=this._game.getPlastic();
+        document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney();
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
-        for (let collector of this.collectors) {
+        for (let collector of this._game.collectors) {
             /*div Element wird erzeugt*/
             let newCollector = document.createElement("div");
             /*Inhalt des Templates in das DIV kopieren*/
-            newCollector.innerHTML = collectortemplate.trim();
+            newCollector.innerHTML = collectorButtonTemplate.trim();
             /*Im collectortemplate Collectorname wird gesetzt im p */
-             newCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+            newCollector.getElementsByClassName("collectorName")[0].innerText = "???";
+            newCollector.getElementsByClassName("collectorCounts")[0].innerText = collector.count;
+            newCollector.getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
+            newCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
+
+
 
 /*Die Id vom div wird auf die Id vom neuen Collector gesetzt, um das newCollector.div im Nachhinein noch verändern zu können */
             newCollector.id = collector.id; //Set the id of the button
@@ -67,41 +68,9 @@ class Clicker {
         }
 
         setInterval(() => {
-            this.checkCollectorUnlock(this.collectors);
+            this.checkCollectorUnlock(this._game.collectors);
         }, 100);
 
-
-        /*providing Upgrades, after quantity of clicks*/
-
-
-        /*providing Upgrades, after quantity of clicks for Buckets*/
-
-        /*
-        if (clicks >= requiredClicksForBucket)
-
-        {
-            document.getElementById('button').style.disabled="true";
-        }
-
-        if(clicks < requiredClicksForBucket)
-        {
-            document.getElementById('button').style.disabled="false";
-        }
-
-        /*providing Upgrades, after quantity of clicks for IdeonellaSakariensis*/
-        /*
-        let requiredClicksForIdeonellaSakariensis;
-
-        if (clicks >= requiredClicksForIdeonellaSakariensis)
-        {
-            document.getElementById('button').style.disabled="true";
-        }
-        if(clicks < requiredClicksForIdeonellaSakariensis)
-        {
-            document.getElementById('button').style.disabled="false";
-        }
-
-        */
 
     };
 
@@ -120,37 +89,50 @@ class Clicker {
                 objCollectorButton.classList.remove("qmLockedCollectorButton");
                 objCollectorButton.classList.remove("lockedCollectorButton");
                 /*Bilder setzen*/
-                htmlCollector.picture = "./../img/" + collector.picture;
+                objCollectorButton.picture = collector.picture;
+                htmlCollector.count = collector.count;
+                htmlCollector.requiredMoney = collector.requiredMoney;
                 htmlCollector.disabled = false;
                 htmlCollector.style.backgroundColor = "white";
                 objCollectorButton.classList.add("unlockedCollectorButton");
                 htmlCollector.removeAttribute("disabled");
-
                 collector.unlocked = true;
+
             }
             //gray background and button disabled
             else if (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true) {
-                document.getElementById(collector.id).setAttribute("disabled", "disabled");
 
-                //bBucket.disabled = true;
-                objCollectorButton.classList.remove("unlockedCollectorButton");
-                objCollectorButton.classList.add("lockedCollectorButton");
-
-            }
-            //show questionmark picture
-            else {
                 //Collector noch nicht freigeschalten
+                htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
+
+            } 
+            else if ((collector.requiredMoney*0.8) <= this._game.getMoney())
+            {
+                //Collector aufdecken, wenn 80% vom benötigten Geld erreicht wurden
+                htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+            }
+            else
+            {
+              //Collector noch nicht freigeschalten -> Questionmark picture
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
             }
 
         }
     }
 
-    buyCollector(collector)
-    {
-        console.log("collector");
-        this._game.setMoney(this._game.getMoney() - collector.requiredMoney )
 
+    buyCollector(collector) {
+        if (collector.requiredMoney <= this._game.getMoney())
+        {
+
+            this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
+            document.getElementById("money").innerHTML = this._game.getMoney();
+            collector.count = collector.count + 1;
+            collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
+            document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
+            document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
+
+        }
     }
 }
 export default Clicker;
