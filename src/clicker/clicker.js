@@ -17,7 +17,7 @@ class Clicker {
 
         this._game.setPlastic(this._game.getPlastic()+1);
         document.getElementById("clicks").innerHTML = this._game.getPlastic();
-        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
+        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject(1));
         /*Für Testzwecke Erhöhung Money*/
         this._game.setMoney(this._game.getMoney()+1);
         document.getElementById("money").innerHTML = this._game.getMoney();
@@ -105,13 +105,15 @@ class Clicker {
                 //Collector noch nicht freigeschalten
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
 
-            }
+            } 
             else if ((collector.requiredMoney*0.8) <= this._game.getMoney())
             {
+                //Collector aufdecken, wenn 80% vom benötigten Geld erreicht wurden
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
             }
             else
             {
+              //Collector noch nicht freigeschalten -> Questionmark picture
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("qmLockedCollectorButton");
             }
 

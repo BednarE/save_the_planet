@@ -8,8 +8,9 @@ class Game {
 
     constructor() {
         this._appStart = new Date().toISOString();
+        this._appStartUTCFormat = new Date().toLocaleString();
+        this._appStartMiliseconds = new Date().getTime();
         this._statisticStorage = {clicks : []};
-        this.insertClickObjectToClickStorage(StatisticUtils.createClickObject());
         this._plastic = 0;
         this._plasticPerClick=1;
         this._money=0;

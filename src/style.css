@@ -5,6 +5,13 @@ a.nav-link {
 a.nav-link:hover {
     color: mediumvioletred;
 }
+body{
+    background: url(img/background.jpg) no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(7px);
+    height: 100%;
+    overflow: visible;
+}
 
 .hidden {
     display: none !important;
@@ -12,6 +19,10 @@ a.nav-link:hover {
 
 #content {
     display: flex;
+}
+
+#statisticsList{
+    list-style-type: none;
 }
 
 /*
