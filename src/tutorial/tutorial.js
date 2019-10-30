@@ -6,6 +6,8 @@ class Tutorial {
         document.getElementById("title").innerText = "Tutorial";
     }
 
+
+
 }
 
 export default Tutorial;

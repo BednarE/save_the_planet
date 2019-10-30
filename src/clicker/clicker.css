@@ -30,18 +30,57 @@ aside {
     height: 400px;
     width: 350px;
     overflow-y: auto;
+    margin-left: 15px;
 }
+#plasticBall{
+    display: block;
+    width: 55%;
+    height: 80%;
+    float: right;
+    margin-left: 10px;
+    /*animation-name: clicked;
+    animation-duration: 2s;*/
+}
+/*
+@keyframes clicked{
+
+}
+*/
 /*questionmark */
 .qmLockedCollectorButton {
     background-color: #585858;
+    font-color: blue;
+
+}
+/*initial questionmark */
+.collectorbutton {
+    background-color: #585858;
+    font-color: blue;
+
 }
 /*enabled*/
 .unlockedCollectorButton {
     background-color: white;
+    font-color: blue;
 
 }
 
 /*disabled*/
 .lockedCollectorButton {
     background-color: #585858;
+    font-color: blue;
+}
+.collectorName {
+    font-color: blue;
+    font-size: 15px;
+}
+
+.collectorCounts {
+    font-color: blue;
+    font-size: 15px;
+}
+
+.collectorRequiredMoney {
+    font-color: blue;
+    font-size: 8px;
 }

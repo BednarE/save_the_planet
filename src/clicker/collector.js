@@ -8,6 +8,7 @@ class Collector {
         this.requiredMoney = requiredMoney;
         this.id = id;
         this.unlocked = false;
+        this.count = 0;
     }
 
 
