@@ -6,11 +6,7 @@ a.nav-link:hover {
     color: mediumvioletred;
 }
 body{
-    background: url(img/background.jpg) no-repeat center center fixed;
-    background-size: cover;
-    backdrop-filter: blur(7px);
-    height: 100%;
-    overflow: visible;
+    background: radial-gradient(circle, lightblue, grey);
 }
 
 .hidden {
@@ -24,7 +20,10 @@ body{
 #statisticsList{
     list-style-type: none;
 }
-
+#plasticBall{
+    height: 300px;
+    width: 300px;
+}
 /*
 /* width */
 ::-webkit-scrollbar {
