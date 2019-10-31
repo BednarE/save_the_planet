@@ -7,10 +7,12 @@ a.nav-link:hover {
 }
 body{
     background: radial-gradient(circle, lightblue, grey);
-    /*background: url(img/background.jpg) no-repeat center center fixed;
-    background-size: cover;
-    backdrop-filter: blur(7px);
-    overflow: visible;*/
+}
+#imageCont{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
 }
 
 html, body { min-height: 100vh; }
@@ -27,8 +29,8 @@ html, body { min-height: 100vh; }
     list-style-type: none;
 }
 #plasticBall{
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 250px;
 }
 /*
 /* width */
