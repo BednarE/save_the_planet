@@ -32,7 +32,7 @@ class Workshop {
             document.getElementById("workshopTemplate").appendChild(newProduct);
             //You can only add the Event Listeners after the element has been added to the DOM!
             newProduct.getElementsByClassName("buyProductButton")[0].addEventListener("click", (mouseEvent) => {
-                this.constructProduct(product); //needs to be buyingProduct() later with the checking if enough plastic is given
+                this.buyingProduct(product); //needs to be buyingProduct() later with the checking if enough plastic is given
             });
 
             //Check if the product is currently under construction
