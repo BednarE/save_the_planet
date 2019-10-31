@@ -1,7 +1,6 @@
 "use strict";
 
 import clickerTemplate from "./clicker.html";
-import Collector from "./collector";
 import collectorButtonTemplate from "./collectortemplate.html";
 import StatisticUtils from "../statistic/statisticutils";
 
@@ -21,7 +20,6 @@ class Clicker {
         /*Für Testzwecke Erhöhung Money*/
         this._game.setMoney(this._game.getMoney()+1);
         document.getElementById("money").innerHTML = this._game.getMoney();
-        this._game.insertMoneyObjectToMoneyStorage(StatisticUtils.createClickObject());
     };
 
 
@@ -53,11 +51,8 @@ class Clicker {
             newCollector.getElementsByClassName("collectorName")[0].innerText = "???";
             newCollector.getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             newCollector.getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
-            newCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
 
-
-
-/*Die Id vom div wird auf die Id vom neuen Collector gesetzt, um das newCollector.div im Nachhinein noch verändern zu können */
+            /*Die Id vom div wird auf die Id vom neuen Collector gesetzt, um das newCollector.div im Nachhinein noch verändern zu können */
             newCollector.id = collector.id; //Set the id of the button
             /*Neuer Collector wird an die Collectorliste gehängt*/
             document.getElementById("collectorList").appendChild(newCollector);
@@ -69,7 +64,7 @@ class Clicker {
 
         setInterval(() => {
             this.checkCollectorUnlock(this._game.collectors);
-        }, 100);
+        }, 800);
 
 
     };
@@ -88,15 +83,11 @@ class Clicker {
                 /*html Collector = dom Element der der Liste hinzugefügt wurde*/
                 objCollectorButton.classList.remove("qmLockedCollectorButton");
                 objCollectorButton.classList.remove("lockedCollectorButton");
-                /*Bilder setzen*/
-                objCollectorButton.picture = collector.picture;
                 htmlCollector.count = collector.count;
                 htmlCollector.requiredMoney = collector.requiredMoney;
                 htmlCollector.disabled = false;
-                htmlCollector.style.backgroundColor = "white";
                 objCollectorButton.classList.add("unlockedCollectorButton");
                 htmlCollector.removeAttribute("disabled");
-                collector.unlocked = true;
 
             }
             //gray background and button disabled
@@ -106,10 +97,12 @@ class Clicker {
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
 
             } 
-            else if ((collector.requiredMoney*0.8) <= this._game.getMoney())
+            else if ((collector.requiredMoney*0.8) <= this._game.getMoney() && collector.unlocked === false)
             {
                 //Collector aufdecken, wenn 80% vom benötigten Geld erreicht wurden
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+                htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
+                collector.unlocked = true;
             }
             else
             {
