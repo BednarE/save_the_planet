@@ -41,12 +41,10 @@ aside {
     /*animation-name: clicked;
     animation-duration: 2s;*/
 }
-/*
-@keyframes clicked{
 
+.button:active {
+    transform: translateY(8px);
 }
-*/
-/*questionmark */
 .qmLockedCollectorButton {
     background-color: #585858;
     font-color: blue;
