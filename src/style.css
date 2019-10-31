@@ -6,10 +6,11 @@ a.nav-link:hover {
     color: mediumvioletred;
 }
 body{
-    background: url(img/background.jpg) no-repeat center center fixed;
+    background: radial-gradient(circle, lightblue, grey);
+    /*background: url(img/background.jpg) no-repeat center center fixed;
     background-size: cover;
     backdrop-filter: blur(7px);
-    overflow: visible;
+    overflow: visible;*/
 }
 
 html, body { min-height: 100vh; }
@@ -25,7 +26,10 @@ html, body { min-height: 100vh; }
 #statisticsList{
     list-style-type: none;
 }
-
+#plasticBall{
+    height: 300px;
+    width: 300px;
+}
 /*
 /* width */
 ::-webkit-scrollbar {
