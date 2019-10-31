@@ -9,9 +9,10 @@ body{
     background: url(img/background.jpg) no-repeat center center fixed;
     background-size: cover;
     backdrop-filter: blur(7px);
-    height: 100%;
     overflow: visible;
 }
+
+html, body { min-height: 100vh; }
 
 .hidden {
     display: none !important;
