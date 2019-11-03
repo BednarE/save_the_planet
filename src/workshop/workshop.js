@@ -2,6 +2,7 @@
 
 import ProductTemplate from "./productTemplate.html";
 import WorkshopTemplate from "./workshopTemplate.html";
+import Swal from 'sweetalert2';
 
 class Workshop {
 
@@ -31,8 +32,12 @@ class Workshop {
             newProduct.id = product._name; //Set the id of the button
             document.getElementById("workshopTemplate").appendChild(newProduct);
             //You can only add the Event Listeners after the element has been added to the DOM!
+            document.getElementById("plasticWorkshop").innerHTML=this._game.getPlastic();
+            document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney();
             newProduct.getElementsByClassName("buyProductButton")[0].addEventListener("click", (mouseEvent) => {
                 this.buyingProduct(product); //needs to be buyingProduct() later with the checking if enough plastic is given
+                document.getElementById("plasticWorkshop").innerHTML=this._game.getPlastic();
+                document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney();
             });
 
             //Check if the product is currently under construction
@@ -88,6 +93,7 @@ class Workshop {
                 //Construction has been finished
                 if (waitTime <= 0) {
                     clearInterval(window["constructionInterval_" + product._name]);
+                    this._game.setMoney(this._game.getMoney() + product._moneyValue);
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
                     if (productHtml != null) {
@@ -114,10 +120,9 @@ class Workshop {
             // now it can be constructed
             this.constructProduct(product);
             // after construction you get the money
-            this._game.setMoney(this._game.getMoney() + product._moneyValue);
-        }//else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
-        //  Swal.fire("Not enough Plastic", "Product can't be bought. You have not not enough plastic","error");
-        //}
+        }else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
+          Swal.fire("Not enough Plastic", "Product can't be bought. You have not enough plastic", "error");
+        }
     }
 
     plasticEnoughForBuying() { // for disabling buttons while checking every second if the button needs to be disabled
