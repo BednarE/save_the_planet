@@ -9,7 +9,7 @@ class Clicker {
 
     constructor(game) {
         this._game = game;
-
+        this.automaticPlasticPicking();
     }
 
     incrementClick() {
@@ -36,6 +36,7 @@ class Clicker {
          */
         document.getElementById("plasticDisplay").innerHTML=this._game.getPlastic();
         document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney();
+        document.getElementById("plasticPerSecondDisplayed").innerHTML=this._game.getPlasticPerSecond();
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
@@ -118,11 +119,13 @@ class Clicker {
         {
 
             this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
-            document.getElementById("money").innerHTML = this._game.getMoney();
+            this._game.setPlasticPerSecond(this._game.getPlasticPerSecond()+collector._plasticPerSecond);
+            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
             collector.count = collector.count + 1;
             collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
             document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
+            document.getElementById("plasticPerSecondDisplayed").innerHTML=this._game.getPlasticPerSecond();
 
         }
     }
@@ -131,6 +134,16 @@ class Clicker {
         document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
         "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
         "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond*collector.count) + ". ";
+    }
+
+    automaticPlasticPicking() {
+        if(this._game.getPlasticPerSecond()>0) {
+            setInterval(function () {
+
+                this._game.setPlastic(this._game.getPlastic() + (this._game.getPlasticPerSecond() / 100));
+
+            }, 10);
+        }
     }
 }
 export default Clicker;
