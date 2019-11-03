@@ -51,7 +51,6 @@ class Clicker {
             newCollector.getElementsByClassName("collectorName")[0].innerText = "???";
             newCollector.getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             newCollector.getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
-            
             /*Die Id vom div wird auf die Id vom neuen Collector gesetzt, um das newCollector.div im Nachhinein noch verändern zu können */
             newCollector.id = collector.id; //Set the id of the button
             /*Neuer Collector wird an die Collectorliste gehängt*/
