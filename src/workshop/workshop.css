@@ -14,3 +14,11 @@
     flex-wrap: wrap;
     justify-content: flex-start;
 }
+
+#plasticWorkshop{
+    line-break: auto;
+}
+
+#moneyWorkshop{
+    line-break: auto;
+}
