@@ -14,12 +14,9 @@ class Clicker {
 
     incrementClick() {
 
-        this._game.setPlastic(this._game.getPlastic()+1);
-        document.getElementById("clicks").innerHTML = this._game.getPlastic();
+        this._game.setPlastic(this._game.getPlastic()+this._game.getPlasticPerClick());
+        document.getElementById("plasticDisplay").innerHTML = this._game.getPlastic();
         this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject(1));
-        /*Für Testzwecke Erhöhung Money*/
-        this._game.setMoney(this._game.getMoney()+1);
-        document.getElementById("money").innerHTML = this._game.getMoney();
     };
 
 
@@ -37,7 +34,7 @@ class Clicker {
         /*Neuer EventListener wird hinzugefügt, document = gesamte Webseite, getElementbyI sucht den PlasticBall raus (steht in der Clicker
         html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
          */
-        document.getElementById("clicks").innerHTML=this._game.getPlastic();
+        document.getElementById("plasticDisplay").innerHTML=this._game.getPlastic();
         document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney();
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
