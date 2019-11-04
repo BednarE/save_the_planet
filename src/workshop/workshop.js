@@ -96,6 +96,7 @@ class Workshop {
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
                     game.setMoney(game.getMoney() + product._moneyValue);
+                    document.getElementById("moneyWorkshop").innerHTML=game.getMoney();
                     if (productHtml != null) {
                         document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].classList.remove("hidden");
                         document.getElementById(product._name).getElementsByClassName("productionTimeLeft")[0].innerHTML = "";
@@ -120,7 +121,7 @@ class Workshop {
             // now it can be constructed
             this.constructProduct(product);
             // after construction you get the money
-            document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney();
+
         }else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
           Swal.fire("Not enough Plastic", "Product can't be bought. You have not enough plastic", "error");
         }
