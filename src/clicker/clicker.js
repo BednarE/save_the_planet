@@ -12,6 +12,7 @@ class Clicker {
     }
 
     incrementClick() {
+        this._game.addClick();
         let animationDiv = document.createElement("div");
         animationDiv.classList.add("animationPerClick");
         this.randomPosition(animationDiv);
@@ -19,7 +20,7 @@ class Clicker {
         document.getElementById("imageCont").appendChild(animationDiv);
         this._game.setPlastic(this._game.getPlastic() + this._game.getPlasticPerClick());
         document.getElementById("plasticDisplay").innerHTML = this._game.getPlastic();
-        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject(1));
+        this._game.insertClickObjectToShortTermClickStorage(StatisticUtils.createClickObject(1));
         setTimeout(function () {
             animationDiv.remove();
         }, 2000);

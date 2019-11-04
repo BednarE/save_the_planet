@@ -65,3 +65,7 @@ webkit-scrollbar-button {
     float: left;
 }
 
+/* Class for the extra div generated for the section templates, this div must fill out the entire screen width!*/
+.templateDiv {
+    width: 100%;
+}
