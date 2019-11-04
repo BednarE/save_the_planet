@@ -1,0 +1,32 @@
+#story {
+    text-align: justify;
+    font-family: "Comic Sans MS";
+    font-color: #000002;
+    padding: 10px;
+    margin: 10px;
+}
+
+.h1 {
+    position: center;
+    font-color: red;
+}
+
+.center1 {
+    text-align: center;
+}
+
+#next {
+    width: 100px;
+    position: absolute;
+    top: 80px;
+    right: 30px;
+    height: 100px;
+}
+#carouselSection {
+    width: 800px;
+    position: center;
+}
+
+.h2 {
+    position: center;
+}
