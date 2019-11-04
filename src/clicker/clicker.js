@@ -16,9 +16,10 @@ class Clicker {
 
         this._game.setPlastic(this._game.getPlastic()+1);
         document.getElementById("clicks").innerHTML = this._game.getPlastic();
-        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject(1));
+        this._game.insertClickObjectToShortTermClickStorage(StatisticUtils.createClickObject(1));
         /*Für Testzwecke Erhöhung Money*/
         this._game.setMoney(this._game.getMoney()+1);
+        this._game.addClick();
         document.getElementById("money").innerHTML = this._game.getMoney();
     };
 
