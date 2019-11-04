@@ -28,18 +28,41 @@ aside {
     display: block;
     height: 400px;
     height: 400px;
-    width: 350px;
+    width: 400px;
     overflow-y: auto;
     margin-left: 15px;
 }
-#plasticBall{
+#plasticBall {
     display: block;
     width: 55%;
     height: 80%;
     float: right;
     margin-left: 10px;
-    /*animation-name: clicked;
-    animation-duration: 2s;*/
+}
+
+.animationPerClick{
+    position: absolute;
+    color: deeppink;
+    animation: textwelle 2s;
+}
+
+@keyframes textwelle {
+0 {
+    font-size: 0;
+    opacity: 0;
+    background-position: 91% center;
+}
+50% {
+    background-position: 93% center;
+}
+90% {
+    font-size: 220%;
+    opacity: 1;
+}
+100% {
+    font-size: 200%;
+    opacity: 1;
+}
 }
 
 .button:active {
