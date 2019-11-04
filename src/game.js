@@ -10,10 +10,11 @@ class Game {
         this._appStart = new Date().toISOString();
         this._appStartUTCFormat = new Date().toLocaleString();
         this._appStartMiliseconds = new Date().getTime();
-        this._statisticStorage = {clicks : []};
+        this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : []};
         this._plastic = 0;
         this._plasticPerClick=1;
         this._money=0;
+        this._clicked = 0;
         this._products = [
             new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 2, 10, null, 1000),
             new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, null, 5000),
@@ -41,6 +42,14 @@ class Game {
             new Collector("blackhole", require("./img/blackhole.jpg"), 1500, "bBlackhole")
         ];
 
+    }
+
+    addClick() {
+        this._clicked = this._clicked + 1;
+    }
+
+    getClicked() {
+        return this._clicked;
     }
 
     setPlastic(plasticAmount) {
@@ -82,10 +91,19 @@ class Game {
     setMoney(money) {
         this._money = money;
     }
-    insertClickObjectToClickStorage(click) {
-        this._statisticStorage.clicks.push(click)
+    insertClickObjectToShortTermClickStorage(click) {
+        this._statisticStorage.clicksShortTerm.push(click)
     }
 
+    /**
+     * adds a new data object. It has to be formatted to be usable by chart.js!
+     * -->  {t: unixTimeStamp, y: value}
+     *
+     * @param click -->  {t: unixTimeStamp, y: value}
+     */
+    insertDataObjectToLongTermClickStorage(click) {
+        this._statisticStorage.clicksLongTermData.push(click)
+    }
 }
 
 export default Game;
