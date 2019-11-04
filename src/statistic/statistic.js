@@ -1,7 +1,10 @@
 "use strict";
 import StatisticTemplate from "./statistic.html";
 import Chart from "chart.js";
-import StatisticUtils from "./statisticutils";
+
+const SHORTTERMCLICKGRAPHDURATION = 1000*60*5; // 5 Minuten in die Vergangenheit
+const SHORTTERMCLICKGRAPHSTEPSIZEINSECONDS = 30; //The step size of the shortterm graph
+const HOURINMILLIS = 3600000; //1 hour in millis
 
 class Statistic {
 
@@ -11,37 +14,48 @@ class Statistic {
         document.getElementById("title").innerText = "Statistics";
         let statisticDiv = document.createElement("div");
         statisticDiv.innerHTML = StatisticTemplate.trim();
+        //Add the template-Div class, so the div fills out the entire screen
+        statisticDiv.classList.add("templateDiv");
         document.getElementById("content").appendChild(statisticDiv);
         this.showClickerStatistics();
-        document.getElementById("timesClicked").innerHTML = "Times clicked: " + (this._game._statisticStorage.clicks.length - 1);
+        document.getElementById("timesClicked").innerHTML = "Times clicked: " + this._game.getClicked();
         document.getElementById("plasticsGathered").innerHTML = "Plastics gathered: " + this._game._plastic;
         document.getElementById("startDate").innerHTML = "Started to save the planet on: " + this._game._appStartUTCFormat;
     }
 
     showClickerStatistics(){
-        this._clickerData = this.preparePlotData(this.getClicksPerTenSeconds());
+        console.log("Short Term Clicks", this._game._statisticStorage.clicksShortTerm);
+        console.log("Short Term Clicks", this._game._statisticStorage.clicksLongTermData);
+        this.addShortTermDataToLongTerm();
+        //We want to remove all values older than 5 minutes from the shortTermGraph
+        this.removeOldShortTermData();
+        let clickerDataShortTerm = this.preparePlotData(this.getClicksPer_CLICKGRAPHSTEPSIZEINSECONDS());
 
-        let ctx = document.getElementById('clicksChart').getContext('2d');
+        //ShortTerm Clicks
+        let ctx = document.getElementById('clicksShortTermChart').getContext('2d');
         ctx.canvas.width = 600;
         ctx.canvas.height = 300;
-
         let color = Chart.helpers.color;
         let cfg = {
-            type: 'bar',
+            type: 'line',
             data: {
                 datasets: [{
                     label: 'Times Clicked',
                     backgroundColor: color("red").alpha(0.5).rgbString(),
                     borderColor: "red",
-                    data: this._clickerData,
+                    data: clickerDataShortTerm,
                     type: 'line',
                     pointRadius: 2,
                     fill: false,
                     lineTension: 0,
-                    borderWidth: 2
+                    borderWidth: 3
                 }]
             },
             options: {
+                title: {
+                    text: 'Klicks der letzten 5 Minuten, gruppiert alle 30 Sekunden',
+                    display: true
+                },
                 scales: {
                     xAxes: [{
                         type: 'time',
@@ -52,15 +66,19 @@ class Statistic {
                         },
                         time: {
                             displayFormats: {
-                                millisecond: 'hh:mm:ss'
+                                millisecond: 'HH:mm:ss'
                             },
-                            stepSize: 10,
+                            stepSize: SHORTTERMCLICKGRAPHSTEPSIZEINSECONDS,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Uhrzeit'
                         }
                     }],
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'clicks per one second'
+                            labelString: 'Klicks'
                         },
                         beginAtZero: true,
                         ticks: {
@@ -68,6 +86,9 @@ class Statistic {
                             suggestedMax: 100
                         }
                     }]
+                },
+                legend: {
+                    display: false,
                 },
                 tooltips: {
                     intersect: false,
@@ -86,8 +107,90 @@ class Statistic {
             }
         };
         this._clicksChart = new Chart(ctx, cfg);
+
+        //LongTerm Clicks
+        let ctx2 = document.getElementById('clicksLongTermChart').getContext('2d');
+        ctx2.canvas.width = 600;
+        ctx2.canvas.height = 300;
+        let cfg2 = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Times Clicked',
+                    backgroundColor: color("red").alpha(0.5).rgbString(),
+                    borderColor: "red",
+                    data: this._game._statisticStorage.clicksLongTermData,
+                    type: 'line',
+                    pointRadius: 2,
+                    fill: false,
+                    lineTension: 0,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                title: {
+                    text: 'Klicks summiert bis zur vollen Stunde',
+                    display: true
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'series',
+                        ticks: {
+                            source: 'auto',
+                            autoSkip: false
+                        },
+                        time: {
+                            displayFormats: {
+                                millisecond: 'DD. MMM: HH'
+                            },
+                            stepSize: HOURINMILLIS,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Tag. Monat: Stunde'
+                        },
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Klicks'
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            suggestedMin: 1,
+                            suggestedMax: 5000
+                        },
+                        stepSize: 50
+                    }]
+                },
+                legend: {
+                  display: false,
+                },
+                tooltips: {
+                    intersect: false,
+                    mode: 'index',
+                    callbacks: {
+                        label: function(tooltipItem, myData) {
+                            let label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += parseFloat(tooltipItem.value).toFixed(2);
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(ctx2, cfg2);
     }
 
+    /**
+     * Takes an array consisting of multiple clickObjects and parses it to a ploatable Array from chart.js
+     * @param clicksArray
+     * @returns {[]}
+     */
     preparePlotData(clicksArray){
         let plotableData = [];  // Die Daten die man darstellen möchte
 
@@ -102,41 +205,13 @@ class Statistic {
         return plotableData
     }
 
-    getClicksDuring(startDate, endDate) {
-        let allClicks = this._game._statisticStorage.clicks;
-        let filteredClicks = [];
-        let parsed = 0;
-        for (let i = 0; i < allClicks.length; i++) {
-            let unixTS = allClicks[i].dateUnix;
-            if (unixTS > startDate) {
-                if (unixTS < endDate) {
-                    filteredClicks.push(allClicks[i])
-                }
-            }
-        }
-        return filteredClicks
-    }
-
-    findEarliest(clicksArray){
-        let minimum = clicksArray[0].dateUnix;
-        for (let i = 0; i < clicksArray.length; i++) {
-            if (minimum > clicksArray[i].dateUnix) {
-                minimum = clicksArray[i].dateUnix;
-            }
-        }
-        return minimum;
-    }
-
-    findLatest(clicksArray){
-        let maximum = clicksArray[0].dateUnix;
-        for (let i = 0; i < clicksArray.length; i++) {
-            if (maximum < clicksArray[i].dateUnix) {
-                maximum = clicksArray[i].dateUnix
-            }
-        }
-        return maximum
-    }
-
+    /**
+     * Returns an interval Array, where each borderpoint is one stepsize after the other. Starts with startDate and ends with endDate
+     * @param startDate
+     * @param endDate
+     * @param stepsize
+     * @returns {[]}
+     */
     createIntervalBorders(startDate, endDate, stepsize){
         let intervals = [];
         let current = startDate;
@@ -148,71 +223,100 @@ class Statistic {
         return intervals
     }
 
-    getClicksPerInterval(stepsize) {
-        let allClicks = this._game._statisticStorage.clicks;
-        if (allClicks.length === 0) {
-            return [];
-        }
-
-        //Only show round 10 secs. earliest = earliest dateUnix value from array
-        let earliest = this.findEarliest(allClicks);
-        let rounded = (Math.round( earliest / 10000) * 10000);
-        earliest = rounded;
+    getClicksPerInterval(stepsize, clickList) {
+        let earliest = new Date().getTime() - SHORTTERMCLICKGRAPHDURATION; //Show the last 5 Minutes
+        earliest = (Math.round(earliest / stepsize) * stepsize); // Round it to the nearest stepsize duration value
+        //e.g. every 30 seconds one value containing all the clicks for the last 30 seconds
 
         let filteredClicks = [];
-        let clicksInInterval = 0;
-        //Alle Werte die vor dem ersten auf 10 Sekunden aufgerundeten Wert liegen diesem hinzufügen
-        for (let y = 0; y < allClicks.length; y++) {
-            if (allClicks[y].dateUnix < earliest) {
-                clicksInInterval = clicksInInterval + allClicks[y].value;
-            }
-        }
-        if (clicksInInterval !== 0) {
-            filteredClicks.push({dateUnix: earliest, value: clicksInInterval})
-        }
 
-        let latest = this.findLatest(allClicks);
+        let latest = new Date().getTime(); //We want to add zero-values too, so let the duration of the graph go until
+        //We are up to date with the current time
+        latest = (Math.round(latest / stepsize) * stepsize);
         let intervalsArray = this.createIntervalBorders(earliest, latest, stepsize);
 
         let lower = 0;
         let upper = 0;
-        let middle = 0;
-
         for (let i = 0; i < intervalsArray.length - 1; i++) {
             lower = intervalsArray[i];
             upper = intervalsArray[i + 1];
-            middle = (lower + upper) / 2;
             let clicksInInterval = 0;
-            for (let y = 0; y < allClicks.length; y++) {
-                if (lower < allClicks[y].dateUnix) {
-                    if (upper > allClicks[y].dateUnix) {
-                        clicksInInterval = clicksInInterval + allClicks[y].value;
+            for (let y = 0; y < clickList.length; y++) {
+                if (lower < clickList[y].dateUnix) {
+                    if (upper > clickList[y].dateUnix) {
+                        clicksInInterval = clicksInInterval + clickList[y].value;
                     }
                 }
             }
             filteredClicks.push({dateUnix: upper, value: clicksInInterval})
         }
-        return filteredClicks
+        return filteredClicks;
     }
 
-    getClicksPerOneSecond() {
-        return this.getClicksPerInterval(1000);
+    getClicksPer_CLICKGRAPHSTEPSIZEINSECONDS() {
+        return this.getClicksPerInterval(1000 * SHORTTERMCLICKGRAPHSTEPSIZEINSECONDS, this._game._statisticStorage.clicksShortTerm);
     }
 
-    getClicksPerTenSeconds() {
-        return this.getClicksPerInterval(10 * 1000);
+    /**
+     * Adds the clickObjects inside the shortTermList to the longTermStorage, as long as those have not been added before
+     */
+
+    addShortTermDataToLongTerm() {
+        //Get the newest entry of the longTermStorageList - We are in a simple chart.js data Array here!
+        let longTermData = JSON.parse(JSON.stringify(this._game._statisticStorage.clicksLongTermData));
+        //JSON parse & stringify to get a deep copy without references
+
+        for (let clickObject of this._game._statisticStorage.clicksShortTerm) {
+            if (!clickObject.alreadyAddedToLongTermStorage) {
+                this.addValueToLongTermStorage(clickObject);
+            }
+        }
+        return longTermData;
     }
 
-    getClicksPerThirtySeconds(){
-        return this.getClicksPerInterval(1000*30);
+    /**
+     * Removes all the Clickobjects from the shortTerm Storage which are older than the SHORTTERMCLICKGRAPHDURATION.
+     * Removes the values attached to a fixed time point (graph is rounded to 30 seconds) all at once.
+     */
+    removeOldShortTermData() {
+
+        let stepSizeInMillis = SHORTTERMCLICKGRAPHSTEPSIZEINSECONDS*1000;
+        let earliest = new Date().getTime() - SHORTTERMCLICKGRAPHDURATION; //The earliest is the oldest value in the graph
+        earliest = (Math.round(earliest / stepSizeInMillis) * stepSizeInMillis);
+        let latest = new Date().getTime();
+        let intervals = this.createIntervalBorders(earliest, latest, stepSizeInMillis);
+
+        //Remove values that would be going outside the graph (first entry in intervals)
+        for (let clickObject of this._game._statisticStorage.clicksShortTerm) {
+            if (clickObject.dateUnix < intervals[0]+1) {
+                //Remove all entries from the graph which are before the first interval's start +1 millisecond
+                //(+1 because we do not want to remove the very first entry, as this entry still is inside the graphs range)
+                this._game._statisticStorage.clicksShortTerm.shift(); //Remove first value from list
+            }
+        }
     }
 
-    getClicksPerTSixtySeconds() {
-        return this.getClicksPerInterval(60 * 1000);
-    }
-
-    getClicksPerOneHour(){
-        return this.getClicksPerInterval(1000*60*60);
+    /**
+     * Adds the clickObject given to the longTermStorage.
+     * Does not just append the clickObject to the array, but does add its value to the nearest hour-mark of the longtermStorage Graph
+     * @param clickObject
+     */
+    addValueToLongTermStorage(clickObject) {
+        //Round the timestamp of the clickObject to the next hour, so all values up until this hour-border are added to it
+        let timeRoundedToHours = Math.ceil(clickObject.dateUnix / HOURINMILLIS) * HOURINMILLIS;
+        let lastEntryInLongTermList = this._game._statisticStorage.clicksLongTermData[this._game._statisticStorage.clicksLongTermData.length-1];
+        if (lastEntryInLongTermList !== undefined && lastEntryInLongTermList !== null && lastEntryInLongTermList.t === timeRoundedToHours) {
+            //The data entry is there and it is the right hour to add the clicksum value to the entry
+            lastEntryInLongTermList.y = lastEntryInLongTermList.y + clickObject.value;
+        } else {
+            //New entry, we have played over an hour!
+            this._game.insertDataObjectToLongTermClickStorage({
+                t: timeRoundedToHours,
+                y: clickObject.value
+            });
+        }
+        //Mark it as added
+        clickObject.alreadyAddedToLongTermStorage = true;
     }
 }
 export default Statistic;
