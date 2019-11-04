@@ -9,7 +9,6 @@ class Workshop {
     constructor(game) {
         document.getElementById("title").innerText = "Workshop";
         this._game = game;
-
         this.showProducts();
     }
 
@@ -59,6 +58,7 @@ class Workshop {
      */
     constructProduct(product) {
         //Get the product html
+        let game=this._game;
         let productHtml = document.getElementById(product._name);
         let waitTime = product._productionTime;
         //Check if it is already unter construction
@@ -93,9 +93,9 @@ class Workshop {
                 //Construction has been finished
                 if (waitTime <= 0) {
                     clearInterval(window["constructionInterval_" + product._name]);
-                    this._game.setMoney(this._game.getMoney() + product._moneyValue);
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
+                    game.setMoney(game.getMoney() + product._moneyValue);
                     if (productHtml != null) {
                         document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].classList.remove("hidden");
                         document.getElementById(product._name).getElementsByClassName("productionTimeLeft")[0].innerHTML = "";
@@ -120,6 +120,7 @@ class Workshop {
             // now it can be constructed
             this.constructProduct(product);
             // after construction you get the money
+            document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney();
         }else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
           Swal.fire("Not enough Plastic", "Product can't be bought. You have not enough plastic", "error");
         }
