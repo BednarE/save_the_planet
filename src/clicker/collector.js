@@ -12,6 +12,10 @@ class Collector {
         this.plasticPerSecond = plasticPerSecond;
     }
 
+    getPlasticPerSecond() {
+        return this.plasticPerSecond;
+    }
+
 
 }
 export default Collector;

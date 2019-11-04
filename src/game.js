@@ -31,18 +31,19 @@ class Game {
             new Product("Plastik Flughafen","damit die Umweltaktivisten um die Welt reisen können", 1500, 6000,null, 30000000)
         ];
         this.collectors = [
-            new Collector("bucket", require("./img/bucket.png"), 10, "bBucket", "0.2"),
-            new Collector("vacuum cleaner", require("./img/vacuumCleaner.jpg"), 100, "bVacuumCleaner", "3"),
-            new Collector("ideonella sakariensis", require("./img/IdeonellaSakariensis.jpg"), 200, "bIdeonellaSakariensis", "7"),
-            new Collector("drone", require("./img/drone.jpg"), 250, "bDrone", "9"),
-            new Collector("dip net", require("./img/dipNet.jpg"), 350, "bDipNet", "13"),
-            new Collector("magnetic",require("./img/magnetic.png"), 450, "bMagnetic", "16"),
-            new Collector("cat", require("./img/cat.jpg"), 550, "bCat", "23"),
-            new Collector("net", require("./img/net2.jpg"), 700, "bNet2", "30"),
-            new Collector("time machine", require("./img/TimeMachine.jpg"), 900, "bTimeMachine", "40"),
-            new Collector("blackhole", require("./img/blackhole.jpg"), 1500, "bBlackhole", "55")
+            new Collector("bucket", require("./img/bucket.png"), 10, "bBucket", 0.2),
+            new Collector("vacuum cleaner", require("./img/vacuumCleaner.jpg"), 100, "bVacuumCleaner", 3),
+            new Collector("ideonella sakariensis", require("./img/IdeonellaSakariensis.jpg"), 200, "bIdeonellaSakariensis", 7),
+            new Collector("drone", require("./img/drone.jpg"), 250, "bDrone", 9),
+            new Collector("dip net", require("./img/dipNet.jpg"), 350, "bDipNet", 13),
+            new Collector("magnetic",require("./img/magnetic.png"), 450, "bMagnetic", 16),
+            new Collector("cat", require("./img/cat.jpg"), 550, "bCat", 23),
+            new Collector("net", require("./img/net2.jpg"), 700, "bNet2", 30),
+            new Collector("time machine", require("./img/TimeMachine.jpg"), 900, "bTimeMachine", 40),
+            new Collector("blackhole", require("./img/blackhole.jpg"), 1500, "bBlackhole", 55)
         ];
 
+        this.automaticPlasticCollection();
     }
 
     addClick() {
@@ -112,6 +113,17 @@ class Game {
 
     setPlasticPerSecond(value) {
         this._plasticPerSecond = value;
+    }
+
+    automaticPlasticCollection() {
+        setInterval(() => {
+
+            this.setPlastic(this.getPlastic() + (this.getPlasticPerSecond() / 100));
+            let plasticDisplay = document.getElementById("plasticDisplay");
+            if (plasticDisplay !== null) {
+                document.getElementById("plasticDisplay").innerHTML = ""+ Math.round(this.getPlastic());
+            }
+        }, 10);
     }
 }
 
