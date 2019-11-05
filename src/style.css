@@ -28,6 +28,7 @@ html, body { min-height: 100vh; }
 #statisticsList{
     list-style-type: none;
 }
+
 #plasticBall{
     height: 250px;
     width: 250px;

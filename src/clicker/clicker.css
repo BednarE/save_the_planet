@@ -68,6 +68,7 @@ aside {
 .button:active {
     transform: translateY(8px);
 }
+
 .qmLockedCollectorButton {
     background-color: #585858;
     font-color: blue;

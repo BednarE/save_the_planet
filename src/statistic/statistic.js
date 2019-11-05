@@ -21,6 +21,34 @@ class Statistic {
         document.getElementById("timesClicked").innerHTML = "Times clicked: " + this._game.getClicked();
         document.getElementById("plasticsGathered").innerHTML = "Plastics gathered: " + this._game._plastic;
         document.getElementById("startDate").innerHTML = "Started to save the planet on: " + this._game._appStartUTCFormat;
+        let t = setInterval(()=> this.showTimePlayed(), 1000);
+    }
+
+    showTimePlayed() {
+        let today = new Date();
+        let diffDate = (today.getTime() - this._game._appStartMiliseconds);
+
+        let seconds = Math.floor(diffDate / 1000);
+        let minutes = Math.floor(seconds / 60);
+        let hours = Math.floor(minutes / 60);
+        let days = Math.floor(hours / 24);
+
+        if (seconds <= 59) {
+            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+                + days + "d "+ hours + "h " + minutes + "m " + seconds + "s ";
+        }
+        else if (minutes <= 59) {
+            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+                + days + "d "+ hours + "h " + minutes + "m " + (seconds - (minutes * 60)) + "s ";
+        }
+        else if (hours <= 23){
+            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+                + days + "d "+ hours + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
+        }
+        else{
+            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+                + days + "d "+ hours + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
+        }
     }
 
     showClickerStatistics(){
@@ -318,5 +346,6 @@ class Statistic {
         //Mark it as added
         clickObject.alreadyAddedToLongTermStorage = true;
     }
+
 }
 export default Statistic;
