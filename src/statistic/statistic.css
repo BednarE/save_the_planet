@@ -7,15 +7,19 @@
     color: black;
 }
 
-.chartcanvasses {
-    width: 500px;
-    height: 200px;
+#statisticsSection {
+    width: 100%;
+    height: 100vh;
 }
 
 .chartdivs{
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.4);
+    margin-top: 10px;
 }
 
+#clicksChartRow {
+    margin: 0px;
+}
 
 
 
