@@ -38,13 +38,13 @@ aside {
     height: 80%;
     float: right;
     margin-left: 10px;
-    /*animation-name: clicked;
-    animation-duration: 2s;*/
+
 }
 
 .button:active {
     transform: translateY(8px);
 }
+
 .qmLockedCollectorButton {
     background-color: #585858;
     font-color: blue;
