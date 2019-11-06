@@ -1,10 +1,16 @@
 <section id="clickerTemplate">
-    <div id="imageCont">
-        <img class="button" id="plasticBall" src="./../img/plasticball.png" alt="Click me button">
+    <div class="container-fluid">
+        <div class="row">
+            <aside id="collectorList">
+            </aside>
+            <div id="imageCont">
+                <img class="button" id="plasticBall" src="./../img/plasticball.png" alt="Click me button">
+            </div>
+            <div id="displayGameData">
+                <h2 class="h2">Plastic: <a id="plasticDisplay">0</a></h2>
+                <h2 class="h2">Money: <a id="moneyDisplayed"></a></h2>
+                <h2 class="h2">Plastic per second: <a id="plasticPerSecondDisplayed">0</a></h2>
+            </div>
+        </div>
     </div>
-    <p>Plastic: <a id="plasticDisplay">0</a></p>
-    <p>Money: <a id="moneyDisplayed"></a></p>
-    <p>Plastic per second: <a id="plasticPerSecondDisplayed">0</a></p>
-    <aside id="collectorList">
-    </aside>
 </section>

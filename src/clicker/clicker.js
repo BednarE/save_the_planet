@@ -44,6 +44,10 @@ class Clicker {
         document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
         document.getElementById("plasticPerSecondDisplayed").innerHTML = this._game.getPlasticPerSecond();
 
+        document.getElementById("displayGameData").classList.add("col-md-5");
+        document.getElementById("imageCont").classList.add("col-md-5");
+        document.getElementById("collectorList").classList.add("col-md-6");
+
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
         });
