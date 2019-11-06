@@ -21,10 +21,6 @@ html, body { min-height: 100vh; }
     display: none !important;
 }
 
-#content {
-    display: flex;
-}
-
 #statisticsList{
     list-style-type: none;
 }

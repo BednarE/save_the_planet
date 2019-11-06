@@ -7,6 +7,9 @@
     color: black;
 }
 
+#statisticTemplate {
+    display: flex;
+}
 .chartcanvasses {
     width: 500px;
     height: 200px;

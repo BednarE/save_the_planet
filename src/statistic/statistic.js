@@ -10,6 +10,7 @@ class Statistic {
         this._rate = rate;
         document.getElementById("title").innerText = "Statistics";
         let statisticDiv = document.createElement("div");
+        statisticDiv.setAttribute("id","statisticTemplate");
         statisticDiv.innerHTML = StatisticTemplate.trim();
         document.getElementById("content").appendChild(statisticDiv);
         this.showClickerStatistics();
