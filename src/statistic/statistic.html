@@ -1,5 +1,4 @@
 <section id="statisticsSection">
-    <h1 id="statisticsHeadline"> Statistics &#128200;</h1>
     <ul id="statisticsList">
         <li id="startDate">
             Started to save the planet:
@@ -21,7 +20,7 @@
         </li>
         <li id="plasticPerClick">
             Plastic per click:
-        </li >
+        </li>
         <li id="timesClicked">
             Times clicked:
         </li>
@@ -41,8 +40,12 @@
             Plastics sold:
         </li>
     </ul>
-
-    <div class="chartdivs" id="clicksChartDiv">
-        <canvas class="charts" id="clicksChart"></canvas>
+    <div id="clicksChartRow" class="row">
+        <div class="chartdivs col-lg-6" id="clicksShortTermChartDiv">
+            <canvas class="charts" id="clicksShortTermChart"></canvas>
+        </div>
+        <div class="chartdivs col-lg-6" id="clicksLongTermChartDiv">
+            <canvas class="charts" id="clicksLongTermChart"></canvas>
+        </div>
     </div>
 </section>

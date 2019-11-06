@@ -8,10 +8,10 @@ class Clicker {
 
     constructor(game) {
         this._game = game;
-        this.automaticPlasticPicking();
     }
 
     incrementClick() {
+        this._game.addClick();
         let animationDiv = document.createElement("div");
         animationDiv.classList.add("animationPerClick");
         this.randomPosition(animationDiv);
@@ -19,7 +19,7 @@ class Clicker {
         document.getElementById("imageCont").appendChild(animationDiv);
         this._game.setPlastic(this._game.getPlastic() + this._game.getPlasticPerClick());
         document.getElementById("plasticDisplay").innerHTML = this._game.getPlastic();
-        this._game.insertClickObjectToClickStorage(StatisticUtils.createClickObject(1));
+        this._game.insertClickObjectToShortTermClickStorage(StatisticUtils.createClickObject(1));
         setTimeout(function () {
             animationDiv.remove();
         }, 2000);
@@ -124,7 +124,7 @@ class Clicker {
         if (collector.requiredMoney <= this._game.getMoney()) {
 
             this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
-            this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector._plasticPerSecond);
+            this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector.getPlasticPerSecond());
             document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
             collector.count = collector.count + 1;
             collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
@@ -141,15 +141,6 @@ class Clicker {
             "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
     }
 
-    automaticPlasticPicking() {
-        if (this._game.getPlasticPerSecond() > 0) {
-            setInterval(function () {
-
-                this._game.setPlastic(this._game.getPlastic() + (this._game.getPlasticPerSecond() / 100));
-
-            }, 10);
-        }
-    }
 
     randomPosition(animationDiv) {
         // animation für obendrüber
