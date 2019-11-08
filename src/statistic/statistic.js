@@ -47,7 +47,7 @@ class Statistic {
         }
         else{
             document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
-                + days + "d "+ hours + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
+                + days + "d "+ (hours - (days * 24)) + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
         }
     }
 
@@ -232,6 +232,21 @@ class Statistic {
         }
         return plotableData
     }
+
+    preparePlasticPlotData(plasticsArray){
+        let plotableData = [];
+
+        for (let i = 0; i < clicksArray.length; i++){
+            plotableData.push(
+                {
+                    t: plasticsArray._timeStamp,
+                    y: plasticsArray._plastic
+                }
+            );
+        }
+        return plotableData
+    }
+
 
     /**
      * Returns an interval Array, where each borderpoint is one stepsize after the other. Starts with startDate and ends with endDate
