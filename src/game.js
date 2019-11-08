@@ -97,6 +97,10 @@ class Game {
         this._statisticStorage.clicksShortTerm.push(click)
     }
 
+    insertPlasticToPlasticStorage(plastic){
+        this._statisticStorage.plasticAmount.push(plastic)
+    }
+
     /**
      * adds a new data object. It has to be formatted to be usable by chart.js!
      * -->  {t: unixTimeStamp, y: value}

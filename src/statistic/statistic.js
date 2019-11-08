@@ -18,9 +18,9 @@ class Statistic {
         statisticDiv.classList.add("templateDiv");
         document.getElementById("content").appendChild(statisticDiv);
         this.showClickerStatistics();
-        document.getElementById("timesClicked").innerHTML = "Times clicked: " + this._game.getClicked();
-        document.getElementById("plasticsGathered").innerHTML = "Plastics gathered: " + this._game._plastic;
-        document.getElementById("startDate").innerHTML = "Started to save the planet on: " + this._game._appStartUTCFormat;
+        document.getElementById("timesClicked").innerHTML = "<b>Times clicked:</b> " + this._game.getClicked();
+        document.getElementById("plasticsGathered").innerHTML = "<b>Plastics gathered:</b> " + this._game._plastic;
+        document.getElementById("startDate").innerHTML = "<b>Started to save the planet on:</b> " + this._game._appStartUTCFormat;
         let t = setInterval(()=> this.showTimePlayed(), 1000);
     }
 
@@ -34,19 +34,19 @@ class Statistic {
         let days = Math.floor(hours / 24);
 
         if (seconds <= 59) {
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
                 + days + "d "+ hours + "h " + minutes + "m " + seconds + "s ";
         }
         else if (minutes <= 59) {
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
                 + days + "d "+ hours + "h " + minutes + "m " + (seconds - (minutes * 60)) + "s ";
         }
         else if (hours <= 23){
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
                 + days + "d "+ hours + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
         }
         else{
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
                 + days + "d "+ (hours - (days * 24)) + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
         }
     }
@@ -54,6 +54,7 @@ class Statistic {
     showClickerStatistics(){
         console.log("Short Term Clicks", this._game._statisticStorage.clicksShortTerm);
         console.log("Short Term Clicks", this._game._statisticStorage.clicksLongTermData);
+        console.log("Short Term Clicks", this._game._statisticStorage.plasticAmount);
         this.addShortTermDataToLongTerm();
         //We want to remove all values older than 5 minutes from the shortTermGraph
         this.removeOldShortTermData();
@@ -212,6 +213,83 @@ class Statistic {
             }
         };
         new Chart(ctx2, cfg2);
+
+        //LongTerm Clicks
+        let ctx3 = document.getElementById('plasticChart').getContext('2d');
+        ctx3.canvas.width = 600;
+        ctx3.canvas.height = 300;
+        let cfg3 = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Plastics',
+                    backgroundColor: color("red").alpha(0.5).rgbString(),
+                    borderColor: "red",
+                    data: this._game._statisticStorage.plasticAmount,
+                    type: 'line',
+                    pointRadius: 2,
+                    fill: false,
+                    lineTension: 0,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                title: {
+                    text: 'Plastics gathered in an Hour',
+                    display: true
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'series',
+                        ticks: {
+                            source: 'auto',
+                            autoSkip: false
+                        },
+                        time: {
+                            displayFormats: {
+                                millisecond: 'DD. MMM: HH'
+                            },
+                            stepSize: HOURINMILLIS,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Hour'
+                        },
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Plastics'
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            suggestedMin: 1,
+                            suggestedMax: 5000
+                        },
+                        stepSize: 50
+                    }]
+                },
+                legend: {
+                    display: false,
+                },
+                tooltips: {
+                    intersect: false,
+                    mode: 'index',
+                    callbacks: {
+                        label: function(tooltipItem, myData) {
+                            let label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += parseFloat(tooltipItem.value).toFixed(2);
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(ctx3, cfg3);
     }
 
     /**
