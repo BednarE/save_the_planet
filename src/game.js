@@ -17,7 +17,7 @@ class Game {
         this._money=0;
         this._clicked = 0;
         this._products = [
-            new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 2, 10, null, 1000),
+            new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 8, 10, null, 1000),
             new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, null, 5000),
             new Product("Plastik Ohrringe","sehr leicht zerbrechlich, aber dennoch schmückend", 5, 25,null, 10000),
             new Product("Plastik Handtasche","umweltfreundliche Handtasche", 10, 45,null, 30000),
