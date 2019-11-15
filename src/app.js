@@ -10,7 +10,7 @@ import Game from "./game";
 class App {
 
     constructor() {
-        this._router = new Navigo(null, true);
+        this._router = new Navigo("http://localhost:1234/", false);
         this._currentUrl = "";
         this._router.on({
             "main": () => this.showClicker(),
@@ -33,28 +33,36 @@ class App {
     start() {
         console.log("Start wurde aufgerufen");
         this._router.resolve();
+        this._router.updatePageLinks();
     }
 
-    showWorkshop() {
+    async showWorkshop() {
+        this._router.updatePageLinks();
         document.getElementById("content").innerHTML = "";
-        new Workshop(this._game);
+        let workshop = new Workshop(this._game);
+        await workshop.showProducts();
     }
 
-    showTutorial() {
+    async showTutorial() {
+        this._router.updatePageLinks();
         document.getElementById("content").innerHTML = "";
-        new Tutorial();
+        let tutorial = new Tutorial();
+        await tutorial.showContent();
     }
 
-    showStatistic() {
+    async showStatistic() {
+        this._router.updatePageLinks();
         document.getElementById("content").innerHTML = "";
-        new Statistic(this._game);
+        let statistics = new Statistic(this._game);
+        await statistics.showContent();
     }
 
-    showClicker() {
+    async showClicker() {
+        this._router.updatePageLinks();
         document.getElementById("content").innerHTML = "";
 
         let clicker = new Clicker(this._game);
-        clicker.showMainpage();
+        await clicker.showMainpage();
     }
 
     showError() {

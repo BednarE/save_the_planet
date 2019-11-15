@@ -1,7 +1,5 @@
 "use strict";
 
-import ProductTemplate from "./productTemplate.html";
-import WorkshopTemplate from "./workshopTemplate.html";
 import Swal from 'sweetalert2';
 
 class Workshop {
@@ -9,10 +7,12 @@ class Workshop {
     constructor(game) {
         document.getElementById("title").innerText = "Workshop";
         this._game = game;
-        this.showProducts();
     }
 
-    showProducts() {
+    async showProducts() {
+
+        let ProductTemplate = await import("./productTemplate.html");
+        let WorkshopTemplate = await import("./workshopTemplate.html");
         //Create the main workshop div
         let workshopTemplate = document.createElement("div");
         workshopTemplate.innerHTML = WorkshopTemplate.trim();

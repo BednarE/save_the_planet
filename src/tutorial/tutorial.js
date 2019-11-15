@@ -1,35 +1,36 @@
 "use strict";
 
-import tutorial from "../tutorial/tutorialText.html";
-import carouselSection from "../tutorial/tutorialCarousel.html";
-
 class Tutorial {
 
     constructor() {
         document.getElementById("title").innerText = "Die Erde retten, jetzt aber wirklich!";
         //document.getElementById("content").innerText = document.getElementById("story").innerText;
-        let story = true;
+        this._story = true;
+    }
+
+    async showContent() {
+        let tutorial = await import("../tutorial/tutorialText.html");
         let standard = document.createElement("div");
         standard.innerHTML = tutorial.trim();
         document.getElementById("content").appendChild(standard);
 
         document.getElementById("next").addEventListener("click", (mouseEvent) => {
-            console.log("Test", story);
-            this.switchTutorialContent(story);
+            this.switchTutorialContent();
         });
     }
 
-    switchTutorialContent(story) {
-        story = !story;
+    async switchTutorialContent() {
+        let tutorial = await import("../tutorial/tutorialText.html");
+        let carouselSection = await import ("../tutorial/tutorialCarousel.html");
+        this._story = !this._story;
         let newTutorial = document.createElement("div");
-        if(story === true)
+        if(this._story === true)
         {
             newTutorial.innerHTML = tutorial.trim();
             document.getElementById("content").innerHTML = "";
             document.getElementById("content").appendChild(newTutorial);
             document.getElementById("next").addEventListener("click", (mouseEvent) => {
-                console.log("Test", story);
-                this.switchTutorialContent(story);
+                this.switchTutorialContent();
             });
         }
         else {
@@ -37,8 +38,7 @@ class Tutorial {
             document.getElementById("content").innerHTML = "";
             document.getElementById("content").appendChild(newTutorial);
             document.getElementById("next").addEventListener("click", (mouseEvent) => {
-                console.log("Test", story);
-                this.switchTutorialContent(story);
+                this.switchTutorialContent();
             });
         }
     }

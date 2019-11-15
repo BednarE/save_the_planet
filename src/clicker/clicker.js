@@ -1,7 +1,5 @@
 "use strict";
 
-import clickerTemplate from "./clicker.html";
-import collectorButtonTemplate from "./collectortemplate.html";
 import StatisticUtils from "../statistic/statisticutils";
 
 class Clicker {
@@ -27,7 +25,10 @@ class Clicker {
 
 
     /*Methodenname*/
-    showMainpage() {
+    async showMainpage() {
+        let clickerTemplate = await import('./clicker.html');
+        let collectorButtonTemplate = await import('./collectortemplate.html');
+
         /*zieht sich das Element mit der ID Titel und setzt den Text auf main page, Änderung des Titelbilds pro Seite*/
         document.getElementById("title").innerText = "Main Page";
         /*Dom div wird neu erstelllt */
