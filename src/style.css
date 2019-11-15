@@ -1,5 +1,8 @@
-a.nav-link {
-    color: red;
+
+navbar, h1, .nav-link, .nav-link {
+    font-color: blue;
+    font-family: "Comic Sans MS";
+    font-size: 20px;
 }
 
 a.nav-link:hover {
@@ -7,6 +10,8 @@ a.nav-link:hover {
 }
 body{
     background: radial-gradient(circle, lightblue, grey);
+    font-family: "Comic Sans MS";
+    font-size: 20px;
 }
 #imageCont{
     position:absolute;
@@ -75,19 +80,39 @@ webkit-scrollbar-button {
 
 @media (max-width: 40em) {
    #collectorList {
-       margin-top: 50px;
+       margin-top: 00px;
    }
 
     #clickerTemplate {
-        margin-top: 200px;
+        margin-top: 300px;
     }
 
-    #displayGameData {
-        margin-top: 200px;
+    #displayGameData{
+        margin-top: 00px;
 
     }
 
     h1 {
         display: none;
+    }
+}
+
+@media (max-height: 30em) {
+    #collectorList {
+        margin-top: 00px;
+    }
+
+    #clickerTemplate {
+        margin-top: 100px;
+    }
+
+    #displayGameData{
+        margin-top: 00px;
+
+    }
+
+    h1 {
+        display: none;
+        /*margin-top: 200px;*/
     }
 }
