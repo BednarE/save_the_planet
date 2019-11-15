@@ -10,7 +10,7 @@ class Game {
         this._appStart = new Date().toISOString();
         this._appStartUTCFormat = new Date().toLocaleString();
         this._appStartMiliseconds = new Date().getTime();
-        this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : []};
+        this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : [], plasticAmount:[]};
         this._plastic = 0;
         this._plasticPerClick=1;
         this._plasticPerSecond=0;
@@ -95,6 +95,10 @@ class Game {
     }
     insertClickObjectToShortTermClickStorage(click) {
         this._statisticStorage.clicksShortTerm.push(click)
+    }
+
+    insertPlasticToPlasticStorage(plastic){
+        this._statisticStorage.plasticAmount.push(plastic)
     }
 
     /**

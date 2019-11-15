@@ -24,6 +24,7 @@ class Clicker {
     };
 
 
+
     /*Methodenname*/
     async showMainpage() {
         let clickerTemplate = await import('./clicker.html');
