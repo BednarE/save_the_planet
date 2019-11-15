@@ -32,11 +32,11 @@ class Workshop {
             document.getElementById("workshopTemplate").appendChild(newProduct);
             //You can only add the Event Listeners after the element has been added to the DOM!
             document.getElementById("plasticWorkshop").innerHTML=Math.round(this._game.getPlastic());
-            document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney();
+            document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney()+" €";
             newProduct.getElementsByClassName("buyProductButton")[0].addEventListener("click", (mouseEvent) => {
                 this.buyingProduct(product); //needs to be buyingProduct() later with the checking if enough plastic is given
                 document.getElementById("plasticWorkshop").innerHTML=this._game.getPlastic();
-                document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney();
+                document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney()+" €";
             });
 
             //Check if the product is currently under construction
@@ -96,7 +96,7 @@ class Workshop {
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
                     game.setMoney(game.getMoney() + product._moneyValue);
-                    document.getElementById("moneyWorkshop").innerHTML=game.getMoney();
+                    document.getElementById("moneyWorkshop").innerHTML=game.getMoney()+" €";
                     if (productHtml != null) {
                         document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].classList.remove("hidden");
                         document.getElementById(product._name).getElementsByClassName("productionTimeLeft")[0].innerHTML = "";

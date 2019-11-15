@@ -41,12 +41,20 @@ class Clicker {
         html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
          */
         document.getElementById("plasticDisplay").innerHTML = this._game.getPlastic();
-        document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
+        document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney()+" €";
         document.getElementById("plasticPerSecondDisplayed").innerHTML = this._game.getPlasticPerSecond();
 
-        document.getElementById("displayGameData").classList.add("col-md-4");
+        document.getElementById("displayGameData").classList.add("col-sm-12");
+        document.getElementById("displayGameData").classList.add("col-md-3");
+        document.getElementById("displayGameData").classList.add("col-lg-5");
+
+        document.getElementById("imageCont").classList.add("col-sm-12");
         document.getElementById("imageCont").classList.add("col-md-4");
-        document.getElementById("collectorList").classList.add("col-md-4");
+        document.getElementById("imageCont").classList.add("col-lg-4");
+
+        document.getElementById("collectorList").classList.add("col-sm-12");
+        document.getElementById("collectorList").classList.add("col-md-5");
+        document.getElementById("collectorList").classList.add("col-lg-3");
 
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
@@ -125,7 +133,7 @@ class Clicker {
 
             this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
             this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector.getPlasticPerSecond());
-            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
+            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney()+" €";
             collector.count = collector.count + 1;
             collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
             document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
@@ -133,7 +141,6 @@ class Clicker {
             document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*100) /100);
             if(this._game.getPlasticPerSecond()>30)
             this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
-
         }
     }
 
@@ -146,8 +153,17 @@ class Clicker {
 
     randomPosition(animationDiv) {
         // animation für obendrüber
-        animationDiv.style.left = document.getElementById("plasticBall").style.left + (500 * Math.random()) + "px";
-        animationDiv.style.top = document.getElementById("plasticBall").style.top- (75 * Math.random()) + "px";
+        let randomX=(400 * Math.random());
+        let randomY=(80 * Math.random());
+        if(randomX>120) {
+            animationDiv.style.left = document.getElementById("plasticBall").style.left + randomX + "px";
+            animationDiv.style.top = document.getElementById("plasticBall").style.top - randomY + "px";
+        }
+        else{
+            animationDiv.style.left = document.getElementById("plasticBall").style.left+"px";
+            animationDiv.style.top = document.getElementById("plasticBall").style.top - randomY + "px";
+        }
+
         //animation für darunter
        // animationDiv.style.left = document.getElementById("plasticBall").style.left + (200 * Math.random()) + "px";
        // animationDiv.style.top = (document.getElementById("plasticBall").style.top+25)+(10 * Math.random()) + "px";
