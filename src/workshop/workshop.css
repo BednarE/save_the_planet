@@ -28,4 +28,6 @@ p{
     -ms-text-size-adjust: auto;
     -webkit-text-size-adjust: auto;
     -moz-text-size-adjust: auto;
+    font-family: "Comic Sans MS";
+    font-size: 20px;
 }
