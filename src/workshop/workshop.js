@@ -23,7 +23,7 @@ class Workshop {
             let newProduct = document.createElement("div");
             newProduct.innerHTML = ProductTemplate.trim();
             //Set the text inside the product card
-            newProduct.getElementsByClassName("productImage")[0].src=product._picture;
+            //newProduct.getElementsByClassName("productImage")[0].src=product._picture;
             newProduct.getElementsByClassName("productName")[0].innerText = product._name;
             newProduct.getElementsByClassName("description")[0].innerText = product._description;
             newProduct.getElementsByClassName("plasticcost")[0].innerText = "Kostet: " + product._plasticCost + " Plastik";
@@ -77,6 +77,7 @@ class Workshop {
             product.setCurrentlyUnderConstruction(true);
             //Add the interval to the window object, so it will continue to run even if the Workshop class has been unloaded.
             //We need to add it with a different name for each product, so different products wil not overwrite each other
+            var _this=this;
             window["constructionInterval_" + product._name] = setInterval(function () {
                 let seconds = Math.floor((waitTime / 1000));
                 let minutes = Math.floor((waitTime / (1000 * 60)));
@@ -114,7 +115,7 @@ class Workshop {
                     }
                     productAmount--;
                     if(productAmount>0){
-                    this.constructProduct(product, productAmount);
+                    _this.constructProduct(product, productAmount);
                     }
                 }
                 waitTime = waitTime - 100;

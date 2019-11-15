@@ -173,6 +173,11 @@ class Clicker {
 
 
     randomPosition(animationDiv) {
+
+        //animation für darunter
+        // animationDiv.style.left = document.getElementById("plasticBall").style.left + (200 * Math.random()) + "px";
+        // animationDiv.style.top = (document.getElementById("plasticBall").style.top+25)+(10 * Math.random()) + "px";
+
         // animation für obendrüber
         let randomX=(400 * Math.random());
         let randomY=(80 * Math.random());
@@ -185,9 +190,6 @@ class Clicker {
             animationDiv.style.top = document.getElementById("plasticBall").style.top - randomY + "px";
         }
 
-        //animation für darunter
-       // animationDiv.style.left = document.getElementById("plasticBall").style.left + (200 * Math.random()) + "px";
-       // animationDiv.style.top = (document.getElementById("plasticBall").style.top+25)+(10 * Math.random()) + "px";
     }
 }
 
