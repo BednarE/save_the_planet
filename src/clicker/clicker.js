@@ -1,7 +1,5 @@
 "use strict";
 
-import clickerTemplate from "./clicker.html";
-import collectorButtonTemplate from "./collectortemplate.html";
 import StatisticUtils from "../statistic/statisticutils";
 
 class Clicker {
@@ -18,7 +16,7 @@ class Clicker {
         animationDiv.innerHTML = "+" + this._game.getPlasticPerClick();
         document.getElementById("imageCont").appendChild(animationDiv);
         this._game.setPlastic(this._game.getPlastic() + this._game.getPlasticPerClick());
-        document.getElementById("plasticDisplay").innerHTML = this._game.getPlastic();
+        document.getElementById("plasticDisplay").innerHTML = Math.round(this._game.getPlastic());
         this._game.insertClickObjectToShortTermClickStorage(StatisticUtils.createClickObject(1));
         setTimeout(function () {
             animationDiv.remove();
@@ -28,7 +26,10 @@ class Clicker {
 
 
     /*Methodenname*/
-    showMainpage() {
+    async showMainpage() {
+        let clickerTemplate = await import('./clicker.html');
+        let collectorButtonTemplate = await import('./collectortemplate.html');
+
         /*zieht sich das Element mit der ID Titel und setzt den Text auf main page, Änderung des Titelbilds pro Seite*/
         document.getElementById("title").innerText = "Main Page";
         /*Dom div wird neu erstelllt */
@@ -42,8 +43,20 @@ class Clicker {
         html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
          */
         document.getElementById("plasticDisplay").innerHTML = this._game.getPlastic();
-        document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
+        document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney()+" €";
         document.getElementById("plasticPerSecondDisplayed").innerHTML = this._game.getPlasticPerSecond();
+
+        document.getElementById("displayGameData").classList.add("col-sm-12");
+        document.getElementById("displayGameData").classList.add("col-md-3");
+        document.getElementById("displayGameData").classList.add("col-lg-5");
+
+        document.getElementById("imageCont").classList.add("col-sm-12");
+        document.getElementById("imageCont").classList.add("col-md-4");
+        document.getElementById("imageCont").classList.add("col-lg-4");
+
+        document.getElementById("collectorList").classList.add("col-sm-12");
+        document.getElementById("collectorList").classList.add("col-md-5");
+        document.getElementById("collectorList").classList.add("col-lg-3");
 
         document.getElementById("plasticBall").addEventListener("click", (product) => {
             this.incrementClick();
@@ -95,15 +108,21 @@ class Clicker {
                 htmlCollector.disabled = false;
                 objCollectorButton.classList.add("unlockedCollectorButton");
                 htmlCollector.removeAttribute("disabled");
+                htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+                htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
 
             }
             //gray background and button disabled
             else if (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true) {
-
+                objCollectorButton.classList.remove("qmLockedCollectorButton");
+                objCollectorButton.classList.remove("unlockedCollectorButton");
                 //Collector noch nicht freigeschalten
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
+                htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+                htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
 
-            } else if ((collector.requiredMoney * 0.8) <= this._game.getMoney() && collector.unlocked === false) {
+            } else if ((collector.requiredMoney* 0.8) <= this._game.getMoney() && collector.unlocked === false) {
+                objCollectorButton.classList.remove("qmLockedCollectorButton");
                 //Collector aufdecken, wenn 80% vom benötigten Geld erreicht wurden
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
                 htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
@@ -122,30 +141,53 @@ class Clicker {
 
             this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
             this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector.getPlasticPerSecond());
-            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
+            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney()+" €";
             collector.count = collector.count + 1;
             collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
             document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
-            document.getElementById("plasticPerSecondDisplayed").innerHTML = this._game.getPlasticPerSecond();
-
+            document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*100) /100);
+            if(this._game.getPlasticPerSecond()>30)
+            this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
         }
     }
 
     showCollectorText(collector) {
-        document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
-            "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
-            "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
+        if(((collector.requiredMoney * 0.8) <= this._game.getMoney() && collector.unlocked === false)
+        || (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true)) {
+
+            document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
+                "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
+                "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
+        }
+        else
+        {
+            document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
+                "\n" + "Each ???  produces " + collector.plasticPerSecond + ". " +
+                "\n" + collector.count + " ??? producing " + (collector.plasticPerSecond * collector.count) + ". ";
+        }
+
+
     }
+
 
 
     randomPosition(animationDiv) {
         // animation für obendrüber
-        animationDiv.style.left = document.getElementById("imageCont").style.left + (250 * Math.random()) + "px";
-        animationDiv.style.top = document.getElementById("imageCont").style.top- (75 * Math.random()) + "px";
+        let randomX=(400 * Math.random());
+        let randomY=(80 * Math.random());
+        if(randomX>120) {
+            animationDiv.style.left = document.getElementById("plasticBall").style.left + randomX + "px";
+            animationDiv.style.top = document.getElementById("plasticBall").style.top - randomY + "px";
+        }
+        else{
+            animationDiv.style.left = document.getElementById("plasticBall").style.left+"px";
+            animationDiv.style.top = document.getElementById("plasticBall").style.top - randomY + "px";
+        }
+
         //animation für darunter
-       // animationDiv.style.left = document.getElementById("imageCont").style.left + (200 * Math.random()) + "px";
-       // animationDiv.style.top = (document.getElementById("imageCont").style.top+25)+(10 * Math.random()) + "px";
+       // animationDiv.style.left = document.getElementById("plasticBall").style.left + (200 * Math.random()) + "px";
+       // animationDiv.style.top = (document.getElementById("plasticBall").style.top+25)+(10 * Math.random()) + "px";
     }
 }
 

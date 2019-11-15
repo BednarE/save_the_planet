@@ -1,5 +1,8 @@
-a.nav-link {
-    color: red;
+
+navbar, h1, .nav-link, .nav-link {
+    font-color: blue;
+    font-family: "Comic Sans MS";
+    font-size: 20px;
 }
 
 a.nav-link:hover {
@@ -7,22 +10,14 @@ a.nav-link:hover {
 }
 body{
     background: radial-gradient(circle, lightblue, grey);
-}
-#imageCont{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
+    font-family: "Comic Sans MS";
+    font-size: 20px;
 }
 
 html, body { min-height: 100vh; }
 
 .hidden {
     display: none !important;
-}
-
-#content {
-    display: flex;
 }
 
 #statisticsList{
@@ -69,4 +64,45 @@ webkit-scrollbar-button {
 /* Class for the extra div generated for the section templates, this div must fill out the entire screen width!*/
 .templateDiv {
     width: 100%;
+}
+
+/** Allgemeines und Smartphone **/
+
+@media (max-width: 40em) {
+   #collectorList {
+       margin-top: 00px;
+   }
+
+    #clickerTemplate {
+        margin-top: 300px;
+    }
+
+    #displayGameData{
+        margin-top: 00px;
+
+    }
+
+    h1 {
+        display: none;
+    }
+}
+
+@media (max-height: 30em) {
+    #collectorList {
+        margin-top: 00px;
+    }
+
+    #clickerTemplate {
+        margin-top: 100px;
+    }
+
+    #displayGameData{
+        margin-top: 00px;
+
+    }
+
+    h1 {
+        display: none;
+        /*margin-top: 200px;*/
+    }
 }

@@ -1,6 +1,12 @@
-h1{
+h1 {
     color: red;
+    margin-bottom: 50px;
 }
+
+#clickerTemplate{
+    display: block;
+}
+
 .collectorbutton {
     border-radius: 200px;
     background-color: white;
@@ -25,41 +31,32 @@ h1{
 
 
 aside {
-    display: block;
     height: 400px;
-    height: 400px;
+    height: 600px;
     width: 400px;
     overflow-y: auto;
-    margin-left: 15px;
-}
-#plasticBall {
-    display: block;
-    width: 55%;
-    height: 80%;
-    float: right;
-    margin-left: 10px;
+
 }
 
-.animationPerClick{
+.animationPerClick {
     position: absolute;
     color: deeppink;
     animation: textwelle 2s;
 }
 
 @keyframes textwelle {
-0 {
+0{
     font-size: 0;
     opacity: 0;
     background-position: 91% center;
 }
-50% {
+50%{
     background-position: 93% center;
 }
-90% {
+90%{
     font-size: 220%;
     opacity: 1;
-}
-100% {
+}100%{
     font-size: 200%;
     opacity: 1;
 }
@@ -74,12 +71,14 @@ aside {
     font-color: blue;
 
 }
+
 /*initial questionmark */
 .collectorbutton {
     background-color: #585858;
     font-color: blue;
 
 }
+
 /*enabled*/
 .unlockedCollectorButton {
     background-color: white;
@@ -92,6 +91,7 @@ aside {
     background-color: #585858;
     font-color: blue;
 }
+
 .collectorName {
     font-color: blue;
     font-size: 15px;
@@ -104,5 +104,20 @@ aside {
 
 .collectorRequiredMoney {
     font-color: blue;
-    font-size: 8px;
+    font-size: 12px;
 }
+
+#imageCont {
+    margin-top: 15vh;
+    padding-left: 10vw;
+}
+
+#displayGameData{
+    margin-top:20vh;
+    padding-left: 5vw;
+}
+#h2{
+    margin-bottom: 5vh;
+}
+
+

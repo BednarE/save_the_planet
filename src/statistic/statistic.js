@@ -1,5 +1,4 @@
 "use strict";
-import StatisticTemplate from "./statistic.html";
 import Chart from "chart.js";
 
 const SHORTTERMCLICKGRAPHDURATION = 1000*60*5; // 5 Minuten in die Vergangenheit
@@ -12,7 +11,12 @@ class Statistic {
         this._game = game;
         this._rate = rate;
         document.getElementById("title").innerText = "Statistics";
+    }
+
+    async showContent() {
+        let StatisticTemplate = await import("./statistic.html");
         let statisticDiv = document.createElement("div");
+        statisticDiv.setAttribute("id","statisticTemplate");
         statisticDiv.innerHTML = StatisticTemplate.trim();
         //Add the template-Div class, so the div fills out the entire screen
         statisticDiv.classList.add("templateDiv");
