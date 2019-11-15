@@ -106,15 +106,21 @@ class Clicker {
                 htmlCollector.disabled = false;
                 objCollectorButton.classList.add("unlockedCollectorButton");
                 htmlCollector.removeAttribute("disabled");
+                htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+                htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
 
             }
             //gray background and button disabled
             else if (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true) {
-
+                objCollectorButton.classList.remove("qmLockedCollectorButton");
+                objCollectorButton.classList.remove("unlockedCollectorButton");
                 //Collector noch nicht freigeschalten
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
+                htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
+                htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
 
-            } else if ((collector.requiredMoney * 0.8) <= this._game.getMoney() && collector.unlocked === false) {
+            } else if ((collector.requiredMoney* 0.8) <= this._game.getMoney() && collector.unlocked === false) {
+                objCollectorButton.classList.remove("qmLockedCollectorButton");
                 //Collector aufdecken, wenn 80% vom benötigten Geld erreicht wurden
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
                 htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
@@ -145,10 +151,23 @@ class Clicker {
     }
 
     showCollectorText(collector) {
-        document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
-            "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
-            "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
+        if(((collector.requiredMoney * 0.8) <= this._game.getMoney() && collector.unlocked === false)
+        || (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true)) {
+
+            document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
+                "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
+                "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
+        }
+        else
+        {
+            document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
+                "\n" + "Each ???  produces " + collector.plasticPerSecond + ". " +
+                "\n" + collector.count + " ??? producing " + (collector.plasticPerSecond * collector.count) + ". ";
+        }
+
+
     }
+
 
 
     randomPosition(animationDiv) {
