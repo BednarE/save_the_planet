@@ -13,21 +13,11 @@ body{
     font-family: "Comic Sans MS";
     font-size: 20px;
 }
-#imageCont{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-}
 
 html, body { min-height: 100vh; }
 
 .hidden {
     display: none !important;
-}
-
-#content {
-    display: flex;
 }
 
 #statisticsList{
