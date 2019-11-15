@@ -5,6 +5,7 @@ h1 {
 
 #clickerTemplate{
     display: block;
+    font-family: "Comic Sans MS";
 }
 
 .collectorbutton {
@@ -117,7 +118,7 @@ aside {
     padding-left: 5vw;
 }
 #h2{
-    margin-bottom: 5vh;
+    padding-bottom: 5vh;
 }
 
 

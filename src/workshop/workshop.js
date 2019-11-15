@@ -23,20 +23,27 @@ class Workshop {
             let newProduct = document.createElement("div");
             newProduct.innerHTML = ProductTemplate.trim();
             //Set the text inside the product card
+            newProduct.getElementsByClassName("productImage")[0].src=product._picture;
             newProduct.getElementsByClassName("productName")[0].innerText = product._name;
             newProduct.getElementsByClassName("description")[0].innerText = product._description;
             newProduct.getElementsByClassName("plasticcost")[0].innerText = "Kostet: " + product._plasticCost + " Plastik";
             newProduct.getElementsByClassName("productMoneyValue")[0].innerText = "Wert: " + product._moneyValue + "€";
             newProduct.getElementsByClassName("productionTime")[0].innerText = "Produktionszeit: " + (product._productionTime / 1000) + "s";
             newProduct.id = product._name; //Set the id of the button
-            document.getElementById("workshopTemplate").appendChild(newProduct);
+            document.getElementById("productSection").appendChild(newProduct);
             //You can only add the Event Listeners after the element has been added to the DOM!
-            document.getElementById("plasticWorkshop").innerHTML=Math.round(this._game.getPlastic());
-            document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney()+" €";
+            document.getElementById("plasticDisplay").innerHTML=Math.round(this._game.getPlastic());
+            document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney()+" €";
             newProduct.getElementsByClassName("buyProductButton")[0].addEventListener("click", (mouseEvent) => {
-                this.buyingProduct(product); //needs to be buyingProduct() later with the checking if enough plastic is given
-                document.getElementById("plasticWorkshop").innerHTML=this._game.getPlastic();
-                document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney()+" €";
+                let productAmount;
+                if(newProduct.getElementsByClassName("amountProducts")[0].value!="") {
+                    productAmount = parseInt(newProduct.getElementsByClassName("amountProducts")[0].value);
+                }else{
+                    productAmount=1;
+                }
+                this.buyingProduct(product, productAmount); //needs to be buyingProduct() later with the checking if enough plastic is given
+                document.getElementById("plasticDisplay").innerHTML=this._game.getPlastic();
+                document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney()+" €";
             });
 
             //Check if the product is currently under construction
@@ -56,7 +63,7 @@ class Workshop {
      * Starts the construction of the given product if it is not yet under construction
      * @param product - the product to be constructed
      */
-    constructProduct(product) {
+    constructProduct(product, productAmount) {
         //Get the product html
         let game=this._game;
         let productHtml = document.getElementById(product._name);
@@ -96,7 +103,7 @@ class Workshop {
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
                     game.setMoney(game.getMoney() + product._moneyValue);
-                    document.getElementById("moneyWorkshop").innerHTML=game.getMoney()+" €";
+                    document.getElementById("moneyDisplayed").innerHTML=game.getMoney()+" €";
                     if (productHtml != null) {
                         document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].classList.remove("hidden");
                         document.getElementById(product._name).getElementsByClassName("productionTimeLeft")[0].innerHTML = "";
@@ -104,6 +111,10 @@ class Workshop {
                         productHtml.getElementsByClassName("progress-bar")[0].style = "width: 0%;";
                         productHtml.getElementsByClassName("progress-bar")[0].innerHTML = "0%";
                         productHtml.getElementsByClassName("productProgressBar")[0].classList.add("hidden");
+                    }
+                    productAmount--;
+                    if(productAmount>0){
+                    this.constructProduct(product, productAmount);
                     }
                 }
                 waitTime = waitTime - 100;
@@ -114,16 +125,18 @@ class Workshop {
         }
     }
 
-    buyingProduct(product) {
+    buyingProduct(product, productAmount) {
         //Check if enough plastic to buy a product then reduce the plastic
-        if (this._game.getPlastic() >= product._plasticCost) {
-            this._game.setPlastic(this._game.getPlastic() - product._plasticCost);
-            // now it can be constructed
-            this.constructProduct(product);
-            // after construction you get the money
+        if(productAmount>0) {
+            if (this._game.getPlastic() >= (product._plasticCost*productAmount)) {
+                this._game.setPlastic(this._game.getPlastic() - (product._plasticCost*productAmount));
+                // now it can be constructed
+                this.constructProduct(product, productAmount);
+                // after construction you get the money
 
-        }else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
-          Swal.fire("Not enough Plastic", "Product can't be bought. You have not enough plastic", "error");
+            } else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
+                Swal.fire("Not enough Plastic", "Product can't be bought. You have not enough plastic", "error");
+            }
         }
     }
 
