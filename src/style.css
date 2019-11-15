@@ -70,3 +70,24 @@ webkit-scrollbar-button {
 .templateDiv {
     width: 100%;
 }
+
+/** Allgemeines und Smartphone **/
+
+@media (max-width: 40em) {
+   #collectorList {
+       margin-top: 50px;
+   }
+
+    #clickerTemplate {
+        margin-top: 200px;
+    }
+
+    #displayGameData {
+        margin-top: 200px;
+
+    }
+
+    h1 {
+        display: none;
+    }
+}
