@@ -7,6 +7,13 @@
     color: black;
 }
 
+#statisticTemplate {
+    display: flex;
+}
+.chartcanvasses {
+    width: 500px;
+    height: 200px;
+}
 #statisticsSection {
     width: 100%;
     height: 100vh;

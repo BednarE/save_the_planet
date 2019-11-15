@@ -31,7 +31,7 @@ class Workshop {
             newProduct.id = product._name; //Set the id of the button
             document.getElementById("workshopTemplate").appendChild(newProduct);
             //You can only add the Event Listeners after the element has been added to the DOM!
-            document.getElementById("plasticWorkshop").innerHTML=this._game.getPlastic();
+            document.getElementById("plasticWorkshop").innerHTML=Math.round(this._game.getPlastic());
             document.getElementById("moneyWorkshop").innerHTML=this._game.getMoney();
             newProduct.getElementsByClassName("buyProductButton")[0].addEventListener("click", (mouseEvent) => {
                 this.buyingProduct(product); //needs to be buyingProduct() later with the checking if enough plastic is given
