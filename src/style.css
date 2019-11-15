@@ -8,12 +8,6 @@ a.nav-link:hover {
 body{
     background: radial-gradient(circle, lightblue, grey);
 }
-#imageCont{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-}
 
 html, body { min-height: 100vh; }
 

@@ -38,10 +38,6 @@ aside {
 
 }
 
-#plasticBall {
-
-}
-
 .animationPerClick {
     position: absolute;
     color: deeppink;
@@ -109,6 +105,20 @@ aside {
 .collectorRequiredMoney {
     font-color: blue;
     font-size: 12px;
+}
+
+#imageCont {
+    margin-top: 15vh;
+    padding-left: 10vw;
+}
+.animationPerClick{
+    margin-top: 15vh;
+    padding-left: 10vw;
+}
+
+#displayGameData{
+    margin-top:20vh;
+    padding-left: 5vw;
 }
 
 
