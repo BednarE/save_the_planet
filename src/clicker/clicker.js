@@ -26,6 +26,7 @@ class Clicker {
     };
 
 
+
     /*Methodenname*/
     showMainpage() {
         /*zieht sich das Element mit der ID Titel und setzt den Text auf main page, Änderung des Titelbilds pro Seite*/
