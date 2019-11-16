@@ -159,13 +159,13 @@ class Workshop {
         }
     }
 
-    buyingProduct(product, productAmount) {
+    buyingProduct(product) {
         //Check if enough plastic to buy a product then reduce the plastic
-        if(productAmount>0) {
-            if (this._game.getPlastic() >= (product._plasticCost*productAmount)) {
-                this._game.setPlastic(this._game.getPlastic() - (product._plasticCost*productAmount));
+        if(product._productAmount>0) {
+            if (this._game.getPlastic() >= (product._plasticCost*product._productAmount)) {
+                this._game.setPlastic(this._game.getPlastic() - (product._plasticCost*product._productAmount));
                 // now it can be constructed
-                this.constructProduct(product, productAmount);
+                this.constructProduct(product);
                 // after construction you get the money
 
             } else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
