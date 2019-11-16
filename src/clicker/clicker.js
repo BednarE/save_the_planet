@@ -136,6 +136,7 @@ class Clicker {
     }
 
 
+
     buyCollector(collector) {
         if (collector.requiredMoney <= this._game.getMoney()) {
 
@@ -149,6 +150,16 @@ class Clicker {
             document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*100) /100);
             if(this._game.getPlasticPerSecond()>30)
             this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
+            if(collector.count == 1) {
+                this._game._collectorStatisticX.push(collector.name);
+                console.log(collector.name);
+                this._game._collectorStatisticY.push(collector.count);
+                console.log(collector.count);
+            }
+            else{
+            this._game._collectorStatisticY [0] += 1;
+            }
+
         }
     }
 
@@ -169,6 +180,8 @@ class Clicker {
 
 
     }
+
+
 
 
 

@@ -16,6 +16,8 @@ class Game {
         this._plasticPerSecond=0;
         this._money=0;
         this._clicked = 0;
+        this._collectorStatisticX = [];
+        this._collectorStatisticY = [];
         this._products = [
             new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 8, 10, null, 1000),
             new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, null, 5000),
