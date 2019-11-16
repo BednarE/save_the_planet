@@ -9,5 +9,13 @@ class StatisticUtils {
         clickObject.value = value;
         return clickObject
     }
+
+    static createPlasticObject(value){
+        let plasticObject = {"date": new Date()};
+        plasticObject.dateString = plasticObject.date.toISOString();
+        plasticObject.dateUnix = plasticObject.date.getTime();
+        plasticObject.value = value;
+        return plasticObject
+    }
 }
 export default StatisticUtils;

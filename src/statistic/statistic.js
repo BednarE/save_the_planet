@@ -1,5 +1,4 @@
 "use strict";
-import StatisticTemplate from "./statistic.html";
 import Chart from "chart.js";
 
 const SHORTTERMCLICKGRAPHDURATION = 1000*60*5; // 5 Minuten in die Vergangenheit
@@ -12,6 +11,10 @@ class Statistic {
         this._game = game;
         this._rate = rate;
         document.getElementById("title").innerText = "Statistics";
+    }
+
+    async showContent() {
+        let StatisticTemplate = await import("./statistic.html");
         let statisticDiv = document.createElement("div");
         statisticDiv.setAttribute("id","statisticTemplate");
         statisticDiv.innerHTML = StatisticTemplate.trim();
@@ -19,9 +22,9 @@ class Statistic {
         statisticDiv.classList.add("templateDiv");
         document.getElementById("content").appendChild(statisticDiv);
         this.showClickerStatistics();
-        document.getElementById("timesClicked").innerHTML = "Times clicked: " + this._game.getClicked();
-        document.getElementById("plasticsGathered").innerHTML = "Plastics gathered: " + this._game._plastic;
-        document.getElementById("startDate").innerHTML = "Started to save the planet on: " + this._game._appStartUTCFormat;
+        document.getElementById("timesClicked").innerHTML = "<b>Times clicked:</b> " + this._game.getClicked();
+        document.getElementById("plasticsGathered").innerHTML = "<b>Plastics gathered:</b> " + this._game._plastic;
+        document.getElementById("startDate").innerHTML = "<b>Started to save the planet on:</b> " + this._game._appStartUTCFormat;
         let t = setInterval(()=> this.showTimePlayed(), 1000);
     }
 
@@ -35,30 +38,32 @@ class Statistic {
         let days = Math.floor(hours / 24);
 
         if (seconds <= 59) {
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
                 + days + "d "+ hours + "h " + minutes + "m " + seconds + "s ";
         }
         else if (minutes <= 59) {
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
                 + days + "d "+ hours + "h " + minutes + "m " + (seconds - (minutes * 60)) + "s ";
         }
         else if (hours <= 23){
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
                 + days + "d "+ hours + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
         }
         else{
-            document.getElementById('timePlayed').innerHTML = "Saving the planet since: "
-                + days + "d "+ hours + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
+            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
+                + days + "d "+ (hours - (days * 24)) + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
         }
     }
 
-    showClickerStatistics(){
+    showClickerStatistics() {
         console.log("Short Term Clicks", this._game._statisticStorage.clicksShortTerm);
         console.log("Short Term Clicks", this._game._statisticStorage.clicksLongTermData);
+        console.log("Short Term Clicks", this._game._statisticStorage.plasticAmount);
         this.addShortTermDataToLongTerm();
         //We want to remove all values older than 5 minutes from the shortTermGraph
         this.removeOldShortTermData();
         let clickerDataShortTerm = this.preparePlotData(this.getClicksPer_CLICKGRAPHSTEPSIZEINSECONDS());
+        let plasticData = this.preparePlasticPlotData(this.getPlasticsPerHour(this._game._statisticStorage.plasticAmount));
 
         //ShortTerm Clicks
         let ctx = document.getElementById('clicksShortTermChart').getContext('2d');
@@ -123,7 +128,7 @@ class Statistic {
                     intersect: false,
                     mode: 'index',
                     callbacks: {
-                        label: function(tooltipItem, myData) {
+                        label: function (tooltipItem, myData) {
                             let label = myData.datasets[tooltipItem.datasetIndex].label || '';
                             if (label) {
                                 label += ': ';
@@ -194,13 +199,13 @@ class Statistic {
                     }]
                 },
                 legend: {
-                  display: false,
+                    display: false,
                 },
                 tooltips: {
                     intersect: false,
                     mode: 'index',
                     callbacks: {
-                        label: function(tooltipItem, myData) {
+                        label: function (tooltipItem, myData) {
                             let label = myData.datasets[tooltipItem.datasetIndex].label || '';
                             if (label) {
                                 label += ': ';
@@ -213,7 +218,140 @@ class Statistic {
             }
         };
         new Chart(ctx2, cfg2);
+
+
+        //Plastics
+        let ctx3 = document.getElementById('plasticChart').getContext('2d');
+        ctx3.canvas.width = 600;
+        ctx3.canvas.height = 300;
+        let cfg3 = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Plastics',
+                    backgroundColor: color("red").alpha(0.5).rgbString(),
+                    borderColor: "red",
+                    data: plasticData,
+                    type: 'line',
+                    pointRadius: 2,
+                    fill: false,
+                    lineTension: 0,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                title: {
+                    text: 'Plastics gathered in an Hour',
+                    display: true
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        distribution: 'series',
+                        ticks: {
+                            source: 'auto',
+                            autoSkip: false
+                        },
+                        time: {
+                            displayFormats: {
+                                millisecond: 'DD. MMM: HH'
+                            },
+                            stepSize: HOURINMILLIS,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Hour'
+                        },
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Plastics'
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            suggestedMin: 1,
+                            suggestedMax: 5000
+                        },
+                        stepSize: 50
+                    }]
+                },
+                legend: {
+                    display: false,
+                },
+                tooltips: {
+                    intersect: false,
+                    mode: 'index',
+                    callbacks: {
+                        label: function (tooltipItem, myData) {
+                            let label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += parseFloat(tooltipItem.value).toFixed(2);
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(ctx3, cfg3);
+
+        //Collectors
+        let ctx4 = document.getElementById('collectorChart').getContext('2d');
+        ctx4.canvas.width = 600;
+        ctx4.canvas.height = 300;
+        let cfg4 = {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: 'clicks',
+                        backgroundColor: color("red").alpha(0.5).rgbString(),
+                        borderColor: "red",
+                        data: [2, 29, 5, 5, 2, 3, 10],
+                        type: 'line',
+                        pointRadius: 2,
+                        fill: false,
+                        lineTension: 0,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            distribution: 'series',
+                            ticks: {
+                                source: 'auto',
+                                autoSkip: false
+                            }
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'clicks per one second'
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        intersect: false,
+                        mode: 'index',
+                        callbacks: {
+                            label: function(tooltipItem, myData) {
+                                var label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += parseFloat(tooltipItem.value).toFixed(2);
+                                return label;
+                            }
+                        }
+                    }
+                }
+            };
+        new Chart(ctx4, cfg4);
     }
+
 
     /**
      * Takes an array consisting of multiple clickObjects and parses it to a ploatable Array from chart.js
@@ -233,6 +371,20 @@ class Statistic {
         }
         return plotableData
     }
+
+    preparePlasticPlotData(plasticAmount){
+        let plotableData = [];
+        for (let storedPlasticObject of this._game._statisticStorage.plasticAmount){
+            plotableData.push(
+                {
+                    t: plasticAmount.dateUnix,
+                    y: plasticAmount.value
+                }
+            );
+        }
+        return plotableData
+    }
+
 
     /**
      * Returns an interval Array, where each borderpoint is one stepsize after the other. Starts with startDate and ends with endDate
@@ -280,6 +432,33 @@ class Statistic {
             filteredClicks.push({dateUnix: upper, value: clicksInInterval})
         }
         return filteredClicks;
+    }
+    getPlasticsPerHour(plasticList) {
+        let earliest = this._game._appStartMiliseconds;
+
+        let filteredPlastics = [];
+
+        let latest = new Date().getTime(); //We want to add zero-values too, so let the duration of the graph go until
+        //We are up to date with the current time
+        latest = (Math.round(latest / 3600000) * 3600000);
+        let intervalsArray = this.createIntervalBorders(earliest, latest, 3600000);
+
+        let lowest = 0;
+        let uppest = 0;
+        for (let i = 0; i < intervalsArray.length - 1; i++) {
+            lowest = intervalsArray[i];
+            uppest = intervalsArray[i + 1];
+            let plasticInInterval = 0;
+            for (let y = 0; y < plasticList.length; y++) {
+                if (lowest < plasticList[y].dateUnix) {
+                    if (uppest > plasticList[y].dateUnix) {
+                        plasticInInterval = plasticInInterval + plasticList[y].value;
+                    }
+                }
+            }
+            filteredPlastics.push({dateUnix: uppest, value: plasticInInterval})
+        }
+        return filteredPlastics;
     }
 
     getClicksPer_CLICKGRAPHSTEPSIZEINSECONDS() {

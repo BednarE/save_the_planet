@@ -5,7 +5,9 @@
     padding: 10px;
     margin: 10px;
 }
-
+#tutorialTemplate{
+    font-family: "Comic Sans MS";
+}
 .h1 {
     position: center;
     font-color: blue;
