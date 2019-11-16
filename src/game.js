@@ -4,13 +4,15 @@ import Product from "./workshop/Product";
 import StatisticUtils from "./statistic/statisticutils";
 import Collector from "./clicker/collector";
 
+const HOURINMILLIS = 3600000; //1 hour in millis
+
 class Game {
 
     constructor() {
         this._appStart = new Date().toISOString();
         this._appStartUTCFormat = new Date().toLocaleString();
         this._appStartMiliseconds = new Date().getTime();
-        this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : [], plasticAmount:[]};
+        this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : [], plasticGathered:[], plasticSold: 0, moneyGenerated: 0, totalHandCollectedPlastic: 0};
         this._plastic = 100000;
         this._plasticPerClick=1;
         this._plasticPerSecond=0;
@@ -47,6 +49,7 @@ class Game {
         ];
 
         this.automaticPlasticCollection();
+        this.updatePlasticGathered();
     }
 
     addClick() {
@@ -119,7 +122,7 @@ class Game {
     }
 
     setPlasticPerSecond(value) {
-        this._plasticPerSecond = value;
+        this._plasticPerSecond = (Math.round(value*10) /10); //Smallest amount to add is 0.2
     }
 
     automaticPlasticCollection() {
@@ -131,6 +134,33 @@ class Game {
                 document.getElementById("plasticDisplay").innerHTML = ""+ Math.round(this.getPlastic());
             }
         }, 10);
+    }
+
+    updatePlasticGathered() {
+        //Jede sekunde das automatische Plastik aufaddieren
+        setInterval(() => {
+            let lastEntry = this._statisticStorage.plasticGathered[this._statisticStorage.plasticGathered.length-1];
+            let currentTime = new Date().getTime();
+            currentTime = (Math.round(currentTime / 3600000) * 3600000);
+            if (lastEntry === undefined) {
+                lastEntry = {
+                    value: 0,
+                    dateUnix: currentTime
+                };
+                this._statisticStorage.plasticGathered.push(lastEntry);
+            }
+            if (lastEntry.dateUnix + HOURINMILLIS < currentTime) {
+                //Neue Stunde erreicht -> Neues Objekt erzeugen
+                let dataObject = {
+                    value: this.getPlasticPerSecond(),
+                    dateUnix: currentTime
+                };
+                this._statisticStorage.plasticGathered.push(dataObject);
+            } else {
+                //Auf das bisherige Objekt addieren
+                lastEntry.value = (Math.round((lastEntry.value + this._plasticPerSecond)*10)/10);
+            }
+        }, 1000);
     }
 }
 

@@ -126,6 +126,7 @@ class Workshop {
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
                     game.setMoney(game.getMoney() + product._moneyValue);
+                    game._statisticStorage.moneyGenerated = game._statisticStorage.moneyGenerated + product._moneyValue;
                     if (document.getElementById("moneyDisplayed") !== null) {
                         document.getElementById("moneyDisplayed").innerHTML=game.getMoney()+" €";
                     }
@@ -165,13 +166,14 @@ class Workshop {
         //Check if enough plastic to buy a product then reduce the plastic
         if(product._productAmount>0) {
             if (this._game.getPlastic() >= (product._plasticCost*product._productAmount)) {
+                this._game._statisticStorage.plasticSold = this._game._statisticStorage.plasticSold + (product._plasticCost*product._productAmount);
                 this._game.setPlastic(this._game.getPlastic() - (product._plasticCost*product._productAmount));
                 // now it can be constructed
                 this.constructProduct(product);
                 // after construction you get the money
 
             } else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
-                Swal.fire("Not enough Plastic", "Product can't be bought. You need " + (product._plasticCost*product._productAmount - this._game.getPlastic()) + " more Plastic before you can construct this product", "error");
+                Swal.fire("Not enough Plastic", "Product can't be bought. You need " + Math.round(product._plasticCost*product._productAmount - this._game.getPlastic()) + " more Plastic before you can construct this product", "error");
             }
         }
     }

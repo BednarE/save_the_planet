@@ -18,6 +18,16 @@ class Clicker {
         this._game.setPlastic(this._game.getPlastic() + this._game.getPlasticPerClick());
         document.getElementById("plasticDisplay").innerHTML = Math.round(this._game.getPlastic());
         this._game.insertClickObjectToShortTermClickStorage(StatisticUtils.createClickObject(1));
+        this._game._statisticStorage.totalHandCollectedPlastic = (this._game._statisticStorage.totalHandCollectedPlastic + this._game.getPlasticPerClick());
+        let last = this._game._statisticStorage.plasticGathered[this._game._statisticStorage.plasticGathered.length-1];
+        if (last === undefined) {
+            let last = {
+                value: this._game.getPlasticPerClick(),
+                dateUnix: (Math.round(new Date().getTime() / 3600000) * 3600000)
+            };
+            this._game._statisticStorage.plasticGathered.push(last);
+        }
+        last.value = (last.value + this._game.getPlasticPerClick());
         setTimeout(function () {
             animationDiv.remove();
         }, 2000);
