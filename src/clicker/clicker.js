@@ -145,17 +145,17 @@ class Clicker {
 
             this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
             this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector.getPlasticPerSecond());
-            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney()+" €";
+            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney() + " €";
             collector.count = collector.count + 1;
             collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
             document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
-            document.getElementById("plasticPerSecondDisplayed").innerHTML = "" + (Math.round(this._game.getPlasticPerSecond()*100) /100);
-            if(this._game.getPlasticPerSecond()>30)
-                this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
-        }
-        else {
+            document.getElementById("plasticPerSecondDisplayed").innerHTML = "" + (Math.round(this._game.getPlasticPerSecond() * 100) / 100);
+            if (this._game.getPlasticPerSecond() > 30) {
 
+                this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond() / 10) + this._game.getPlasticPerClick() / 10));
+
+            }
         }
     }
 
