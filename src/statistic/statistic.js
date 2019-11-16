@@ -305,7 +305,7 @@ class Statistic {
         let cfg4 = {
             type: 'bar',
             data: {
-                labels: [this._game._collectorStatisticX],
+                labels: this._game._collectorStatisticX,
                 datasets: [{
                     label: 'Collectors',
                     data: this._game._collectorStatisticY,
