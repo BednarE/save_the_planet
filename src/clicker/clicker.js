@@ -82,7 +82,7 @@ class Clicker {
                 this.showCollectorText(collector);
             });
         }
-
+        this.checkCollectorUnlock(this._game.collectors); //Check once fast if side has loaded
         setInterval(() => {
             this.checkCollectorUnlock(this._game.collectors);
         }, 800);
@@ -121,8 +121,6 @@ class Clicker {
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
                 htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
-                collector.firstUnlocked = false;
-
 
             } else if ((collector.requiredMoney* 0.8) <= this._game.getMoney() && collector.firstUnlocked === false) {
                 objCollectorButton.classList.remove("qmLockedCollectorButton");
@@ -166,11 +164,11 @@ class Clicker {
 
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
                 "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
-                "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
+                "\n" + collector.count + " " + collector.name + " producing " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
         } else {
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
                 "\n" + "Each ???  produces " + collector.plasticPerSecond + ". " +
-                "\n" + collector.count + " ??? producing " + (collector.plasticPerSecond * collector.count) + ". ";
+                "\n" + collector.count + " ??? producing " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
         }
 
 
