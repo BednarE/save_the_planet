@@ -126,33 +126,40 @@ class Clicker {
     }
 
 
-    buyCollector(collector) {
-        if (collector.requiredMoney <= this._game.getMoney()) {
+    buyCollector(collector, collectorList) {
+        for (let collector of collectorList) {
+            //enable button
+            let htmlCollector = document.getElementById(collector.id);
 
-            this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
-            this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector.getPlasticPerSecond());
-            document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
-            collector.count = collector.count + 1;
-            collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
-            document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
-            document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
-            document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*100) /100);
-            if(this._game.getPlasticPerSecond()>30)
-            this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
+            if (htmlCollector == null) {
+                return;
+            }
+            if (collector.requiredMoney <= this._game.getMoney()) {
 
+                this._game.setMoney(this._game.getMoney() - collector.requiredMoney);
+                this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector.getPlasticPerSecond());
+                document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney();
+                collector.count = collector.count + 1;
+                collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
+                document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
+                document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
+                document.getElementById("plasticPerSecondDisplayed").innerHTML = "" + (Math.round(this._game.getPlasticPerSecond() * 100) / 100);
+                if (this._game.getPlasticPerSecond() > 30)
+                    this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond() / 10) + this._game.getPlasticPerClick() / 10));
+
+            }
         }
     }
 
-    showCollectorText(collector) {
-        if(((collector.requiredMoney * 0.8) <= this._game.getMoney() && collector.unlocked === false)
-        || (collector.requiredMoney > this._game.getMoney() && collector.unlocked === true)) {
+    showCollectorText(collector){
+
+        if (((collector.requiredMoney * 0.8) <= this._game.getMoney() && collector.unlocked === false)
+            ||  collector.unlocked === true) {
 
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
                 "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
                 "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
-        }
-        else
-        {
+        } else {
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
                 "\n" + "Each ???  produces " + collector.plasticPerSecond + ". " +
                 "\n" + collector.count + " ??? producing " + (collector.plasticPerSecond * collector.count) + ". ";
@@ -160,8 +167,6 @@ class Clicker {
 
 
     }
-
-
 
     randomPosition(animationDiv) {
         // animation für obendrüber
