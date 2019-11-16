@@ -23,15 +23,21 @@ class App {
                 after: (params) => {
                     // Navigation durchführen, daher die neue URL merken
                     this._currentUrl = this._router.lastRouteResolved().url;
-                    console.log(this._currentUrl);
                 }
             }
         );
-        this._game = new Game();
+        //Try to load any existing gamesave
+        let data = JSON.parse(localStorage.getItem("game"));
+        this._game = new Game(data);
+
+        //start the auto-save loop
+        setInterval(()=> {
+            localStorage.setItem("game", JSON.stringify(this._game));
+            console.log("Saved")
+        }, 10000); //Alle 10 Sekunden
     }
 
     start() {
-        console.log("Start wurde aufgerufen");
         this._router.resolve();
         this._router.updatePageLinks();
     }

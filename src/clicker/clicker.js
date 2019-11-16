@@ -180,7 +180,7 @@ class Clicker {
                 this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond() / 10) + this._game.getPlasticPerClick() / 10));
 
             }
-
+            this.checkCollectorUnlock(this._game.collectors); //For immediate resetting if necessary
         }
     }
 
