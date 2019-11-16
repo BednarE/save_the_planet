@@ -126,7 +126,9 @@ class Workshop {
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
                     game.setMoney(game.getMoney() + product._moneyValue);
-                    document.getElementById("moneyDisplayed").innerHTML=game.getMoney()+" €";
+                    if (document.getElementById("moneyDisplayed") !== null) {
+                        document.getElementById("moneyDisplayed").innerHTML=game.getMoney()+" €";
+                    }
                     product._productAmount--;
                     if (productHtml != null) {
                         document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].classList.remove("hidden");
@@ -169,7 +171,7 @@ class Workshop {
                 // after construction you get the money
 
             } else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
-                Swal.fire("Not enough Plastic", "Product can't be bought. You need " + (product._plasticCost*productAmount - this._game.getPlastic()) + " more Plastic before you can construct this product", "error");
+                Swal.fire("Not enough Plastic", "Product can't be bought. You need " + (product._plasticCost*product._productAmount - this._game.getPlastic()) + " more Plastic before you can construct this product", "error");
             }
         }
     }
