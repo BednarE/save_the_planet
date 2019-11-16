@@ -2,7 +2,7 @@
 
 class Collector {
 
-    constructor(name, picture, requiredMoney, id, plasticPerSecond) {
+    constructor(name, picture, requiredMoney, id, plasticPerSecond, index) {
         this.name = name;
         this.picture = picture;
         this.requiredMoney = requiredMoney;
@@ -10,7 +10,11 @@ class Collector {
         this.unlocked = false;
         this.count = 0;
         this.plasticPerSecond = plasticPerSecond;
+
+        this.index = index;
+
         this.firstUnlocked = false;
+
     }
 
     getPlasticPerSecond() {
