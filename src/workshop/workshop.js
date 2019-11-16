@@ -42,7 +42,7 @@ class Workshop {
                     productAmount=1;
                 }
                 this.buyingProduct(product, productAmount); //needs to be buyingProduct() later with the checking if enough plastic is given
-                document.getElementById("plasticDisplay").innerHTML=this._game.getPlastic();
+                document.getElementById("plasticDisplay").innerHTML=Math.round(this._game.getPlastic());
                 document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney()+" €";
             });
 
