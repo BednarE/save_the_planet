@@ -14,7 +14,7 @@ class Game {
         this._plastic = 0;
         this._plasticPerClick=1;
         this._plasticPerSecond=0;
-        this._money=10000000;
+        this._money=0;
         this._clicked = 0;
         this._collectorStatisticX = [];
         this._collectorStatisticY = [];

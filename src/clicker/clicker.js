@@ -150,6 +150,7 @@ class Clicker {
             document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*100) /100);
             if(this._game.getPlasticPerSecond()>30)
             this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
+
             if(collector.count == 1) {
                 this._game._collectorStatisticX.push(collector.name);
                 console.log(collector.name);
