@@ -183,7 +183,7 @@ class Clicker {
         // animationDiv.style.top = (document.getElementById("plasticBall").style.top+25)+(10 * Math.random()) + "px";
 
         // animation für obendrüber
-        let randomX=(400 * Math.random());
+        let randomX=(400 * Math.random())+100;
         let randomY=(80 * Math.random());
         if(randomX>120) {
             animationDiv.style.left = document.getElementById("plasticBall").style.left + randomX + "px";
