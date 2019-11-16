@@ -13,6 +13,7 @@ class Product {
         this._leftConstructionHours = 0;
         this._leftConstructionMinutes = 0;
         this._leftConstructionSeconds = 0;
+        this._productAmount = 1;
     }
 
     setCurrentlyUnderConstruction(underConstruction) {

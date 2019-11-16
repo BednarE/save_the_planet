@@ -8,11 +8,12 @@
     margin: 5px;
 }
 
-#workshopTemplate {
+#productSection {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
+    font-family: "Comic Sans MS";
 }
 
 #plasticWorkshop{
@@ -22,12 +23,12 @@
 #moneyWorkshop{
     line-break: auto;
 }
-p{
-    margin-left: auto;
-    margin-right: auto;
-    -ms-text-size-adjust: auto;
-    -webkit-text-size-adjust: auto;
-    -moz-text-size-adjust: auto;
-    font-family: "Comic Sans MS";
-    font-size: 20px;
+
+#GameData{
+    font-size: 30pt;
+    text-align: center;
+}
+.productImage{
+    height: 30%;
+    width: 75%;
 }

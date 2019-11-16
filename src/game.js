@@ -11,7 +11,7 @@ class Game {
         this._appStartUTCFormat = new Date().toLocaleString();
         this._appStartMiliseconds = new Date().getTime();
         this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : [], plasticAmount:[]};
-        this._plastic = 0;
+        this._plastic = 100000;
         this._plasticPerClick=1;
         this._plasticPerSecond=0;
         this._money=0;
@@ -19,18 +19,19 @@ class Game {
         this._collectorStatisticX = [];
         this._collectorStatisticY = [];
         this._products = [
-            new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 8, 10, null, 1000),
-            new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, null, 5000),
-            new Product("Plastik Ohrringe","sehr leicht zerbrechlich, aber dennoch schmückend", 5, 25,null, 10000),
-            new Product("Plastik Handtasche","umweltfreundliche Handtasche", 10, 45,null, 30000),
-            new Product("Plastik Jacke","sehr stylisch, sorgt für anziehende Blicke", 17, 65,null, 80000),
-            new Product("Plastik Schuhe","sehr komfortabel", 20, 70,null, 75000),
-            new Product("Plastik Raum","zum Versammeln mit Umweltaktivisten, so wie Greta Thunberg", 50, 180,null, 500000),
-            new Product("Plastik Auto","sehr schnell, dafür das es nur aus Plastik ist", 100, 300,null, 800000),
-            new Product("Plastik Flugzeug","sehr stabil für seine Verhältnisse", 150, 400,null, 1000000),
-            new Product("Plastik Supermarkt","ein neuer Supermarkt zum Einkaufen", 300, 750,null, 3000000),
-            new Product("Plastik Krankenhaus","zur Versorgung von kranken Umweltaktivisten", 1000, 4000,null, 10000000),
-            new Product("Plastik Flughafen","damit die Umweltaktivisten um die Welt reisen können", 1500, 6000,null, 30000000)
+
+            new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 1, 10, require("./img/plasticring.jpg"), 1000),
+            new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, require("./img/plastic_chain.jpg"), 5000),
+            new Product("Plastik Ohrringe","sehr leicht zerbrechlich, aber dennoch schmückend", 5, 25,require("./img/plastic_earrings.jpg"), 10000),
+            new Product("Plastik Handtasche","umweltfreundliche Handtasche", 10, 45,require("./img/plastic_handbag.jpg"), 30000),
+            new Product("Plastik Jacke","sehr stylisch, sorgt für anziehende Blicke", 17, 65,require("./img/plastic_jacket.jpg"), 80000),
+            new Product("Plastik Schuhe","sehr komfortabel", 20, 70,require("./img/plastic_shoes.jpg"), 75000),
+            new Product("Plastik Raum","zum Versammeln mit Umweltaktivisten, so wie Greta Thunberg", 50, 180,require("./img/plastic_room.jpg"), 500000),
+            new Product("Plastik Auto","sehr schnell, dafür das es nur aus Plastik ist", 100, 300,require("./img/plastic_car.jpg"), 800000),
+            new Product("Plastik Flugzeug","sehr stabil für seine Verhältnisse", 150, 400,require("./img/plastic_airplane.jpg"), 1000000),
+            new Product("Plastik Supermarkt","ein neuer Supermarkt zum Einkaufen", 300, 750,require("./img/plastic_supermarket.jpg"), 3000000),
+            new Product("Plastik Krankenhaus","zur Versorgung von kranken Umweltaktivisten", 1000, 4000,require("./img/plastic_hospital.jpg"), 10000000),
+            new Product("Plastik Flughafen","damit die Umweltaktivisten um die Welt reisen können", 1500, 6000,require("./img/plastic_airport.jpg"), 30000000)
         ];
         this.collectors = [
             new Collector("bucket", require("./img/bucket.png"), 10, "bBucket", 0.2,0),

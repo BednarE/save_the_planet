@@ -9,10 +9,9 @@ a.nav-link:hover {
     color: mediumvioletred;
 }
 body{
-    background: radial-gradient(circle, lightblue, grey);
-    font-family: "Comic Sans MS";
-    font-size: 20px;
-}
+     background: radial-gradient(circle, lightblue, grey);
+     font-size: 20px;
+ }
 
 html, body { min-height: 100vh; }
 
@@ -74,11 +73,11 @@ webkit-scrollbar-button {
    }
 
     #clickerTemplate {
-        margin-top: 300px;
+        margin-top: 00px;
     }
 
     #displayGameData{
-        margin-top: 00px;
+        margin-top: 50px;
 
     }
 
@@ -93,7 +92,7 @@ webkit-scrollbar-button {
     }
 
     #clickerTemplate {
-        margin-top: 100px;
+        margin-top: 00px;
     }
 
     #displayGameData{
