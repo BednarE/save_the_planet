@@ -23,7 +23,7 @@ class Workshop {
             let newProduct = document.createElement("div");
             newProduct.innerHTML = ProductTemplate.trim();
             //Set the text inside the product card
-            //newProduct.getElementsByClassName("productImage")[0].src=product._picture;
+            newProduct.getElementsByClassName("productImage")[0].src=product._picture;
             newProduct.getElementsByClassName("productName")[0].innerText = product._name;
             newProduct.getElementsByClassName("description")[0].innerText = product._description;
             newProduct.getElementsByClassName("plasticcost")[0].innerText = "Kostet: " + product._plasticCost + " Plastik";
