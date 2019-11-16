@@ -28,6 +28,7 @@ class Statistic {
         let t = setInterval(()=> this.showTimePlayed(), 1000);
     }
 
+
     showTimePlayed() {
         let today = new Date();
         let diffDate = (today.getTime() - this._game._appStartMiliseconds);
@@ -302,52 +303,59 @@ class Statistic {
         ctx4.canvas.width = 600;
         ctx4.canvas.height = 300;
         let cfg4 = {
-                type: 'bar',
-                data: {
-                    datasets: [{
-                        label: 'clicks',
-                        backgroundColor: color("red").alpha(0.5).rgbString(),
-                        borderColor: "red",
-                        data: [2, 29, 5, 5, 2, 3, 10],
-                        type: 'line',
-                        pointRadius: 2,
-                        fill: false,
-                        lineTension: 0,
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            distribution: 'series',
-                            ticks: {
-                                source: 'auto',
-                                autoSkip: false
-                            }
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'clicks per one second'
-                            }
-                        }]
-                    },
-                    tooltips: {
-                        intersect: false,
-                        mode: 'index',
-                        callbacks: {
-                            label: function(tooltipItem, myData) {
-                                var label = myData.datasets[tooltipItem.datasetIndex].label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                label += parseFloat(tooltipItem.value).toFixed(2);
-                                return label;
-                            }
+            type: 'bar',
+            data: {
+                labels: this._game._collectorStatisticX,
+                datasets: [{
+                    label: 'Collectors',
+                    data: this._game._collectorStatisticY,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            maxRotation: 90,
+                            minRotation: 80
                         }
-                    }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
+            }
             };
         new Chart(ctx4, cfg4);
     }
@@ -384,6 +392,7 @@ class Statistic {
         }
         return plotableData
     }
+
 
 
     /**

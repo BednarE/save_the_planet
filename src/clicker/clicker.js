@@ -150,12 +150,29 @@ class Clicker {
             collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
             document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
+
+            document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*100) /100);
+            if(this._game.getPlasticPerSecond()>30)
+            this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
+
+            if(collector.count == 1) {
+                this._game._collectorStatisticX.push(collector.name);
+                console.log(collector.name);
+                this._game._collectorStatisticY.push(collector.count);
+                console.log(collector.count);
+            }
+            else{
+            this._game._collectorStatisticY [collector.index] += 1;
+            }
+
+
             document.getElementById("plasticPerSecondDisplayed").innerHTML = "" + (Math.round(this._game.getPlasticPerSecond() * 10) / 10);
             if (this._game.getPlasticPerSecond() > 30) {
 
                 this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond() / 10) + this._game.getPlasticPerClick() / 10));
 
             }
+
         }
     }
 
@@ -181,6 +198,12 @@ class Clicker {
         //animation für darunter
         // animationDiv.style.left = document.getElementById("plasticBall").style.left + (200 * Math.random()) + "px";
         // animationDiv.style.top = (document.getElementById("plasticBall").style.top+25)+(10 * Math.random()) + "px";
+
+
+
+
+    randomPosition(animationDiv) {
+
 
         // animation für obendrüber
         let randomX=(400 * Math.random());
