@@ -11,7 +11,7 @@ class Game {
         this._appStartUTCFormat = new Date().toLocaleString();
         this._appStartMiliseconds = new Date().getTime();
         this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : [], plasticAmount:[]};
-        this._plastic = 0;
+        this._plastic = 100000;
         this._plasticPerClick=1;
         this._plasticPerSecond=0;
         this._money=0;
