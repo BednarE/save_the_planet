@@ -347,18 +347,19 @@ class Statistic {
                 }]
             },
             options: {
-                responsive: false,
+                title: {
+                    text: 'Gekaufte Kollektoren',
+                    display: true
+                },
+                responsive: true,
                 scales: {
-                    xAxes: [{
-                        ticks: {
-                            maxRotation: 90,
-                            minRotation: 80
-                        }
-                    }],
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
-                        }
+                            beginAtZero: true,
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        },
+                        stepSize: 1
                     }]
                 }
             }
