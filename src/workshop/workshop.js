@@ -57,8 +57,8 @@ class Workshop {
                     productAmount=1;
                     product._productAmount = 1;
                 }
-                this.buyingProduct(product, productAmount);
-                document.getElementById("plasticDisplay").innerHTML=this._game.getPlastic();
+                this.buyingProduct(product);
+                document.getElementById("plasticDisplay").innerHTML=Math.round(this._game.getPlastic());
                 document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney()+" €";
             });
 
