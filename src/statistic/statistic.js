@@ -25,7 +25,7 @@ class Statistic {
         document.getElementById("timesClicked").innerHTML = "<b>Times clicked:</b> " + this._game.getClicked();
         document.getElementById("plasticsGathered").innerHTML = "<b>Plastics gathered:</b> " + this._game._plastic;
         document.getElementById("startDate").innerHTML = "<b>Started to save the planet on:</b> " + this._game._appStartUTCFormat;
-        let t = setInterval(()=> this.showTimePlayed(), 1000);
+        window.statisticUpdateInterval = setInterval(()=> this.showTimePlayed(), 1000);
     }
 
     showTimePlayed() {
@@ -36,6 +36,12 @@ class Statistic {
         let minutes = Math.floor(seconds / 60);
         let hours = Math.floor(minutes / 60);
         let days = Math.floor(hours / 24);
+
+        if (document.getElementById('timePlayed') === null) {
+            //We have changed the subpage!
+            clearInterval(window.statisticUpdateInterval);
+            return;
+        }
 
         if (seconds <= 59) {
             document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
