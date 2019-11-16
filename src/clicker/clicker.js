@@ -157,7 +157,7 @@ class Clicker {
                 console.log(collector.count);
             }
             else{
-            this._game._collectorStatisticY [0] += 1;
+            this._game._collectorStatisticY [collector.index] += 1;
             }
 
         }
