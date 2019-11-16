@@ -10,14 +10,14 @@ class Game {
         this._appStart = new Date().toISOString();
         this._appStartUTCFormat = new Date().toLocaleString();
         this._appStartMiliseconds = new Date().getTime();
-        this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : []};
+        this._statisticStorage = {clicksShortTerm : [], clicksLongTermData : [], plasticAmount:[]};
         this._plastic = 0;
         this._plasticPerClick=1;
         this._plasticPerSecond=0;
         this._money=0;
         this._clicked = 0;
         this._products = [
-            new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 8, 10, null, 1000),
+            new Product("Plastikring", "Ein nicht-so glänzender Plastikring", 100, 10, null, 1000),
             new Product("Plastik Kette", "sehr leicht und bröselig", 3, 15, null, 5000),
             new Product("Plastik Ohrringe","sehr leicht zerbrechlich, aber dennoch schmückend", 5, 25,null, 10000),
             new Product("Plastik Handtasche","umweltfreundliche Handtasche", 10, 45,null, 30000),
@@ -95,6 +95,10 @@ class Game {
     }
     insertClickObjectToShortTermClickStorage(click) {
         this._statisticStorage.clicksShortTerm.push(click)
+    }
+
+    insertPlasticToPlasticStorage(plastic){
+        this._statisticStorage.plasticAmount.push(plastic)
     }
 
     /**
