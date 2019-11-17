@@ -12,6 +12,7 @@ class Game {
     constructor(data) {
         if (data !== undefined && data !== null) {
 
+            this._autoSaveInterval = data._autoSaveInterval;
             this._lastSaved = data._lastSaved;
             this._appStart = data._appStart;
             this._appStartUTCFormat = data._appStartUTCFormat;
@@ -45,6 +46,7 @@ class Game {
             }
 
         } else {
+            this._autoSaveInterval = 60000;
             this._lastSaved = null;
             this._appStart = new Date().toISOString();
             this._appStartUTCFormat = new Date().toLocaleString();
@@ -73,18 +75,16 @@ class Game {
                 new Product("Plastik Flughafen","... weil warum nicht?", 1500, 6000,require("./img/plastic_airport.jpg"), 30000000,false,0,0,0,1)
             ];
             this.collectors = [
-                this.collectors = [
-                new Collector("Eimer", require("./img/bucket.png"), 10, "bBucket", 0.2,0),
-                new Collector("Staubsauger", require("./img/vacuumCleaner.jpg"), 100, "bVacuumCleaner", 3,1),
-                new Collector("Ideonella Sakariensis", require("./img/IdeonellaSakariensis.jpg"), 200, "bIdeonellaSakariensis", 7,2),
-                new Collector("Drone", require("./img/drone.jpg"), 250, "bDrone", 9,3),
-                new Collector("Kescher", require("./img/dipNet.jpg"), 350, "bDipNet", 13,4),
-                new Collector("Magnet",require("./img/magnetic.png"), 450, "bMagnetic", 16,5),
-                new Collector("Katze", require("./img/cat.jpg"), 550, "bCat", 23,6),
-                new Collector("Netz", require("./img/net2.jpg"), 700, "bNet2", 30,7),
-                new Collector("Zeitmaschine", require("./img/TimeMachine.jpg"), 900, "bTimeMachine", 40,8),
-                new Collector("Schwarzes Loch", require("./img/blackhole.jpg"), 1500, "bBlackhole", 55,9)
-                ]
+                new Collector("bucket", require("./img/bucket.png"), 10, "bBucket", 0.2,0,0,false,false),
+                new Collector("vacuum cleaner", require("./img/vacuumCleaner.jpg"), 100, "bVacuumCleaner", 3,1,0,false,false),
+                new Collector("ideonella sakariensis", require("./img/IdeonellaSakariensis.jpg"), 200, "bIdeonellaSakariensis", 7,2,0,false,false),
+                new Collector("drone", require("./img/drone.jpg"), 250, "bDrone", 9,3,0,false,false),
+                new Collector("dip net", require("./img/dipNet.jpg"), 350, "bDipNet", 13,4,0,false,false),
+                new Collector("magnetic",require("./img/magnetic.png"), 450, "bMagnetic", 16,5,0,false,false),
+                new Collector("cat", require("./img/cat.jpg"), 550, "bCat", 23,6,0,false,false),
+                new Collector("net", require("./img/net2.jpg"), 700, "bNet2", 30,7,0,false,false),
+                new Collector("time machine", require("./img/TimeMachine.jpg"), 900, "bTimeMachine", 40,8,0,false,false),
+                new Collector("blackhole", require("./img/blackhole.jpg"), 1500, "bBlackhole", 55,9,0,false,false)
             ];
         }
 

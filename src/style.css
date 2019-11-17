@@ -124,11 +124,16 @@ webkit-scrollbar-button {
     vertical-align: middle;
     color: orange;
     margin-right: 2vw;
-    animation: fadeInOutAnimation 2s;
+    animation: fadeInOutAnimation 3s;
 }
 
 @keyframes fadeInOutAnimation {
     0%   { opacity:0; }
     50%  { opacity:1; }
     100% { opacity:0; }
+}
+
+.optionButtons {
+    display: flex;
+    justify-content: space-evenly;
 }
