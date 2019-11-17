@@ -1,39 +1,21 @@
 <section id="statisticsSection">
-    <ul id="statisticsList">
-        <li id="startDate">
-            <b>Started to save the planet:</b>
-        </li>
-        <li id="timePlayed">
-            <b>Saving the planet since:</b>
-        </li>
-        <li id="thePlanetSaved">
-            <b>The planet saved %:</b>
-        </li>
-        <li>
-            <b>Kollektoren: </b><span id="collectorsOwned"></span>
-        </li>
-        <li id="plasticsGathered">
-            <b>Plastics gathered:</b>
-        </li>
-        <li>
-            <b>Plastik pro Sekunde: </b><span id="plasticPerSecond"></span>
-        </li>
-        <li>
-            <b>Gesammeltes Plastik pro Klick: </b><span id="plasticPerClick"></span>
-        </li>
-        <li id="timesClicked">
-            <b>Times clicked:</b>
-        </li>
-        <li>
-            <b>Von Hand gesammeltes Plastik: </b><span id="totalHandCollectedPlastic"></span>
-        </li>
-        <li>
-            <b>Erzeugtes Geld: </b><span id="totalMoneyGenerated"></span>
-        </li>
-        <li>
-            <b>Wiederverwendetes Plastik: </b><span id="plasticsSold"></span>
-        </li>
-    </ul>
+    <div id="displayStatData">
+    <div>
+        <h5 class="statisticList">Angefangen den Planetten zu retten am:  <a id="startDate">0</a></h5>
+        <h5 class="statisticList">Der Planet wird gerettet seit:  <a id="timePlayed">0</a></h5>
+        <h5 class="statisticList">Der Planet gerettet %: <a id="thePlanetSaved">0</a></h5>
+        <h5 class="statisticList">Gekaufte Kollektoren: <a id="collectorsOwned">0</a></h5>
+        <h5 class="statisticList">Gesammeltes Plastik <a id="plasticsGathered">0</a></h5>
+        <h5 class="statisticList">Plastik pro Sekunde: <span id="plasticPerSecond"></span></h5>
+    </div>
+    <div>
+        <h5 class="statisticList">Gesammeltes Plastik pro Klick: <span id="plasticPerClick"></span></h5>
+        <h5 class="statisticList">Geklickt insgesamt: <a id="timesClicked">0</a></h5>
+        <h5 class="statisticList">Von Hand gesammeltes Plastik: <span id="totalHandCollectedPlastic"></span></h5>
+        <h5 class="statisticList">Erzeugtes Geld: <span id="totalMoneyGenerated"></span></h5>
+        <h5 class="statisticList">Wiederverwendetes Plastik: <span id="plasticsSold"></span></h5>
+    </div>
+    </div>
     <div id="clicksChartRow" class="row">
         <div class="chartdivs col-lg-6" id="clicksShortTermChartDiv">
             <canvas class="charts" id="clicksShortTermChart"></canvas>

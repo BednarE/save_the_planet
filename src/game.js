@@ -21,10 +21,8 @@ class Game {
             this._plastic = data._plastic;
             this._plasticPerClick=data._plasticPerClick;
             this._plasticPerSecond=data._plasticPerSecond;
-            this._money=data._money;
+            this._money=1;
             this._clicked = data._clicked;
-            this._collectorStatisticX = data._collectorStatisticX;
-            this._collectorStatisticY = data._collectorStatisticY;
             //Products
             this._products = [];
             for (let productData of data._products) {
