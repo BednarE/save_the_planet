@@ -102,29 +102,29 @@ class Game {
             this._products = [
 
                 new Product("Plastikring", "Kann leben retten oder als Schmuck dienen", 1, 10, require("./img/plasticring.jpg"), 1000, false, 0, 0, 0, 1),
-                new Product("Plastik Kette", "Sehr leicht: Schwimmt auf dem Wasser", 3, 15, require("./img/plastic_chain.jpg"), 3000, false, 0, 0, 0, 1),
-                new Product("Plastik Ohrringe", "Sehr zerbrechlich, aber dennoch schmückend", 9, 25, require("./img/plastic_earrings.jpg"), 8000, false, 0, 0, 0, 1),
-                new Product("Plastik Handtasche", "Umweltfreundliche Handtasche", 18, 45, require("./img/plastic_handbag.jpg"), 15000, false, 0, 0, 0, 1),
-                new Product("Plastik Jacke", "Mit dieser Jacke bist du DER Babo", 45, 65, require("./img/plastic_jacket.jpg"), 40000, false, 0, 0, 0, 1),
-                new Product("Plastik Schuhe", "Sehr komfortabel", 90, 70, require("./img/plastic_shoes.jpg"), 75000, false, 0, 0, 0, 1),
-                new Product("Plastik Raum", "Ab ins Home Business!", 190, 180, require("./img/plastic_room.jpg"), 160000, false, 0, 0, 0, 1),
-                new Product("Plastik Auto", "Sehr schnell, leider nicht sehr stabil", 700, 300, require("./img/plastic_car.jpg"), 600000, false, 0, 0, 0, 1),
-                new Product("Plastik Flugzeug", "Fliegt wunderbar, weil sehr leicht", 1100, 400, require("./img/plastic_airplane.jpg"), 1000000, false, 0, 0, 0, 1),
-                new Product("Plastik Supermarkt", "Ein neuer Supermarkt zum Einkaufen", 3400, 750, require("./img/plastic_supermarket.jpg"), 3000000, false, 0, 0, 0, 1),
-                new Product("Plastik Krankenhaus", "Zur Versorgung aller Kranken", 10500, 4000, require("./img/plastic_hospital.jpg"), 10000000, false, 0, 0, 0, 1),
-                new Product("Plastik Flughafen", "... weil warum nicht?", 35000, 6000, require("./img/plastic_airport.jpg"), 30000000, false, 0, 0, 0, 1)
+                new Product("Plastik Kette", "Sehr leicht: Schwimmt auf dem Wasser", 5, 25, require("./img/plastic_chain.jpg"), 8000, false, 0, 0, 0, 1),
+                new Product("Plastik Ohrringe", "Sehr zerbrechlich, aber dennoch schmückend", 12, 33, require("./img/plastic_earrings.jpg"), 9500, false, 0, 0, 0, 1),
+                new Product("Plastik Handtasche", "Umweltfreundliche Handtasche", 24, 60, require("./img/plastic_handbag.jpg"), 11500, false, 0, 0, 0, 1),
+                new Product("Plastik Jacke", "Mit dieser Jacke bist du DER Babo", 55, 80, require("./img/plastic_jacket.jpg"), 13500, false, 0, 0, 0, 1),
+                new Product("Plastik Schuhe", "Sehr komfortabel", 61, 85, require("./img/plastic_shoes.jpg"), 15000, false, 0, 0, 0, 1),
+                new Product("Plastik Raum", "Ab ins Home Business!", 167, 200, require("./img/plastic_room.jpg"), 20000, false, 0, 0, 0, 1),
+                new Product("Plastik Auto", "Sehr schnell, leider nicht sehr stabil", 465, 550, require("./img/plastic_car.jpg"), 60000, false, 0, 0, 0, 1),
+                new Product("Plastik Flugzeug", "Fliegt wunderbar, weil sehr leicht", 545, 635, require("./img/plastic_airplane.jpg"), 100000, false, 0, 0, 0, 1),
+                new Product("Plastik Supermarkt", "Ein neuer Supermarkt zum Einkaufen", 875, 965, require("./img/plastic_supermarket.jpg"), 300000, false, 0, 0, 0, 1),
+                new Product("Plastik Krankenhaus", "Zur Versorgung aller Kranken", 3895, 4125, require("./img/plastic_hospital.jpg"), 1000000, false, 0, 0, 0, 1),
+                new Product("Plastik Flughafen", "... weil warum nicht?", 6950, 7500, require("./img/plastic_airport.jpg"), 3000000, false, 0, 0, 0, 1)
             ];
             this.collectors = [
-                new Collector("bucket", require("./img/bucket.png"), 10, "bBucket", 0.2, 0, 0, false, false),
-                new Collector("vacuum cleaner", require("./img/vacuumCleaner.jpg"), 100, "bVacuumCleaner", 3, 1, 0, false, false),
-                new Collector("ideonella sakariensis", require("./img/IdeonellaSakariensis.jpg"), 200, "bIdeonellaSakariensis", 7, 2, 0, false, false),
-                new Collector("drone", require("./img/drone.jpg"), 250, "bDrone", 9, 3, 0, false, false),
-                new Collector("dip net", require("./img/dipNet.jpg"), 350, "bDipNet", 13, 4, 0, false, false),
-                new Collector("magnetic", require("./img/magnetic.png"), 450, "bMagnetic", 16, 5, 0, false, false),
-                new Collector("cat", require("./img/cat.jpg"), 550, "bCat", 23, 6, 0, false, false),
-                new Collector("net", require("./img/net2.jpg"), 700, "bNet2", 30, 7, 0, false, false),
-                new Collector("time machine", require("./img/TimeMachine.jpg"), 900, "bTimeMachine", 40, 8, 0, false, false),
-                new Collector("blackhole", require("./img/blackhole.jpg"), 1500, "bBlackhole", 55, 9, 0, false, false)
+                new Collector("bucket", require("./img/bucket.png"), 20, "bBucket", 0.2, 0, 0, false, false),
+                new Collector("vacuum cleaner", require("./img/vacuumCleaner.jpg"), 200, "bVacuumCleaner", 5, 1, 0, false, false),
+                new Collector("ideonella sakariensis", require("./img/IdeonellaSakariensis.jpg"), 400, "bIdeonellaSakariensis", 12, 2, 0, false, false),
+                new Collector("drone", require("./img/drone.jpg"), 500, "bDrone", 18, 3, 0, false, false),
+                new Collector("dip net", require("./img/dipNet.jpg"), 700, "bDipNet", 28, 4, 0, false, false),
+                new Collector("magnetic", require("./img/magnetic.png"), 900, "bMagnetic", 38, 5, 0, false, false),
+                new Collector("cat", require("./img/cat.jpg"), 1100, "bCat", 49, 6, 0, false, false),
+                new Collector("net", require("./img/net2.jpg"), 1400, "bNet2", 63, 7, 0, false, false),
+                new Collector("time machine", require("./img/TimeMachine.jpg"), 1800, "bTimeMachine", 88, 8, 0, false, false),
+                new Collector("blackhole", require("./img/blackhole.jpg"), 3000, "bBlackhole", 150, 9, 0, false, false)
             ];
         }
 

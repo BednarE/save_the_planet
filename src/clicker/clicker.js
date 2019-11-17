@@ -155,7 +155,7 @@ class Clicker {
             this._game.setPlasticPerSecond(this._game.getPlasticPerSecond() + collector.getPlasticPerSecond());
             document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney() + " €";
             collector.count = collector.count + 1;
-            collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
+            collector.requiredMoney = Math.round(collector.requiredMoney * 1.25);
             document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
 
