@@ -5,12 +5,9 @@
   1. git clone in ein Verzeichnis
   2. in dieses Verzeichnis wechseln
   3. 'npm install' ausführen
-  4. 'npm start' zum starten des Entwicklungsservers ausführen
+  4. 'npm start' zum Starten des Entwicklungsservers ausführen
 
 ## Kurzbeschreibung
-
-Anwendung "Save_the_planet"
-Kurzbeschreibung
 Unsere Browserapp "Save_the_planet" stellt ein Minispiel dar, dass dem 'Cookie-Klicker' - Spielprinzip ähnelt.  
 Das Ziel des Spiels ist es , immer mehr und mehr Plastik zu sammeln um den Planeten von diesem zu befreien.
 Das gesammelte Plastik kann in recycle-Produkte umgewandelt werden, welche für Spielgeld verkauft werden.
