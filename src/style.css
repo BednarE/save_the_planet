@@ -9,9 +9,9 @@ a.nav-link:hover {
     color: mediumvioletred;
 }
 body{
-    background: radial-gradient(circle farthest-corner at 670px 350px, yellowgreen, steelblue, lightskyblue);
     font-size: 20px;
- }
+    background: radial-gradient(circle farthest-corner at 45% 45%, yellowgreen, steelblue, lightskyblue) fixed;
+}
 
 html, body { min-height: 100vh; }
 
