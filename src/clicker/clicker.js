@@ -155,17 +155,6 @@ class Clicker {
             if(this._game.getPlasticPerSecond()>30)
             this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
 
-            if(collector.count == 1) {
-                this._game._collectorStatisticX.push(collector.name);
-                console.log(collector.name);
-                this._game._collectorStatisticY.push(collector.count);
-                console.log(collector.count);
-            }
-            else{
-            this._game._collectorStatisticY [collector.index] += 1;
-            }
-
-
             document.getElementById("plasticPerSecondDisplayed").innerHTML = "" + (Math.round(this._game.getPlasticPerSecond() * 10) / 10);
             if (this._game.getPlasticPerSecond() > 30) {
 
@@ -193,7 +182,7 @@ class Clicker {
 
     }
 
-    randomPosition(animationDiv) {
+    //randomPosition(animationDiv) {
 
         //animation für darunter
         // animationDiv.style.left = document.getElementById("plasticBall").style.left + (200 * Math.random()) + "px";
@@ -202,7 +191,7 @@ class Clicker {
 
 
 
-    randomPosition(animationDiv) {
+    randomPosition(animationDiv){
 
 
         // animation für obendrüber
