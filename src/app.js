@@ -212,6 +212,8 @@ class App {
                 autoSaveInterval = parseInt(autoSaveInterval);
                 if (autoSaveInterval < 10) {
                     autoSaveInterval = 10; //Minimum ist alle 10 Sekunden
+                } else if (autoSaveInterval > 90) {
+                    autoSaveInterval = 90; //Maximum ist alle 90 Sekunden -> Offline Produktion basiert darauf!
                 }
                 this._game._autoSaveInterval = (autoSaveInterval *1000);
             } else {
