@@ -83,17 +83,17 @@ class Game {
             this._products = [
 
                 new Product("Plastikring", "Kann leben retten oder als Schmuck dienen", 1, 10, require("./img/plasticring.jpg"), 1000, false, 0, 0, 0, 1),
-                new Product("Plastik Kette", "Sehr leicht: Schwimmt auf dem Wasser", 3, 15, require("./img/plastic_chain.jpg"), 5000, false, 0, 0, 0, 1),
-                new Product("Plastik Ohrringe", "Sehr zerbrechlich, aber dennoch schmückend", 5, 25, require("./img/plastic_earrings.jpg"), 10000, false, 0, 0, 0, 1),
-                new Product("Plastik Handtasche", "Umweltfreundliche Handtasche", 10, 45, require("./img/plastic_handbag.jpg"), 30000, false, 0, 0, 0, 1),
-                new Product("Plastik Jacke", "Mit dieser Jacke bist du DER Babo", 17, 65, require("./img/plastic_jacket.jpg"), 80000, false, 0, 0, 0, 1),
-                new Product("Plastik Schuhe", "Sehr komfortabel", 20, 70, require("./img/plastic_shoes.jpg"), 75000, false, 0, 0, 0, 1),
-                new Product("Plastik Raum", "Ab ins Home Business!", 50, 180, require("./img/plastic_room.jpg"), 500000, false, 0, 0, 0, 1),
-                new Product("Plastik Auto", "Sehr schnell, leider nicht sehr stabil", 100, 300, require("./img/plastic_car.jpg"), 800000, false, 0, 0, 0, 1),
-                new Product("Plastik Flugzeug", "Fliegt wunderbar, weil sehr leicht", 150, 400, require("./img/plastic_airplane.jpg"), 1000000, false, 0, 0, 0, 1),
-                new Product("Plastik Supermarkt", "Ein neuer Supermarkt zum Einkaufen", 300, 750, require("./img/plastic_supermarket.jpg"), 3000000, false, 0, 0, 0, 1),
-                new Product("Plastik Krankenhaus", "Zur Versorgung aller Kranken", 1000, 4000, require("./img/plastic_hospital.jpg"), 10000000, false, 0, 0, 0, 1),
-                new Product("Plastik Flughafen", "... weil warum nicht?", 1500, 6000, require("./img/plastic_airport.jpg"), 30000000, false, 0, 0, 0, 1)
+                new Product("Plastik Kette", "Sehr leicht: Schwimmt auf dem Wasser", 3, 15, require("./img/plastic_chain.jpg"), 3000, false, 0, 0, 0, 1),
+                new Product("Plastik Ohrringe", "Sehr zerbrechlich, aber dennoch schmückend", 9, 25, require("./img/plastic_earrings.jpg"), 8000, false, 0, 0, 0, 1),
+                new Product("Plastik Handtasche", "Umweltfreundliche Handtasche", 18, 45, require("./img/plastic_handbag.jpg"), 15000, false, 0, 0, 0, 1),
+                new Product("Plastik Jacke", "Mit dieser Jacke bist du DER Babo", 45, 65, require("./img/plastic_jacket.jpg"), 40000, false, 0, 0, 0, 1),
+                new Product("Plastik Schuhe", "Sehr komfortabel", 90, 70, require("./img/plastic_shoes.jpg"), 75000, false, 0, 0, 0, 1),
+                new Product("Plastik Raum", "Ab ins Home Business!", 190, 180, require("./img/plastic_room.jpg"), 160000, false, 0, 0, 0, 1),
+                new Product("Plastik Auto", "Sehr schnell, leider nicht sehr stabil", 700, 300, require("./img/plastic_car.jpg"), 600000, false, 0, 0, 0, 1),
+                new Product("Plastik Flugzeug", "Fliegt wunderbar, weil sehr leicht", 1100, 400, require("./img/plastic_airplane.jpg"), 1000000, false, 0, 0, 0, 1),
+                new Product("Plastik Supermarkt", "Ein neuer Supermarkt zum Einkaufen", 3400, 750, require("./img/plastic_supermarket.jpg"), 3000000, false, 0, 0, 0, 1),
+                new Product("Plastik Krankenhaus", "Zur Versorgung aller Kranken", 10500, 4000, require("./img/plastic_hospital.jpg"), 10000000, false, 0, 0, 0, 1),
+                new Product("Plastik Flughafen", "... weil warum nicht?", 35000, 6000, require("./img/plastic_airport.jpg"), 30000000, false, 0, 0, 0, 1)
             ];
             this.collectors = [
                 new Collector("bucket", require("./img/bucket.png"), 10, "bBucket", 0.2, 0, 0, false, false),
