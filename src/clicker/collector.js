@@ -10,10 +10,9 @@ class Collector {
         this.unlocked = unlocked;
         this.count = count;
         this.plasticPerSecond = plasticPerSecond;
-
-        this.index = index;
-
+        this.firstUnlocked = false;
         this.firstUnlocked = firstUnlocked;
+
 
     }
 

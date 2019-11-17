@@ -72,6 +72,26 @@ class Statistic {
         }
     }
 
+    createCollectorDataX() {
+        let collectors = this._game.collectors;
+        let data = [];
+        for (let collector of collectors) {
+            if (collector.count > 0) {
+                data.push(collector.name);
+            }
+        }
+        return data;
+    }
+
+    createCollectorDataY() {
+        let collectors = this._game.collectors;
+        let data = [];
+        for (let collector of collectors) {
+            data.push(collector.count);
+        }
+        return data;
+    }
+
     showClickerStatistics() {
         this.addShortTermDataToLongTerm();
         //We want to remove all values older than 5 minutes from the shortTermGraph
@@ -325,12 +345,12 @@ class Statistic {
         ctx4.canvas.width = 600;
         ctx4.canvas.height = 300;
         let cfg4 = {
-            type: 'bar',
+            type: 'horizontalBar',
             data: {
-                labels: this._game._collectorStatisticX,
+                labels: this.createCollectorDataX(),
                 datasets: [{
                     label: 'Collectors',
-                    data: this._game._collectorStatisticY,
+                    data: this.createCollectorDataY(),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -359,10 +379,18 @@ class Statistic {
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 5
                 }]
             },
             options: {
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                },
                 title: {
                     text: 'Gekaufte Kollektoren',
                     display: true
@@ -377,7 +405,10 @@ class Statistic {
                         },
                         stepSize: 1
                     }]
-                }
+                },
+                legend: {
+                    display: false,
+                },
             }
             };
         new Chart(ctx4, cfg4);
