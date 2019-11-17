@@ -18,6 +18,16 @@ class Clicker {
         this._game.setPlastic(this._game.getPlastic() + this._game.getPlasticPerClick());
         document.getElementById("plasticDisplay").innerHTML = Math.round(this._game.getPlastic());
         this._game.insertClickObjectToShortTermClickStorage(StatisticUtils.createClickObject(1));
+        this._game._statisticStorage.totalHandCollectedPlastic = (this._game._statisticStorage.totalHandCollectedPlastic + this._game.getPlasticPerClick());
+        let last = this._game._statisticStorage.plasticGathered[this._game._statisticStorage.plasticGathered.length-1];
+        if (last === undefined) {
+            let last = {
+                value: this._game.getPlasticPerClick(),
+                dateUnix: (Math.round(new Date().getTime() / 3600000) * 3600000)
+            };
+            this._game._statisticStorage.plasticGathered.push(last);
+        }
+        last.value = (last.value + this._game.getPlasticPerClick());
         setTimeout(function () {
             animationDiv.remove();
         }, 2000);
@@ -42,9 +52,9 @@ class Clicker {
         /*Neuer EventListener wird hinzugefügt, document = gesamte Webseite, getElementbyI sucht den PlasticBall raus (steht in der Clicker
         html, addEventListener mit dem Eventtyp "click" also wenn es geklickt wurde, Methode wird mitgegeben, die den Clicker um 1 erhöht
          */
-        document.getElementById("plasticDisplay").innerHTML = this._game.getPlastic();
+        document.getElementById("plasticDisplay").innerHTML = Math.round(this._game.getPlastic())+"";
         document.getElementById("moneyDisplayed").innerHTML = this._game.getMoney()+" €";
-        document.getElementById("plasticPerSecondDisplayed").innerHTML = this._game.getPlasticPerSecond();
+        document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*10)/10)+"";
 
         document.getElementById("displayGameData").classList.add("col-sm-12");
         document.getElementById("displayGameData").classList.add("col-md-3");
@@ -82,7 +92,7 @@ class Clicker {
                 this.showCollectorText(collector);
             });
         }
-
+        this.checkCollectorUnlock(this._game.collectors); //Check once fast if side has loaded
         setInterval(() => {
             this.checkCollectorUnlock(this._game.collectors);
         }, 800);
@@ -121,8 +131,6 @@ class Clicker {
                 htmlCollector.getElementsByClassName("collectorbutton")[0].classList.add("lockedCollectorButton");
                 htmlCollector.getElementsByClassName("collectorName")[0].innerText = collector.name;
                 htmlCollector.getElementsByClassName("collectorPicture")[0].src = collector.picture;
-                collector.firstUnlocked = false;
-
 
             } else if ((collector.requiredMoney* 0.8) <= this._game.getMoney() && collector.firstUnlocked === false) {
                 objCollectorButton.classList.remove("qmLockedCollectorButton");
@@ -150,12 +158,29 @@ class Clicker {
             collector.requiredMoney = Math.round(collector.requiredMoney * 1.5);
             document.getElementById(collector.id).getElementsByClassName("collectorCounts")[0].innerText = collector.count;
             document.getElementById(collector.id).getElementsByClassName("collectorRequiredMoney")[0].innerText = collector.requiredMoney;
-            document.getElementById("plasticPerSecondDisplayed").innerHTML = "" + (Math.round(this._game.getPlasticPerSecond() * 100) / 100);
+
+            document.getElementById("plasticPerSecondDisplayed").innerHTML = (Math.round(this._game.getPlasticPerSecond()*100) /100);
+            if(this._game.getPlasticPerSecond()>30)
+            this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond()/10)+this._game.getPlasticPerClick()/10));
+
+            if(collector.count == 1) {
+                this._game._collectorStatisticX.push(collector.name);
+                console.log(collector.name);
+                this._game._collectorStatisticY.push(collector.count);
+                console.log(collector.count);
+            }
+            else{
+            this._game._collectorStatisticY [collector.index] += 1;
+            }
+
+
+            document.getElementById("plasticPerSecondDisplayed").innerHTML = "" + (Math.round(this._game.getPlasticPerSecond() * 10) / 10);
             if (this._game.getPlasticPerSecond() > 30) {
 
                 this._game.setPlasticPerClick(Math.round(Math.floor(this._game.getPlasticPerSecond() / 10) + this._game.getPlasticPerClick() / 10));
 
             }
+            this.checkCollectorUnlock(this._game.collectors); //For immediate resetting if necessary
         }
     }
 
@@ -166,11 +191,11 @@ class Clicker {
 
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
                 "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
-                "\n" + collector.count + " " + collector.name + " producing " + (collector.plasticPerSecond * collector.count) + ". ";
+                "\n" + collector.count + " " + collector.name + " producing " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
         } else {
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
                 "\n" + "Each ???  produces " + collector.plasticPerSecond + ". " +
-                "\n" + collector.count + " ??? producing " + (collector.plasticPerSecond * collector.count) + ". ";
+                "\n" + collector.count + " ??? producing " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
         }
 
 
@@ -183,7 +208,7 @@ class Clicker {
         // animationDiv.style.top = (document.getElementById("plasticBall").style.top+25)+(10 * Math.random()) + "px";
 
         // animation für obendrüber
-        let randomX=(400 * Math.random());
+        let randomX=(400 * Math.random())+100;
         let randomY=(80 * Math.random());
         if(randomX>120) {
             animationDiv.style.left = document.getElementById("plasticBall").style.left + randomX + "px";

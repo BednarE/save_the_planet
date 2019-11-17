@@ -105,3 +105,30 @@ webkit-scrollbar-button {
         /*margin-top: 200px;*/
     }
 }
+
+#optionsButton {
+    float: right
+}
+
+#newSaveGameName {
+    vertical-align: middle;
+    height: 38px;
+    width: 200px;
+}
+
+#newSaveGameContainer {
+    margin-top: 5px;
+}
+
+#savedInfo {
+    vertical-align: middle;
+    color: orange;
+    margin-right: 2vw;
+    animation: fadeInOutAnimation 2s;
+}
+
+@keyframes fadeInOutAnimation {
+    0%   { opacity:0; }
+    50%  { opacity:1; }
+    100% { opacity:0; }
+}

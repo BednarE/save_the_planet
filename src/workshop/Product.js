@@ -2,25 +2,26 @@
 
 class Product {
 
-    constructor(name, description, moneyValue, plasticCost, picture, productionTime) {
+    constructor(name, description, moneyValue, plasticCost, picture, productionTime, currentlyUnderConstruction, leftConstructionHours, leftConstructionMinutes, leftConstructionSeconds, productAmount) {
         this._name = name;
         this._description = description;
         this._moneyValue = moneyValue;
         this._plasticCost = plasticCost;
         this._picture = picture;
         this._productionTime=productionTime;
-        this.__currentlyUnderConstruction = false;
-        this._leftConstructionHours = 0;
-        this._leftConstructionMinutes = 0;
-        this._leftConstructionSeconds = 0;
+        this._currentlyUnderConstruction = currentlyUnderConstruction;
+        this._leftConstructionHours = leftConstructionHours;
+        this._leftConstructionMinutes = leftConstructionMinutes;
+        this._leftConstructionSeconds = leftConstructionSeconds;
+        this._productAmount = productAmount;
     }
 
     setCurrentlyUnderConstruction(underConstruction) {
-        this.__currentlyUnderConstruction = underConstruction;
+        this._currentlyUnderConstruction = underConstruction;
     }
 
     isCurrentlyUnderConstruction() {
-        return this.__currentlyUnderConstruction;
+        return this._currentlyUnderConstruction;
     }
 
     setLeftConstructionTime(hours, minutes, seconds) {
