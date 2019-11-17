@@ -100,9 +100,11 @@ class App {
         if (saveName === undefined || saveName === null || saveName === "") {
             //First time playing!
             saveName = "defaultGame";
-            localStorage.setItem("defaultSaveName", JSON.stringify(saveName));
+            localStorage.setItem("defaultSaveName", JSON.stringify({default: "defaultGame"}));
             let saveNames = [saveName];
             localStorage.setItem("saveNames", JSON.stringify(saveNames));
+        } else {
+            saveName = saveName.default
         }
         return saveName;
     }
@@ -144,7 +146,7 @@ class App {
         document.getElementById("storedSaves").innerHTML = "";
         let template = await import("./saveSelectionTemplate");
 
-        let defaultSaveName = JSON.parse(localStorage.getItem("defaultSaveName"));
+        let defaultSaveName = (JSON.parse(localStorage.getItem("defaultSaveName"))).default;
         if (defaultSaveName === null || defaultSaveName === "") {
             defaultSaveName = "defaultGame"
         }
@@ -184,7 +186,7 @@ class App {
                     () => {
                         this.resetAllIntervals();
                         this._game = new Game(data);
-                        localStorage.setItem("defaultSaveName", JSON.stringify(saveName));
+                        localStorage.setItem("defaultSaveName", JSON.stringify({default: saveName}));
                         console.log("Loaded savegame " + saveName);
                         Swal.fire("Spiel geladen", "Spielstand " + saveName + " wurde geladen. Auto-Save speichert nun auf diesem Spielstand", "info");
                         this._router.navigate('tutorial', false);
@@ -198,7 +200,7 @@ class App {
             });
 
             saveDiv.getElementsByClassName("setToAutoSave")[0].addEventListener("click", () => {
-                localStorage.setItem("defaultSaveName", JSON.stringify(saveName));
+                localStorage.setItem("defaultSaveName", JSON.stringify({default: saveName}));
                 this.fillOptions();
             })
         }
@@ -248,7 +250,7 @@ class App {
         clearInterval(window.autoSaveInterval);
         this.resetAllIntervals();
         this._game = new Game();
-        localStorage.setItem("defaultSaveName", JSON.stringify(saveName));
+        localStorage.setItem("defaultSaveName", JSON.stringify({default: saveName}));
         this.saveGame(saveName);
         Swal.fire("Gespeichert", "Neues Spiel mit dem Namen " + saveName + " erstellt. Auto-Save speichert nun hier", "success");
         this._router.navigate('tutorial', false);
