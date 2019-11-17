@@ -54,14 +54,14 @@ class Game {
                         this.setMoney(this.getMoney()+producedOffline*product._moneyValue);
                         product._productAmount=product._productAmount-producedOffline;
                         new Workshop().constructProduct(product, this);
-                        this.geldGained=producedOffline*product._moneyValue;
+                        this.geldGained=this.geldGained+producedOffline*product._moneyValue;
                     }else{
                         console.log(this.getMoney());
                         console.log(product._moneyValue);
                         console.log(product._productAmount);
 
                         this.setMoney(this.getMoney()+product._moneyValue*product._productAmount);
-                        this.geldGained=product._moneyValue*product._productAmount;
+                        this.geldGained=this.geldGained+product._moneyValue*product._productAmount;
                     }
 
                 }
