@@ -22,9 +22,10 @@ class Game {
             this._plastic = data._plastic;
             this._plasticPerClick = data._plasticPerClick;
             this._plasticPerSecond = data._plasticPerSecond;
-            this._money = 0;
+            this._money = data._money;
             this._clicked = data._clicked;
             //Products
+            this.geldGained=0;
             this._products = [];
             for (let productData of data._products) {
                 let product = new Product(productData._name, productData._description, productData._moneyValue, productData._plasticCost, getProductPictureForName(productData._name), productData._productionTime, productData._currentlyUnderConstruction, productData._leftConstructionHours, productData._leftConstructionMinutes, productData._leftConstructionSeconds, productData._productAmount);
@@ -32,22 +33,37 @@ class Game {
                 if (product.isCurrentlyUnderConstruction()) {
                     product.setCurrentlyUnderConstruction(false); //Because of check in constructProduct
 
-                    let offlineMilliseconds = Math.floor((new Date().getTime() - this._lastSaved));
+                    let offlineMilliseconds = (new Date().getTime() - this._lastSaved);
+                        console.log(offlineMilliseconds);
+                    let producedOffline=Math.floor(offlineMilliseconds/product._productionTime);
+                        console.log(producedOffline);
 
-                    let producedOffline=Math.round(offlineMilliseconds/product._productionTime);
 
                     if (producedOffline<product._productAmount) {
                         offlineMilliseconds = offlineMilliseconds - (producedOffline * product._productionTime);
-                        product.setLeftCalculatedOfflineMilliseconds(offlineMilliseconds);
+                        console.log(offlineMilliseconds);
+
+
+                        /**
+                         * Die übrige Produktionszeit des Produkts das noch hergestellt wird = die Produktionszeit des Produktes - die Offline
+                         * Zeit - die Produktionszeit des Produktes * wie viele man während der Offline Zeit hergestellt hat.
+                         */
+                        product.setLeftCalculatedOfflineMilliseconds(product._productionTime-(new Date().getTime() - this._lastSaved)-(product._productionTime*producedOffline));
+
+
                         this.setMoney(this.getMoney()+producedOffline*product._moneyValue);
                         product._productAmount=product._productAmount-producedOffline;
-                        console.log(this.getMoney());
-                        console.log(producedOffline*product._moneyValue);
                         new Workshop().constructProduct(product, this);
+                        this.geldGained=producedOffline*product._moneyValue;
                     }else{
-                        this.setMoney(this.getMoney()+product._moneyValue*product._productAmount);
+                        console.log(this.getMoney());
+                        console.log(product._moneyValue);
+                        console.log(product._productAmount);
 
+                        this.setMoney(this.getMoney()+product._moneyValue*product._productAmount);
+                        this.geldGained=product._moneyValue*product._productAmount;
                     }
+
                 }
             }
 
@@ -250,7 +266,7 @@ class Game {
         }
 
 
-        Swal.fire("Offline Produktion", "Du warst für " + offlineHours + " Stunden " + offlineMinutes + " Minuten " + offlineSeconds + " Sekunden offline. In dieser Zeit wurde " + Math.round(generatedPlastic*10)/10 + " Plastik produziert", "success");
+        Swal.fire("Offline Produktion", "Du warst für " + offlineHours + " Stunden " + offlineMinutes + " Minuten " + offlineSeconds + " Sekunden offline. In dieser Zeit wurde " + Math.round(generatedPlastic*10)/10 + " Plastik produziert und "+this.geldGained+" Geld generiert", "success");
     }
 
 }
