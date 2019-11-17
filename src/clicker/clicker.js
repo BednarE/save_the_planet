@@ -183,7 +183,7 @@ class Clicker {
                 "\n" + collector.count + " " + collector.name + " produzieren " + Math.round(collector.plasticPerSecond * collector.count) + " Plastiken. ";
         } else {
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
-                "\n" + "eine " + collector.plasticPerSecond + ". " +
+                "\n" + "eine ??? produziert " + collector.plasticPerSecond + " Plastik pro Sekunde. " +
                 "\n" + collector.count + " ??? produziert " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
         }
 
