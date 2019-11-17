@@ -218,7 +218,7 @@ class Game {
     }
 
     offlineProduction() {
-        let offlineSeconds = ((new Date().getTime()) - this._lastSaved) / 1000;
+        let offlineSeconds = Math.floor((new Date().getTime() - this._lastSaved) / 1000);
         let generatedPlastic = this.getPlasticPerSecond() * offlineSeconds;
         this.setPlastic(this.getPlastic() + generatedPlastic);
 
