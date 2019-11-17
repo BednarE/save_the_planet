@@ -184,9 +184,11 @@ class App {
                     () => {
                         this.resetAllIntervals();
                         this._game = new Game(data);
+                        localStorage.setItem("defaultSaveName", JSON.stringify(saveName));
                         console.log("Loaded savegame " + saveName);
-                        Swal.fire("Spiel geladen", "Spielstand " + saveName + " wurde geladen.", "info");
+                        Swal.fire("Spiel geladen", "Spielstand " + saveName + " wurde geladen. Auto-Save speichert nun auf diesem Spielstand", "info");
                         this._router.navigate('tutorial', false);
+                        this.fillOptions();
                     });
             });
 
@@ -248,7 +250,7 @@ class App {
         this._game = new Game();
         localStorage.setItem("defaultSaveName", JSON.stringify(saveName));
         this.saveGame(saveName);
-        Swal.fire("Gespeichert", "Neues Spiel mit dem Namen " + saveName + " erstellt.", "success");
+        Swal.fire("Gespeichert", "Neues Spiel mit dem Namen " + saveName + " erstellt. Auto-Save speichert nun hier", "success");
         this._router.navigate('tutorial', false);
         this.startAutoSaveInterval();
     }
