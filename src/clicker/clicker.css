@@ -20,7 +20,6 @@ h1 {
     display: block;
     padding: 5px;
     border: 1px solid blue;
-
 }
 
 .collectorbutton > img {
@@ -32,11 +31,11 @@ h1 {
 
 
 aside {
-    height: 400px;
-    height: 600px;
-    width: 400px;
+    min-width: 350px;
+    flex-flow: column;
+    flex: 0 1 auto;
+    height: 85vh;
     overflow-y: auto;
-
 }
 
 .animationPerClick {
@@ -117,8 +116,44 @@ aside {
     margin-top:20vh;
     padding-left: 5vw;
 }
+
+#plasticBall {
+    z-index: 2;
+    padding: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+#shineStar {
+    width: 280px;
+    height: 280px;
+    position: relative;
+    z-index: -5;
+    margin-top: -300px;
+    animation: starAnimation 10s linear infinite;
+}
+
+#shineStar2 {
+    width: 280px;
+    height: 280px;
+    position: relative;
+    z-index: -5;
+    margin-top: -340px;
+    animation: starAnimation2 10s linear infinite;
+}
+
+@keyframes starAnimation {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes starAnimation2 {
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
 #h2{
     padding-bottom: 5vh;
 }
-
-

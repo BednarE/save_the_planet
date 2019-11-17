@@ -2,15 +2,17 @@
 
 class Collector {
 
-    constructor(name, picture, requiredMoney, id, plasticPerSecond, index) {
+    constructor(name, picture, requiredMoney, id, plasticPerSecond, index, count, unlocked, firstUnlocked) {
         this.name = name;
         this.picture = picture;
         this.requiredMoney = requiredMoney;
         this.id = id;
-        this.unlocked = false;
-        this.count = 0;
+        this.unlocked = unlocked;
+        this.count = count;
         this.plasticPerSecond = plasticPerSecond;
         this.firstUnlocked = false;
+        this.firstUnlocked = firstUnlocked;
+
 
     }
 

@@ -23,9 +23,19 @@ class Statistic {
         document.getElementById("content").appendChild(statisticDiv);
         this.showClickerStatistics();
         document.getElementById("timesClicked").innerHTML = "<b>Times clicked:</b> " + this._game.getClicked();
-        document.getElementById("plasticsGathered").innerHTML = "<b>Plastics gathered:</b> " + this._game._plastic;
+        document.getElementById("plasticsGathered").innerHTML = "<b>Plastics gathered:</b> " + Math.round(this._game.getPlastic());
         document.getElementById("startDate").innerHTML = "<b>Started to save the planet on:</b> " + this._game._appStartUTCFormat;
-        let t = setInterval(()=> this.showTimePlayed(), 1000);
+        document.getElementById("plasticsSold").innerText = this._game._statisticStorage.plasticSold;
+        document.getElementById("totalMoneyGenerated").innerText = this._game._statisticStorage.moneyGenerated;
+        document.getElementById("totalHandCollectedPlastic").innerText = this._game._statisticStorage.totalHandCollectedPlastic;
+        document.getElementById("plasticPerClick").innerText = this._game.getPlasticPerClick();
+        document.getElementById("plasticPerSecond").innerText = Math.round(this._game.getPlasticPerSecond()*10)/10;
+        let totalCollectors = 0;
+        for (let collector of this._game.collectors) {
+            totalCollectors = totalCollectors + collector.count;
+        }
+        document.getElementById("collectorsOwned").innerText = "" + totalCollectors;
+        window.statisticUpdateInterval = setInterval(()=> this.showTimePlayed(), 1000);
     }
 
 
@@ -37,6 +47,12 @@ class Statistic {
         let minutes = Math.floor(seconds / 60);
         let hours = Math.floor(minutes / 60);
         let days = Math.floor(hours / 24);
+
+        if (document.getElementById('timePlayed') === null) {
+            //We have changed the subpage!
+            clearInterval(window.statisticUpdateInterval);
+            return;
+        }
 
         if (seconds <= 59) {
             document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
@@ -77,14 +93,20 @@ class Statistic {
     }
 
     showClickerStatistics() {
-        console.log("Short Term Clicks", this._game._statisticStorage.clicksShortTerm);
-        console.log("Short Term Clicks", this._game._statisticStorage.clicksLongTermData);
-        console.log("Short Term Clicks", this._game._statisticStorage.plasticAmount);
         this.addShortTermDataToLongTerm();
         //We want to remove all values older than 5 minutes from the shortTermGraph
         this.removeOldShortTermData();
         let clickerDataShortTerm = this.preparePlotData(this.getClicksPer_CLICKGRAPHSTEPSIZEINSECONDS());
-        let plasticData = this.preparePlasticPlotData(this.getPlasticsPerHour(this._game._statisticStorage.plasticAmount));
+        let plasticData;
+        if (this._game._statisticStorage.plasticGathered[0] !== undefined) {
+            let earliest = this._game._statisticStorage.plasticGathered[0].dateUnix;
+            earliest = (Math.floor(earliest / 3600000) * 3600000);
+            plasticData = this.preparePlotData(this.getClicksPerInterval(HOURINMILLIS, this._game._statisticStorage.plasticGathered, earliest));
+        } else {
+            //Game has been started on the statistic page, but the first entry we need to access here has not yet been created.
+            //So just set it manually so the page does not break.
+            plasticData = [{y: 0, x: (Math.round(new Date().getTime() / 3600000) * 3600000)}];
+        }
 
         //ShortTerm Clicks
         let ctx = document.getElementById('clicksShortTermChart').getContext('2d');
@@ -249,7 +271,7 @@ class Statistic {
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Plastics',
+                    label: 'Plastik',
                     backgroundColor: color("red").alpha(0.5).rgbString(),
                     borderColor: "red",
                     data: plasticData,
@@ -262,7 +284,7 @@ class Statistic {
             },
             options: {
                 title: {
-                    text: 'Plastics gathered in an Hour',
+                    text: 'Gesammeltes Plastik pro Stunde',
                     display: true
                 },
                 scales: {
@@ -287,7 +309,7 @@ class Statistic {
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'Plastics'
+                            labelString: 'Plastik'
                         },
                         beginAtZero: true,
                         ticks: {
@@ -370,22 +392,18 @@ class Statistic {
                     }
                 },
                 title: {
-                    text: 'Collectoren',
+                    text: 'Gekaufte Kollektoren',
                     display: true
                 },
-                responsive: false,
+                responsive: true,
                 scales: {
-                    xAxes: [{
-                        ticks: {
-                            maxRotation: 90,
-                            minRotation: 80
-                        }
-                    }],
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
-
-                        }
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        },
+                        stepSize: 1
                     }]
                 },
                 legend: {
@@ -416,21 +434,6 @@ class Statistic {
         return plotableData
     }
 
-    preparePlasticPlotData(plasticAmount){
-        let plotableData = [];
-        for (let storedPlasticObject of this._game._statisticStorage.plasticAmount){
-            plotableData.push(
-                {
-                    t: plasticAmount.dateUnix,
-                    y: plasticAmount.value
-                }
-            );
-        }
-        return plotableData
-    }
-
-
-
     /**
      * Returns an interval Array, where each borderpoint is one stepsize after the other. Starts with startDate and ends with endDate
      * @param startDate
@@ -449,11 +452,7 @@ class Statistic {
         return intervals
     }
 
-    getClicksPerInterval(stepsize, clickList) {
-        let earliest = new Date().getTime() - SHORTTERMCLICKGRAPHDURATION; //Show the last 5 Minutes
-        earliest = (Math.round(earliest / stepsize) * stepsize); // Round it to the nearest stepsize duration value
-        //e.g. every 30 seconds one value containing all the clicks for the last 30 seconds
-
+    getClicksPerInterval(stepsize, clickList, earliest) {
         let filteredClicks = [];
 
         let latest = new Date().getTime(); //We want to add zero-values too, so let the duration of the graph go until
@@ -468,7 +467,7 @@ class Statistic {
             upper = intervalsArray[i + 1];
             let clicksInInterval = 0;
             for (let y = 0; y < clickList.length; y++) {
-                if (lower < clickList[y].dateUnix) {
+                if (lower <= clickList[y].dateUnix) {
                     if (upper > clickList[y].dateUnix) {
                         clicksInInterval = clicksInInterval + clickList[y].value;
                     }
@@ -478,36 +477,13 @@ class Statistic {
         }
         return filteredClicks;
     }
-    getPlasticsPerHour(plasticList) {
-        let earliest = this._game._appStartMiliseconds;
-
-        let filteredPlastics = [];
-
-        let latest = new Date().getTime(); //We want to add zero-values too, so let the duration of the graph go until
-        //We are up to date with the current time
-        latest = (Math.round(latest / 3600000) * 3600000);
-        let intervalsArray = this.createIntervalBorders(earliest, latest, 3600000);
-
-        let lowest = 0;
-        let uppest = 0;
-        for (let i = 0; i < intervalsArray.length - 1; i++) {
-            lowest = intervalsArray[i];
-            uppest = intervalsArray[i + 1];
-            let plasticInInterval = 0;
-            for (let y = 0; y < plasticList.length; y++) {
-                if (lowest < plasticList[y].dateUnix) {
-                    if (uppest > plasticList[y].dateUnix) {
-                        plasticInInterval = plasticInInterval + plasticList[y].value;
-                    }
-                }
-            }
-            filteredPlastics.push({dateUnix: uppest, value: plasticInInterval})
-        }
-        return filteredPlastics;
-    }
 
     getClicksPer_CLICKGRAPHSTEPSIZEINSECONDS() {
-        return this.getClicksPerInterval(1000 * SHORTTERMCLICKGRAPHSTEPSIZEINSECONDS, this._game._statisticStorage.clicksShortTerm);
+        let stepSize = 1000 * SHORTTERMCLICKGRAPHSTEPSIZEINSECONDS;
+        //e.g. every 30 seconds one value containing all the clicks for the last 30 seconds
+        let earliest = new Date().getTime() - SHORTTERMCLICKGRAPHDURATION; //Show the last 5 Minutes
+        earliest = (Math.round(earliest / stepSize) * stepSize); // Round it to the nearest stepsize duration value
+        return this.getClicksPerInterval(stepSize, this._game._statisticStorage.clicksShortTerm, earliest);
     }
 
     /**

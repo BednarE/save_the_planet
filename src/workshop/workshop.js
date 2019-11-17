@@ -35,7 +35,7 @@ class Workshop {
             document.getElementById("plasticDisplay").innerHTML=Math.round(this._game.getPlastic());
             document.getElementById("moneyDisplayed").innerHTML=this._game.getMoney()+" €";
             newProduct.getElementsByClassName("amountProducts")[0].value = product._productAmount;
-            newProduct.getElementsByClassName("amountProducts")[0].disabled = product.__currentlyUnderConstruction; // If still under construction, disable input
+            newProduct.getElementsByClassName("amountProducts")[0].disabled = product._currentlyUnderConstruction; // If still under construction, disable input
             newProduct.getElementsByClassName("amountProducts")[0].addEventListener("input", () => {
                 let productAmount;
                 if(newProduct.getElementsByClassName("amountProducts")[0].value!="") {
@@ -79,9 +79,8 @@ class Workshop {
      * Starts the construction of the given product if it is not yet under construction
      * @param product - the product to be constructed
      */
-    constructProduct(product) {
+    constructProduct(product, game) {
         //Get the product html
-        let game=this._game;
         let productHtml = document.getElementById(product._name);
         let waitTime = product._productionTime;
         //Check if it is already unter construction
@@ -126,7 +125,10 @@ class Workshop {
                     product.setCurrentlyUnderConstruction(false);
                     product.setLeftConstructionTime(0, 0, 0);
                     game.setMoney(game.getMoney() + product._moneyValue);
-                    document.getElementById("moneyDisplayed").innerHTML=game.getMoney()+" €";
+                    game._statisticStorage.moneyGenerated = game._statisticStorage.moneyGenerated + product._moneyValue;
+                    if (document.getElementById("moneyDisplayed") !== null) {
+                        document.getElementById("moneyDisplayed").innerHTML=game.getMoney()+" €";
+                    }
                     product._productAmount--;
                     if (productHtml != null) {
                         document.getElementById(product._name).getElementsByClassName("buyProductButton")[0].classList.remove("hidden");
@@ -138,7 +140,7 @@ class Workshop {
                         productHtml.getElementsByClassName("amountProducts")[0].value = product._productAmount;
                     }
                     if(product._productAmount>0){
-                        workshop.constructProduct(product);
+                        workshop.constructProduct(product, game);
                     } else {
                         product._productAmount = 1; //Set back to default
                         //Finished job
@@ -163,13 +165,14 @@ class Workshop {
         //Check if enough plastic to buy a product then reduce the plastic
         if(product._productAmount>0) {
             if (this._game.getPlastic() >= (product._plasticCost*product._productAmount)) {
+                this._game._statisticStorage.plasticSold = this._game._statisticStorage.plasticSold + (product._plasticCost*product._productAmount);
                 this._game.setPlastic(this._game.getPlastic() - (product._plasticCost*product._productAmount));
                 // now it can be constructed
-                this.constructProduct(product);
+                this.constructProduct(product, this._game);
                 // after construction you get the money
 
             } else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
-                Swal.fire("Not enough Plastic", "Product can't be bought. You need " + (product._plasticCost*productAmount - this._game.getPlastic()) + " more Plastic before you can construct this product", "error");
+                Swal.fire("Not enough Plastic", "Product can't be bought. You need " + Math.round(product._plasticCost*product._productAmount - this._game.getPlastic()) + " more Plastic before you can construct this product", "error");
             }
         }
     }
