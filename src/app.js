@@ -59,6 +59,11 @@ class App {
         window.autoSaveInterval = setInterval(()=> {
             let defaultSaveGameName = this.getDefaultSaveName();
             this.saveGame(defaultSaveGameName);
+            //Bug occured, because you have played on an old version and the _autoSaveInterval is NaN because it was not
+            //set there. So set it here as a last-resort so we don't autosave every millisecond.
+            if (this._game._autoSaveInterval < 10*1000) {
+                this._game._autoSaveInterval = 60*1000;
+            }
         }, this._game._autoSaveInterval); //Jede Minute
     }
 
