@@ -81,8 +81,13 @@ class Workshop {
      */
     constructProduct(product, game) {
         //Get the product html
+        let waitTime;
         let productHtml = document.getElementById(product._name);
-        let waitTime = product._productionTime;
+        if(product.getLeftCalculatedOfflineSeconds()>0){
+            waitTime=product.getLeftCalculatedOfflineSeconds(); // dient zur nachträglichen Produktion für die Offline Zeit
+        }else {
+            waitTime = product._productionTime;
+        }
         //Check if it is already unter construction
         if (!product.isCurrentlyUnderConstruction()) {
             if (productHtml !== null) {
@@ -153,7 +158,7 @@ class Workshop {
                         }
                     }
                 }
-                waitTime = waitTime - 100;
+                 waitTime = waitTime - 100;
             }, 100);
         } else {
             //We should never reach this point as the button should be hidden if it is under construction

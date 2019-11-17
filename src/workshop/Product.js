@@ -14,6 +14,7 @@ class Product {
         this._leftConstructionMinutes = leftConstructionMinutes;
         this._leftConstructionSeconds = leftConstructionSeconds;
         this._productAmount = productAmount;
+        this._leftCalculatedOfflineSeconds=0;
     }
 
     setCurrentlyUnderConstruction(underConstruction) {
@@ -40,6 +41,13 @@ class Product {
 
     getLeftConstructionSeconds() {
         return this._leftConstructionSeconds;
+    }
+    getLeftCalculatedOfflineSeconds() {
+        return this._leftCalculatedOfflineSeconds;
+    }
+
+    setLeftCalculatedOfflineSeconds(value) {
+        this._leftCalculatedOfflineSeconds = value;
     }
 }
 

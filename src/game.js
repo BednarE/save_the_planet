@@ -31,6 +31,19 @@ class Game {
                 this._products.push(product);
                 if (product.isCurrentlyUnderConstruction()) {
                     product.setCurrentlyUnderConstruction(false); //Because of check in constructProduct
+
+                    let offlineSeconds = Math.floor((new Date().getTime() - this._lastSaved) / 1000);
+                    let producedOffline=offlineSeconds/product._productionTime;
+
+                    offlineSeconds=offlineSeconds-(producedOffline*product._productionTime);
+                    product.setLeftCalculatedOfflineSeconds(offlineSeconds);
+
+                    let offlineMinutes = Math.floor(offlineSeconds / 60);
+                    let offlineHours = Math.floor(offlineMinutes / 60);
+                    offlineSeconds = offlineSeconds - (offlineMinutes * 60);
+                    offlineMinutes = offlineMinutes - (offlineHours * 60);
+
+                    this.setMoney(this.getMoney()+producedOffline*product._moneyValue);
                     new Workshop().constructProduct(product, this);
                 }
             }
@@ -234,7 +247,7 @@ class Game {
         }
 
 
-        Swal.fire("Offline Produktion", "Du warst für " + offlineHours + " Stunden " + offlineMinutes + " Minuten " + offlineSeconds + " Sekunden offline. In dieser Zeit wurde " + generatedPlastic + " Plastik produziert", "success");
+        Swal.fire("Offline Produktion", "Du warst für " + offlineHours + " Stunden " + offlineMinutes + " Minuten " + offlineSeconds + " Sekunden offline. In dieser Zeit wurde " + Math.round(generatedPlastic*10)/10 + " Plastik produziert", "success");
     }
 
 }
