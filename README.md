@@ -1,5 +1,12 @@
 # save_the_planet
 
+## Starten der Anwendung:
+
+  1. git clone in ein Verzeichnis
+  2. in dieses Verzeichnis wechseln
+  3. 'npm install' ausführen
+  4. 'npm start' zum starten des Entwicklungsservers ausführen
+
 ## Kurzbeschreibung
 
 Anwendung "Save_the_planet"
