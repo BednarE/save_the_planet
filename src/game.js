@@ -84,6 +84,7 @@ class Game {
                 new Collector("Netz", require("./img/net2.jpg"), 700, "bNet2", 30,7),
                 new Collector("Zeitmaschine", require("./img/TimeMachine.jpg"), 900, "bTimeMachine", 40,8),
                 new Collector("Schwarzes Loch", require("./img/blackhole.jpg"), 1500, "bBlackhole", 55,9)
+                ]
             ];
         }
 
