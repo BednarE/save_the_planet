@@ -32,3 +32,10 @@
 .h2 {
     position: center;
 }
+
+.tutorial {
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+}
