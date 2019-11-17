@@ -115,16 +115,16 @@ class Game {
                 new Product("Plastik Flughafen", "... weil warum nicht?", 6950, 7500, require("./img/plastic_airport.jpg"), 3000000, false, 0, 0, 0, 1)
             ];
             this.collectors = [
-                new Collector("bucket", require("./img/bucket.png"), 20, "bBucket", 0.2, 0, 0, false, false),
-                new Collector("vacuum cleaner", require("./img/vacuumCleaner.jpg"), 200, "bVacuumCleaner", 5, 1, 0, false, false),
-                new Collector("ideonella sakariensis", require("./img/IdeonellaSakariensis.jpg"), 400, "bIdeonellaSakariensis", 12, 2, 0, false, false),
-                new Collector("drone", require("./img/drone.jpg"), 500, "bDrone", 18, 3, 0, false, false),
-                new Collector("dip net", require("./img/dipNet.jpg"), 700, "bDipNet", 28, 4, 0, false, false),
-                new Collector("magnetic", require("./img/magnetic.png"), 900, "bMagnetic", 38, 5, 0, false, false),
-                new Collector("cat", require("./img/cat.jpg"), 1100, "bCat", 49, 6, 0, false, false),
-                new Collector("net", require("./img/net2.jpg"), 1400, "bNet2", 63, 7, 0, false, false),
-                new Collector("time machine", require("./img/TimeMachine.jpg"), 1800, "bTimeMachine", 88, 8, 0, false, false),
-                new Collector("blackhole", require("./img/blackhole.jpg"), 3000, "bBlackhole", 150, 9, 0, false, false)
+                new Collector("Eimer", require("./img/bucket.png"), 20, "bBucket", 0.2, 0, 0, false, false),
+                new Collector("Staubsauger", require("./img/vacuumCleaner.jpg"), 200, "bVacuumCleaner", 5, 1, 0, false, false),
+                new Collector("Ideonella Sakariensis", require("./img/IdeonellaSakariensis.jpg"), 400, "bIdeonellaSakariensis", 12, 2, 0, false, false),
+                new Collector("Drohne", require("./img/drone.jpg"), 500, "bDrone", 18, 3, 0, false, false),
+                new Collector("Fischernetz", require("./img/dipNet.jpg"), 700, "bDipNet", 28, 4, 0, false, false),
+                new Collector("Magnet", require("./img/magnetic.png"), 900, "bMagnetic", 38, 5, 0, false, false),
+                new Collector("Katze", require("./img/cat.jpg"), 1100, "bCat", 49, 6, 0, false, false),
+                new Collector("Schleppnetz", require("./img/net2.jpg"), 1400, "bNet2", 63, 7, 0, false, false),
+                new Collector("Zeitmaschine", require("./img/TimeMachine.jpg"), 1800, "bTimeMachine", 88, 8, 0, false, false),
+                new Collector("Schwarzes Loch", require("./img/blackhole.jpg"), 3000, "bBlackhole", 150, 9, 0, false, false)
             ];
         }
 
