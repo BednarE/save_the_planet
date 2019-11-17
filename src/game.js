@@ -12,6 +12,7 @@ class Game {
     constructor(data) {
         if (data !== undefined && data !== null) {
 
+            this._lastSaved = data._lastSaved;
             this._appStart = data._appStart;
             this._appStartUTCFormat = data._appStartUTCFormat;
             this._appStartMiliseconds = data._appStartMiliseconds;
@@ -44,6 +45,7 @@ class Game {
             }
 
         } else {
+            this._lastSaved = null;
             this._appStart = new Date().toISOString();
             this._appStartUTCFormat = new Date().toLocaleString();
             this._appStartMiliseconds = new Date().getTime();
