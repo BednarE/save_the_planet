@@ -41,7 +41,7 @@ class Clicker {
         let collectorButtonTemplate = await import('./collectortemplate.html');
 
         /*zieht sich das Element mit der ID Titel und setzt den Text auf main page, Änderung des Titelbilds pro Seite*/
-        document.getElementById("title").innerText = "Main Page";
+        document.getElementById("title").innerText = "Hauptseite";
         /*Dom div wird neu erstelllt */
         let newClicker = document.createElement("div");
         /*INhalt des Templates in das Div kopieren*/
@@ -178,13 +178,13 @@ class Clicker {
         if (((collector.requiredMoney * 0.8) <= this._game.getMoney() && collector.firstUnlocked === false)
             ||  collector.unlocked === true) {
 
-            document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
-                "\n" + "Each " + collector.name + " produces " + collector.plasticPerSecond + ". " +
-                "\n" + collector.count + " " + collector.name + " producing " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
+            document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Kostet: " + collector.requiredMoney + ". " +
+                "\n" + "eine " + collector.name + " produziert " + collector.plasticPerSecond + " Plastik pro Sekunde. " +
+                "\n" + collector.count + " " + collector.name + " produzieren " + Math.round(collector.plasticPerSecond * collector.count) + " Plastiken. ";
         } else {
             document.getElementById(collector.id).getElementsByClassName("collectorbutton")[0].title = "Cost: " + collector.requiredMoney + ". " +
-                "\n" + "Each ???  produces " + collector.plasticPerSecond + ". " +
-                "\n" + collector.count + " ??? producing " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
+                "\n" + "eine " + collector.plasticPerSecond + ". " +
+                "\n" + collector.count + " ??? produziert " + Math.round(collector.plasticPerSecond * collector.count) + ". ";
         }
 
 

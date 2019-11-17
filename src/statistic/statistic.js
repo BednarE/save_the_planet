@@ -10,7 +10,7 @@ class Statistic {
     constructor(game, rate) {
         this._game = game;
         this._rate = rate;
-        document.getElementById("title").innerText = "Statistics";
+        document.getElementById("title").innerText = "Statistiken";
     }
 
     async showContent() {
@@ -22,9 +22,9 @@ class Statistic {
         statisticDiv.classList.add("templateDiv");
         document.getElementById("content").appendChild(statisticDiv);
         this.showClickerStatistics();
-        document.getElementById("timesClicked").innerHTML = "<b>Times clicked:</b> " + this._game.getClicked();
-        document.getElementById("plasticsGathered").innerHTML = "<b>Plastics gathered:</b> " + Math.round(this._game.getPlastic());
-        document.getElementById("startDate").innerHTML = "<b>Started to save the planet on:</b> " + this._game._appStartUTCFormat;
+        document.getElementById("timesClicked").innerHTML = "" + this._game.getClicked();
+        document.getElementById("plasticsGathered").innerHTML = "" + Math.round(this._game.getPlastic());
+        document.getElementById("startDate").innerHTML = "" + this._game._appStartUTCFormat;
         document.getElementById("plasticsSold").innerText = this._game._statisticStorage.plasticSold;
         document.getElementById("totalMoneyGenerated").innerText = this._game._statisticStorage.moneyGenerated;
         document.getElementById("totalHandCollectedPlastic").innerText = this._game._statisticStorage.totalHandCollectedPlastic;
@@ -55,19 +55,19 @@ class Statistic {
         }
 
         if (seconds <= 59) {
-            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
+            document.getElementById('timePlayed').innerHTML = ""
                 + days + "d "+ hours + "h " + minutes + "m " + seconds + "s ";
         }
         else if (minutes <= 59) {
-            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
+            document.getElementById('timePlayed').innerHTML = ""
                 + days + "d "+ hours + "h " + minutes + "m " + (seconds - (minutes * 60)) + "s ";
         }
         else if (hours <= 23){
-            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
+            document.getElementById('timePlayed').innerHTML = ""
                 + days + "d "+ hours + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
         }
         else{
-            document.getElementById('timePlayed').innerHTML = "<b>Saving the planet since:</b> "
+            document.getElementById('timePlayed').innerHTML = ""
                 + days + "d "+ (hours - (days * 24)) + "h " +(minutes - (hours * 60)) + "m " + (seconds - (minutes * 60)) + "s";
         }
     }

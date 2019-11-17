@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 class Workshop {
 
     constructor(game) {
-        document.getElementById("title").innerText = "Workshop";
+        document.getElementById("title").innerText = "Werkstatt";
         this._game = game;
     }
 
