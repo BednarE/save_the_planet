@@ -11,6 +11,7 @@ a.nav-link:hover {
 body{
     background: radial-gradient(circle farthest-corner at 45% 45%, yellowgreen, steelblue, lightskyblue);
     font-size: 20px;
+    background-attachment: fixed;
  }
 
 html, body { min-height: 100vh; }
