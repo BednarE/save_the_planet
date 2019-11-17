@@ -83,8 +83,8 @@ class Workshop {
         //Get the product html
         let waitTime;
         let productHtml = document.getElementById(product._name);
-        if(product.getLeftCalculatedOfflineSeconds()>0){
-            waitTime=product.getLeftCalculatedOfflineSeconds(); // dient zur nachträglichen Produktion für die Offline Zeit
+        if(product.getLeftCalculatedOfflineMilliseconds()>0){
+            waitTime=product.getLeftCalculatedOfflineMilliseconds(); // dient zur nachträglichen Produktion für die Offline Zeit
         }else {
             waitTime = product._productionTime;
         }

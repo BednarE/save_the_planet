@@ -32,19 +32,22 @@ class Game {
                 if (product.isCurrentlyUnderConstruction()) {
                     product.setCurrentlyUnderConstruction(false); //Because of check in constructProduct
 
-                    let offlineSeconds = Math.floor((new Date().getTime() - this._lastSaved) / 1000);
-                    let producedOffline=offlineSeconds/product._productionTime;
+                    let offlineMilliseconds = Math.floor((new Date().getTime() - this._lastSaved));
 
-                    offlineSeconds=offlineSeconds-(producedOffline*product._productionTime);
-                    product.setLeftCalculatedOfflineSeconds(offlineSeconds);
+                    let producedOffline=Math.round(offlineMilliseconds/product._productionTime);
 
-                    let offlineMinutes = Math.floor(offlineSeconds / 60);
-                    let offlineHours = Math.floor(offlineMinutes / 60);
-                    offlineSeconds = offlineSeconds - (offlineMinutes * 60);
-                    offlineMinutes = offlineMinutes - (offlineHours * 60);
+                    if (producedOffline<product._productAmount) {
+                        offlineMilliseconds = offlineMilliseconds - (producedOffline * product._productionTime);
+                        product.setLeftCalculatedOfflineMilliseconds(offlineMilliseconds);
+                        this.setMoney(this.getMoney()+producedOffline*product._moneyValue);
+                        product._productAmount=product._productAmount-producedOffline;
+                        console.log(this.getMoney());
+                        console.log(producedOffline*product._moneyValue);
+                        new Workshop().constructProduct(product, this);
+                    }else{
+                        this.setMoney(this.getMoney()+product._moneyValue*product._productAmount);
 
-                    this.setMoney(this.getMoney()+producedOffline*product._moneyValue);
-                    new Workshop().constructProduct(product, this);
+                    }
                 }
             }
 

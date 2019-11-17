@@ -42,11 +42,11 @@ class Product {
     getLeftConstructionSeconds() {
         return this._leftConstructionSeconds;
     }
-    getLeftCalculatedOfflineSeconds() {
+    getLeftCalculatedOfflineMilliseconds() {
         return this._leftCalculatedOfflineSeconds;
     }
 
-    setLeftCalculatedOfflineSeconds(value) {
+    setLeftCalculatedOfflineMilliseconds(value) {
         this._leftCalculatedOfflineSeconds = value;
     }
 }
