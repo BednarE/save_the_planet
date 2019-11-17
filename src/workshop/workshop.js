@@ -172,7 +172,7 @@ class Workshop {
                 // after construction you get the money
 
             } else {  //needs to be imported to make it work, when the buttons are disabled this will be unnecessary
-                Swal.fire("Not enough Plastic", "Product can't be bought. You need " + Math.round(product._plasticCost*product._productAmount - this._game.getPlastic()) + " more Plastic before you can construct this product", "error");
+                Swal.fire("Nicht genügend Plastik", "Produkt kann nicht gekauft werden sammle " + Math.round(product._plasticCost*product._productAmount - this._game.getPlastic()) + " mehr Plastik um das zu konstruieren.", "error");
             }
         }
     }
