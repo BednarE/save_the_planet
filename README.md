@@ -12,6 +12,7 @@ Unsere Browserapp "Save_the_planet" stellt ein Minispiel dar, dass dem 'Cookie-K
 Das Ziel des Spiels ist es , immer mehr und mehr Plastik zu sammeln um den Planeten von diesem zu befreien.
 Das gesammelte Plastik kann in recycle-Produkte umgewandelt werden, welche für Spielgeld verkauft werden.
 Für dieses Geld können anschließend Kollektoren gekauft werden, die das Plastiksammeln für den Nutzer übernehmen und automatisch Plastik sammeln.
+Die Seite wurde für Chrome optimiert.
 
 ## Sub-Seiten
 Die Webapplikation beeinhaltet folgende Seiten:
